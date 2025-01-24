@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dfmakjikklytq"]
+[gd_scene load_steps=9 format=3 uid="uid://bdbgsv8mjtbki"]
 
 [ext_resource type="Texture2D" uid="uid://fy20n800ltg" path="res://Assets/Testing/image.png" id="1_th3gc"]
 [ext_resource type="Script" path="res://character_body_3d.gd" id="2_rsoqe"]
@@ -16,7 +16,7 @@ height = 0.189845
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8ikw"]
 albedo_texture = ExtResource("3_56tbu")
-uv1_scale = Vector3(16, 16, 16)
+uv1_scale = Vector3(32, 32, 32)
 uv1_triplanar = true
 
 [node name="Node3D" type="Node3D"]
@@ -126,7 +126,7 @@ size = Vector3(0.718544, 0.664604, 0.312134)
 transform = Transform3D(0.0441055, 0.601536, -0.797627, -0.0332117, 0.798845, 0.600619, 0.998475, 3.72529e-09, 0.0552115, 0.443613, 3.01785, -0.167722)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(0.830892, 0, 0, 0, 0.830892, 0, 0, 0, 0.830892, 0.837603, 0.884074, 0)
+transform = Transform3D(0.830892, 0, 0, 0, 0.830892, 0, 0, 0, 0.830892, 0.83903, 0.885675, 0.000271475)
 script = ExtResource("2_rsoqe")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
@@ -140,6 +140,7 @@ shape = SubResource("CapsuleShape3D_bgx4o")
 transform = Transform3D(0.0212492, 0.136993, -0.384283, -0.00756359, 0.38487, 0.136784, 0.407901, -1.46308e-09, 0.0225552, -0.655448, 0.230265, -0.00551814)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58515, 0.662023, -0.229081)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.06325, 0.00553308, 9.87591)
 mesh = SubResource("PlaneMesh_p021p")
 surface_material_override/0 = SubResource("StandardMaterial3D_d8ikw")
+metadata/_edit_group_ = true

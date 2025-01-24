@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://8sxt84ny6qto"]
+
+[ext_resource type="PackedScene" uid="uid://hp7qb5j322sq" path="res://Assets/Testing/mall_stand.gltf" id="1_snlyj"]
+[ext_resource type="PackedScene" uid="uid://u3sjojaao4b" path="res://Assets/Maps/Shipping_Container.gltf" id="2_orttm"]
+[ext_resource type="PackedScene" uid="uid://dphvmdtrcv3na" path="res://Assets/Maps/Fish_tank_01.tscn" id="3_f65kv"]
+
+[node name="Mall" type="Node3D"]
+
+[node name="icecream" parent="." instance=ExtResource("1_snlyj")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 5, 30)
+
+[node name="container" parent="." instance=ExtResource("2_orttm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 6, 25)
+
+[node name="blockbench_export" parent="." instance=ExtResource("3_f65kv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23, 5, 30)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.620448, 0.264426, -0.738324, 0, 0.941443, 0.337171, 0.784247, 0.209197, -0.584117, -26.981, 9.344, 22.6015)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Camera3D"]
+transform = Transform3D(1, 1.49012e-08, -1.19209e-07, -1.49012e-08, 1, 1.49012e-08, 0, 1.49012e-08, 1, 0, 19.7703, 7.0806)
