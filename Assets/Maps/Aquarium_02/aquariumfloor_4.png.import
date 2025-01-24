@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv3ndg8osfvb2"
-path.s3tc="res://.godot/imported/aquarium_3.png-44905d4dbcad87788e92480047223635.s3tc.ctex"
+uid="uid://d165kea3homy4"
+path.s3tc="res://.godot/imported/aquariumfloor_4.png-48ec24d13c2c153fc742cce4e8d6111f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://Assets/Maps/aquarium_3.png"
-dest_files=["res://.godot/imported/aquarium_3.png-44905d4dbcad87788e92480047223635.s3tc.ctex"]
+source_file="res://Assets/Maps/Aquarium_02/aquariumfloor_4.png"
+dest_files=["res://.godot/imported/aquariumfloor_4.png-48ec24d13c2c153fc742cce4e8d6111f.s3tc.ctex"]
 
 [params]
 

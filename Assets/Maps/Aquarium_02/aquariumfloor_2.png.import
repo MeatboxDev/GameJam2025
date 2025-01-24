@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmcant5syr1k7"
-path.s3tc="res://.godot/imported/aquarium_4.png-1953af0b78ec3646bf1daf6b8dbbde9c.s3tc.ctex"
+uid="uid://qa76fp3on02c"
+path.s3tc="res://.godot/imported/aquariumfloor_2.png-8f97ffb694d210436d4265def68ae41b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "34a1cda81876f379b6422beed410da11"
+"md5": "57f5da068f2756d805dd6e0227a837b3"
 }
 
 [deps]
 
-source_file="res://Assets/Maps/aquarium_4.png"
-dest_files=["res://.godot/imported/aquarium_4.png-1953af0b78ec3646bf1daf6b8dbbde9c.s3tc.ctex"]
+source_file="res://Assets/Maps/Aquarium_02/aquariumfloor_2.png"
+dest_files=["res://.godot/imported/aquariumfloor_2.png-8f97ffb694d210436d4265def68ae41b.s3tc.ctex"]
 
 [params]
 
