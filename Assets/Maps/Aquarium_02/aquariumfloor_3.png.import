@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvnqskic0duvo"
-path.s3tc="res://.godot/imported/Shipping_Container_0.png-788b52a809ef9ca90d09e039bfbdff14.s3tc.ctex"
+uid="uid://cijkwgts331sk"
+path.s3tc="res://.godot/imported/aquariumfloor_3.png-a5bb926f0eb9abfe6b38de4ff04c0141.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "cbc6c97de8dd1439da7540b084e7e333"
+"md5": "00b9e7da753b532886ffe645691008d6"
 }
 
 [deps]
 
-source_file="res://Assets/Maps/Shipping_Container_0.png"
-dest_files=["res://.godot/imported/Shipping_Container_0.png-788b52a809ef9ca90d09e039bfbdff14.s3tc.ctex"]
+source_file="res://Assets/Maps/Aquarium_02/aquariumfloor_3.png"
+dest_files=["res://.godot/imported/aquariumfloor_3.png-a5bb926f0eb9abfe6b38de4ff04c0141.s3tc.ctex"]
 
 [params]
 
