@@ -1,26 +1,35 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgm7yu8dotoe7"]
+[gd_scene load_steps=5 format=3 uid="uid://bgm7yu8dotoe7"]
 
 [ext_resource type="Script" path="res://Networking/Movement.gd" id="1_n8brg"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_5oo6s"]
+[sub_resource type="BoxMesh" id="BoxMesh_4yjt6"]
 size = Vector3(2, 2, 2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_r87g0"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5oo6s"]
+size = Vector3(2, 3, 2)
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_n8brg")
 
 [node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09931, 0)
+
+[node name="HeadMesh" type="MeshInstance3D" parent="Head"]
+mesh = SubResource("BoxMesh_4yjt6")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head"]
-spring_length = 6.0
+spring_length = 10.0
 margin = 0.2
 
 [node name="PlayerCamera" type="Camera3D" parent="Head/SpringArm3D"]
+v_offset = 2.0
+
+[node name="Body" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_r87g0")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_5oo6s")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
-mesh = SubResource("BoxMesh_r87g0")
