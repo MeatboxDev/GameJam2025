@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Networking/Movement.gd" id="1_n8brg"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5oo6s"]
+size = Vector3(2, 2, 2)
 
 [sub_resource type="BoxMesh" id="BoxMesh_r87g0"]
 
@@ -12,7 +13,7 @@ script = ExtResource("1_n8brg")
 [node name="Head" type="Node3D" parent="."]
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head"]
-spring_length = 4.0
+spring_length = 6.0
 margin = 0.2
 
 [node name="PlayerCamera" type="Camera3D" parent="Head/SpringArm3D"]
@@ -21,4 +22,5 @@ margin = 0.2
 shape = SubResource("BoxShape3D_5oo6s")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 mesh = SubResource("BoxMesh_r87g0")
