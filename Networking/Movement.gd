@@ -23,7 +23,6 @@ var _right: bool = Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D
 var _left: bool = Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A)
 var _movement: Vector3 = Vector3.ZERO
 
-
 @onready var stomp_area: Area3D = $StompArea
 @onready var push_area: Area3D = $PushArea
 @onready var body_mesh: Node = $Body
@@ -40,9 +39,10 @@ func _ready() -> void:
 
 	for c: Node3D in $Model.get_children():
 		for mesh: MeshInstance3D in c.get_children():
-			var new_material:StandardMaterial3D = StandardMaterial3D.new()
+			var new_material: StandardMaterial3D = StandardMaterial3D.new()
 			new_material.albedo_color = "0000ff" if is_good else "ff0000"
 			mesh.material_override = new_material
+
 
 func _calculate_horizontal_movement() -> void:
 	_movement = Vector3.ZERO
@@ -86,9 +86,9 @@ func _calculate_horizontal_movement() -> void:
 	):
 		velocity = XZ.move_toward_xz(velocity, Vector3.ZERO, decel_speed)
 
-
 func _pushback(node: Node3D) -> void:
-	node.queue_free()
+	node.burst()
+
 	velocity.x += sign(abs(node.position.x) - abs(position.x)) * max_speed
 	if node.position.z > position.z:
 		velocity.z += sign(abs(node.position.z) - abs(position.z)) * max_speed
@@ -97,7 +97,8 @@ func _pushback(node: Node3D) -> void:
 
 
 func _stomp(node: Node3D) -> void:
-	node.queue_free()
+	node.burst()
+
 	# If not pressing anything, halt and bounce up
 	if not (_up or _down or _left or _right):
 		velocity = Vector3(0, jump_force * 1.5, 0)
@@ -137,12 +138,26 @@ func _process(_delta: float) -> void:
 	_check_for_bubbles()
 
 	move_and_slide()
+
 	rpc("remote_set_position", global_position)
+	rpc("remote_set_head_rotation", head_node.rotation, spring_arm.rotation)
 
 
 @rpc("unreliable")
 func remote_set_position(real_pos: Vector3) -> void:
 	global_position = real_pos
+
+
+@rpc("unreliable")
+func remote_set_head_rotation(real_rotation: Vector3, real_spring_rotation: Vector3) -> void:
+	head_node.rotation = real_rotation
+	head_mesh.rotation = real_rotation
+	spring_arm.rotation = real_spring_rotation
+
+
+@rpc("unreliable")
+func _net_shoot_bubble() -> void:
+	_shoot_bubble()
 
 
 func toggle_mouse_capture() -> void:
@@ -192,11 +207,12 @@ func _shoot_bubble() -> void:
 	)
 	bubble.position = position + bubble_dir * 5
 	bubble.direction = bubble_dir
+	bubble.set_multiplayer_authority(get_multiplayer_authority())
 
 
 func _process_mouse_button(ev: InputEventMouseButton) -> void:
 	if ev.pressed && ev.button_index == MOUSE_BUTTON_LEFT:
-		print("Shooty mc shoot shoot")
+		rpc("_net_shoot_bubble")
 		_shoot_bubble()
 
 
