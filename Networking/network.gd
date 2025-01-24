@@ -48,8 +48,12 @@ func add_new_connections(id: int) -> void:
 
 
 @rpc
-func add_previous_characters(ids: Array[int]) -> void:
-	for peer_id in ids:
+func add_previous_characters(good_ids: Array[int], bad_ids: Array[int]) -> void:
+	for peer_id in good_ids:
+		good_guys.append(peer_id)
+		add_player_character(peer_id)
+	for peer_id in bad_ids:
+		bad_guys.append(peer_id)
 		add_player_character(peer_id)
 
 
@@ -60,20 +64,19 @@ func show_join_team() -> void:
 
 @rpc("any_peer", "reliable")
 func handle_team_join(id: int, is_good: bool) -> void:
-
-	# Host registers if someone is good or bad
-	if is_good:
-		good_guys.append(id)
-	else:
-		bad_guys.append(id)
-
 	# Host tells everyone, this guy joined
 	print("SENDING ADD NEW TO ALL PLAYERS")
 	rpc("add_new_connections", id)
 
 	# Host tells the player that just joined, these guys are in the game
 	print("SENDING PREVIOUS CHARACTERS TO PEER")
-	rpc_id(id, "add_previous_characters", connected_peer_ids)
+	rpc_id(id, "add_previous_characters", good_guys, bad_guys)
+
+	# Host registers if someone is good or bad
+	if is_good:
+		good_guys.append(id)
+	else:
+		bad_guys.append(id)
 
 	add_player_character(id)
 
