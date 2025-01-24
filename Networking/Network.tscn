@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://8j6tos5wm2f3"]
+[gd_scene load_steps=5 format=3 uid="uid://8j6tos5wm2f3"]
 
 [ext_resource type="Script" path="res://Networking/network.gd" id="1_d0cgp"]
-[ext_resource type="Texture2D" uid="uid://fy20n800ltg" path="res://Assets/Testing/image.png" id="2_dnemi"]
+[ext_resource type="Texture2D" uid="uid://c7c4ntyebp14p" path="res://Assets/Testing/noFilter.webp" id="2_onyyg"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_7ycea"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_swkyh"]
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rl0d"]
+albedo_texture = ExtResource("2_onyyg")
 
 [node name="Network" type="Node3D"]
 script = ExtResource("1_d0cgp")
@@ -18,33 +22,82 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+[node name="JoinLobby" type="VBoxContainer" parent="Control"]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="join" type="Button" parent="Control/VBoxContainer"]
+[node name="join" type="Button" parent="Control/JoinLobby"]
 layout_mode = 2
 text = "Join"
 
-[node name="host" type="Button" parent="Control/VBoxContainer"]
+[node name="host" type="Button" parent="Control/JoinLobby"]
 layout_mode = 2
 text = "Host"
 
-[node name="Status" type="Label" parent="Control/VBoxContainer"]
+[node name="Status" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Status" type="Label" parent="Control/Status"]
 layout_mode = 2
 
-[node name="Id" type="Label" parent="Control/VBoxContainer"]
+[node name="Id" type="Label" parent="Control/Status"]
 layout_mode = 2
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(15, 0, 0, 0, -6.55671e-07, 15, 0, -15, -6.55671e-07, 0, 0, 0)
-texture = ExtResource("2_dnemi")
+[node name="JoinTeam" type="VBoxContainer" parent="Control"]
+visible = false
+layout_mode = 1
+offset_right = 83.0
+offset_bottom = 66.0
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="JoinGood" type="Button" parent="Control/JoinTeam"]
+layout_mode = 2
+text = "Join Good"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_7ycea")
+[node name="JoinBad" type="Button" parent="Control/JoinTeam"]
+layout_mode = 2
+text = "Join Bad"
 
-[connection signal="pressed" from="Control/VBoxContainer/join" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="Control/VBoxContainer/host" to="." method="_on_host_pressed"]
+[node name="World" type="Node3D" parent="."]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="World"]
+use_collision = true
+mesh = SubResource("PlaneMesh_swkyh")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.9727, 0.5, -0.0546317)
+use_collision = true
+size = Vector3(20, 5, 20)
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.9626, 6, -0.00760269)
+use_collision = true
+radius = 2.0
+
+[node name="GoodGuysSpawn" type="CSGBox3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.2301, 2.66473, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_4rl0d")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0273, 0.5, -0.0546317)
+use_collision = true
+size = Vector3(20, 5, 20)
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.0374, 6, -0.00760269)
+use_collision = true
+radius = 2.0
+
+[node name="BadGuysSpawn" type="CSGBox3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7699, 2.66473, 0)
+use_collision = true
+material = SubResource("StandardMaterial3D_4rl0d")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 0.188478, 0.982077, 0, -0.982077, 0.188478, 0, 52.1754, 0)
+
+[connection signal="pressed" from="Control/JoinLobby/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Control/JoinLobby/host" to="." method="_on_host_pressed"]
