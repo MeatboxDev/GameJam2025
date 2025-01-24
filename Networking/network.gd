@@ -131,7 +131,7 @@ func _on_host_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
-	multiplayer_peer.create_client("localhost", PORT)
+	multiplayer_peer.create_client("100.93.129.57", PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 	join_lobby_cont.visible = false
