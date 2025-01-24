@@ -3,6 +3,9 @@ extends CharacterBody3D
 const DEG_45: float = PI/4.0
 const DEG_N45: float = -DEG_45
 
+@onready var stomp_area: Area3D = $StompArea
+@onready var push_area: Area3D = $PushArea
+
 @onready var body: Node = $Body
 @onready var head: Node = $Head
 @onready var head_mesh: Node = $Head/HeadMesh
@@ -51,12 +54,23 @@ func calculate_horizontal_movement() -> void:
 	if _movement.x:
 		body.rotate_y(angle_difference(body.rotation.y + sign(_movement.x) * DEG_45, head.rotation.y)/10.0)
 
+	# If velocity is over 3 times the max in the XZ axys, just lock it to that
+	if xyz_to_xz(velocity).length() > MAX_SPEED * 3:
+		velocity = normalize_xz(velocity, MAX_SPEED*3)
+		return
+
+	# First we check to see if we're over the limit in the XZ axys without doing any movement
+	# if we are, deccelerate at a custom pace, and do nothing more
+	if round(xyz_to_xz(velocity).length()) > MAX_SPEED:
+		velocity = move_toward_xz(velocity, Vector3.ZERO, DECEL_SPEED / 4)
+		return
+
+
 	velocity += _movement.rotated(Vector3.UP, head.rotation.y)
-
-
-	if xyz_to_xz(self.velocity).length() > MAX_SPEED:
+	if xyz_to_xz(velocity).length() > MAX_SPEED:
 		velocity = normalize_xz(velocity, MAX_SPEED)
-	if (not (_up or _down or _left or _right)) or ((_up and _down) or (_right and _left)):
+
+	if is_on_floor() and (not (_up or _down or _left or _right)) or ((_up and _down) or (_right and _left)):
 		velocity = move_toward_xz(velocity, Vector3.ZERO, DECEL_SPEED)
 
 func _process(_delta: float) -> void:
@@ -67,9 +81,27 @@ func _process(_delta: float) -> void:
 	else: velocity.y -= 1
 
 	if (is_on_floor() and Input.is_key_pressed(KEY_SPACE)):
+		velocity *= 2
 		velocity.y += JUMP_FORCE
 
 	calculate_horizontal_movement()
+
+	var pushbacks = push_area.get_overlapping_bodies()
+	if pushbacks.size() != 0:
+		for b in pushbacks:
+			if b.is_in_group("Bubble"):
+				velocity.x += sign(abs(b.position.x) - abs(position.x))*MAX_SPEED
+				if (b.position.z > position.z):
+					velocity.z += sign(abs(b.position.z) - abs(position.z))*MAX_SPEED
+				else: velocity.z -= sign(abs(b.position.z) - abs(position.z))*MAX_SPEED
+
+	var stomps = stomp_area.get_overlapping_bodies()
+	if stomps.size() != 0:
+		for b in stomps:
+			if b.is_in_group("Bubble"):
+				velocity *= 3
+				velocity.y = JUMP_FORCE
+
 	move_and_slide()
 	rpc("remote_set_position", global_position)
 

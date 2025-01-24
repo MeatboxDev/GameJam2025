@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://crqbqe60pjvvj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_02rix"]
+radius = 1.87772
+
+[sub_resource type="SphereMesh" id="SphereMesh_fhe44"]
+radius = 2.0
+height = 4.0
+radial_segments = 32
+
+[node name="StaticBody3D" type="StaticBody3D" groups=["Bubble"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_02rix")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_fhe44")
+skeleton = NodePath("../..")
