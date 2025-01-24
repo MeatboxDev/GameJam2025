@@ -86,6 +86,7 @@ func _calculate_horizontal_movement() -> void:
 	):
 		velocity = XZ.move_toward_xz(velocity, Vector3.ZERO, decel_speed)
 
+
 func _pushback(node: Node3D) -> void:
 	node.burst()
 
@@ -191,7 +192,7 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 
 	head_node.rotate_y(-move_x * p_cam_sensitivity)
 	spring_arm.rotate_x(-move_y * p_cam_sensitivity)
-	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -.8, 1)
+	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -1, 1.5)
 	head_mesh.rotation.x = spring_arm.rotation.x
 
 	head_body_diff = angle_difference(head_node.rotation.y, body_mesh.rotation.y)
@@ -202,10 +203,8 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 func _shoot_bubble() -> void:
 	var bubble: Node3D = BUBBLE.instantiate()
 	get_tree().get_root().add_child(bubble)
-	var bubble_dir: Vector3 = -Vector3(
-		head_node.basis.z.x, spring_arm.basis.z.y, head_node.basis.z.z
-	)
-	bubble.position = position + bubble_dir * 5
+	var bubble_dir: Vector3 = -p_cam.global_basis.z
+	bubble.position = position + bubble_dir * 8
 	bubble.direction = bubble_dir
 	bubble.set_multiplayer_authority(get_multiplayer_authority())
 
