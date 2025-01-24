@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=4 uid="uid://ci05ta1b70d18"]
+
+[ext_resource type="PackedScene" uid="uid://bkskx8nipf8br" path="res://Assets/Maps/Aquarium_02/aquariumfloor.gltf" id="1_ybhm6"]
+[ext_resource type="Texture2D" uid="uid://crsol3brvf1b2" path="res://Assets/Maps/Aquarium_02/aquariumfloor_0.png" id="2_62ben"]
+[ext_resource type="Texture2D" uid="uid://6kayq2ml0ei7" path="res://Assets/Maps/Aquarium_02/aquariumfloor_1.png" id="2_j6dur"]
+[ext_resource type="Animation" uid="uid://ehah65jcdrbt" path="res://Assets/Maps/Aquarium_02/fish_swim_02.res" id="4_qen1o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsluf"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_62ben")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_mba2e"]
+_surfaces = [{
+"aabb": AABB(-3, 3, -3, 6, 1e-05, 6),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("//8AAP//AAD//wAAAAAAAAAAAAD//wAAAAAAAAAAAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_b0ubf"]
+resource_name = "blockbench_export_mesh2"
+_surfaces = [{
+"aabb": AABB(-3, 3, -3, 6, 1e-05, 6),
+"attribute_data": PackedByteArray("/0//T/9PAAAAAP9PAAAAAA=="),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"material": SubResource("StandardMaterial3D_wsluf"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("//8AAP///7///wAAAAD/vwAAAAD///+/AAAAAAAA/7////9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_mba2e")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gcvx"]
+resource_name = "material_1"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_j6dur")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_8gc66"]
+_surfaces = [{
+"aabb": AABB(-2.90625, -2.22045e-16, -2.90625, 5.8125, 2.875, 5.8125),
+"format": 34896613377,
+"index_count": 30,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUABAACAAAABAAFAAIAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_g84ny"]
+resource_name = "blockbench_export_mesh4"
+_surfaces = [{
+"aabb": AABB(-2.90625, -2.22045e-16, -2.90625, 5.8125, 2.875, 5.8125),
+"attribute_data": PackedByteArray("/0wAAP9M/y3/mAAA/5j/Lf+Y/y7/TP8u/5j/XP9M/1z/S/9L/0sAAAAA/0sAAAAA/5j/Xf9M/13/mP+L/0z/i/9M/4z/TP+6/5j/jP+Y/7o="),
+"format": 34896613399,
+"index_count": 30,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEA"),
+"material": SubResource("StandardMaterial3D_0gcvx"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v/////////+//////wAA/78AAP//////vwAA//8AAP+/////////AIAAAP////8AgP//AAD//wCAAAAAAP//AID/////AAD/////AAAAAP//AAD//wAA//8AAAAAAAD///9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///////f////3////9/////f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_8gc66")
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w758u"]
+_data = {
+"fish swim": ExtResource("4_qen1o")
+}
+
+[node name="blockbench_export" instance=ExtResource("1_ybhm6")]
+
+[node name="glass pane_selection" parent="Node/glass" index="1"]
+mesh = SubResource("ArrayMesh_b0ubf")
+
+[node name="water block" parent="Node/water" index="0"]
+mesh = SubResource("ArrayMesh_g84ny")
+
+[node name="fish 12" parent="Node/fish" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.431598, 0.8125, 1.5625)
+
+[node name="fish 22" parent="Node/fish" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.294529, 1.3125, 1.1875)
+
+[node name="fish 32" parent="Node/fish" index="2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.802913, 1.875, -1.6875)
+
+[node name="fish 42" parent="Node/fish" index="3"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -1.12502, 0.125, -0.3125)
+
+[node name="algae" parent="Node" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98838, 0, -3)
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_w758u")
+}
+autoplay = "fish swim"
+speed_scale = 0.2
