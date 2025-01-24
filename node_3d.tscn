@@ -1,13 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfmakjikklytq"]
+[gd_scene load_steps=9 format=3 uid="uid://dfmakjikklytq"]
 
 [ext_resource type="Texture2D" uid="uid://fy20n800ltg" path="res://Assets/Testing/image.png" id="1_th3gc"]
 [ext_resource type="Script" path="res://character_body_3d.gd" id="2_rsoqe"]
+[ext_resource type="Texture2D" uid="uid://iy85uygqcqsv" path="res://Assets/Testing/mall_floor.png" id="3_56tbu"]
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_o5lls"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_amqqv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_bgx4o"]
 radius = 0.0613742
 height = 0.189845
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_p021p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8ikw"]
+albedo_texture = ExtResource("3_56tbu")
+uv1_scale = Vector3(16, 16, 16)
+uv1_triplanar = true
 
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(2.94604, 0, 0, 0, 2.94604, 0, 0, 0, 2.94604, 0.261068, 0, 0)
@@ -32,9 +42,10 @@ use_collision = true
 size = Vector3(0.643616, 0.131958, 1.88097)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="."]
-transform = Transform3D(1.20346, 0, 0, 0, 5.39559, 0, 0, 0, 1.10563, 3.33132, 0.29942, -0.437067)
+transform = Transform3D(1.20346, -0.0142423, -0.00181859, 0.00317539, 5.39557, -0.000716381, 0.00198158, 0.00347249, 1.10563, 3.33132, 0.29942, -0.437067)
 use_collision = true
 size = Vector3(1.78786, 0.131958, 1.415)
+material = SubResource("ORMMaterial3D_o5lls")
 
 [node name="CSGBox3D5" type="CSGBox3D" parent="."]
 transform = Transform3D(1.20346, 0, 0, 0, 5.39559, 0, 0, 0, 1.10563, 3.00856, 0.29942, 0.716597)
@@ -115,7 +126,7 @@ size = Vector3(0.718544, 0.664604, 0.312134)
 transform = Transform3D(0.0441055, 0.601536, -0.797627, -0.0332117, 0.798845, 0.600619, 0.998475, 3.72529e-09, 0.0552115, 0.443613, 3.01785, -0.167722)
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(0.830892, 0, 0, 0, 0.830892, 0, 0, 0, 0.830892, 0.837603, 0.743101, 0)
+transform = Transform3D(0.830892, 0, 0, 0, 0.830892, 0, 0, 0, 0.830892, 0.837603, 0.884074, 0)
 script = ExtResource("2_rsoqe")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
@@ -127,3 +138,8 @@ shape = SubResource("CapsuleShape3D_bgx4o")
 
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
 transform = Transform3D(0.0212492, 0.136993, -0.384283, -0.00756359, 0.38487, 0.136784, 0.407901, -1.46308e-09, 0.0225552, -0.655448, 0.230265, -0.00551814)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58515, 0.662023, -0.229081)
+mesh = SubResource("PlaneMesh_p021p")
+surface_material_override/0 = SubResource("StandardMaterial3D_d8ikw")
