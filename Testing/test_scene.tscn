@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3 uid="uid://bpd2o4pcms4nl"]
+
+[ext_resource type="PackedScene" uid="uid://bgm7yu8dotoe7" path="res://Networking/test_character.tscn" id="1_wt0fi"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_04wgp"]
+size = Vector2(200, 200)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5lx6"]
+
+[node name="TestScene" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.988105, 0.153779, 0, -0.153779, 0.988105, 0, 30, 0)
+
+[node name="Level" type="Node3D" parent="."]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Level"]
+use_collision = true
+mesh = SubResource("PlaneMesh_04wgp")
+material = SubResource("StandardMaterial3D_s5lx6")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 2.5, 0)
+use_collision = true
+size = Vector3(20, 5, 30)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 7.5, 13)
+use_collision = true
+size = Vector3(20, 5, 4)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.5, 7.5, -13)
+use_collision = true
+size = Vector3(20, 5, 4)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5, 7.5, 4.5)
+use_collision = true
+size = Vector3(4, 5, 13)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Level"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.5, 7.5, 4.5)
+use_collision = true
+size = Vector3(4, 5, 13)
+
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_wt0fi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+SENSITIVITY = 0.003
