@@ -27,3 +27,13 @@ func _process(delta: float) -> void:
 	if not start_deccel:
 		return
 	speed -= decel_speed
+
+@rpc("any_peer", "reliable")
+func _net_burst() -> void:
+	print("bust")
+	self.queue_free()
+
+func burst() -> void:
+	print("burt")
+	rpc("_net_burst")
+	self.queue_free()
