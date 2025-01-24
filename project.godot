@@ -14,3 +14,7 @@ config/name="AxoBubble"
 run/main_scene="res://Networking/Network.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[global_group]
+
+Bubble=""
