@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bgm7yu8dotoe7"]
+[gd_scene load_steps=7 format=3 uid="uid://bgm7yu8dotoe7"]
 
 [ext_resource type="Script" path="res://Networking/Movement.gd" id="1_n8brg"]
 
@@ -10,6 +10,14 @@ size = Vector3(1, 2, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5oo6s"]
 size = Vector3(2, 3, 2)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5vp2o"]
+height = 0.824465
+radius = 1.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pc1rs"]
+height = 2.5
+radius = 1.5
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_n8brg")
@@ -33,3 +41,16 @@ mesh = SubResource("BoxMesh_r87g0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("BoxShape3D_5oo6s")
+
+[node name="StompArea" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StompArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.211663, 0)
+shape = SubResource("CylinderShape3D_5vp2o")
+
+[node name="PushArea" type="Area3D" parent="."]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="PushArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.680305, 0)
+shape = SubResource("CylinderShape3D_pc1rs")
