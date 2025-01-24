@@ -11,7 +11,11 @@ script = ExtResource("1_n8brg")
 
 [node name="Head" type="Node3D" parent="."]
 
-[node name="PlayerCamera" type="Camera3D" parent="Head"]
+[node name="SpringArm3D" type="SpringArm3D" parent="Head"]
+spring_length = 4.0
+margin = 0.2
+
+[node name="PlayerCamera" type="Camera3D" parent="Head/SpringArm3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_5oo6s")
