@@ -47,7 +47,6 @@ size = Vector3(4, 5, 13)
 
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_wt0fi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-SENSITIVITY = 0.003
 
 [node name="StaticBody3D" parent="." instance=ExtResource("2_kcwcx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0)
