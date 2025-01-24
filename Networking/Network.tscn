@@ -36,9 +36,13 @@ layout_mode = 2
 text = "Host"
 
 [node name="Status" type="VBoxContainer" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -44.0
+offset_bottom = 67.0
+grow_horizontal = 0
 
 [node name="Status" type="Label" parent="Control/Status"]
 layout_mode = 2
