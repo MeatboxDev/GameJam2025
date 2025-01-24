@@ -32,6 +32,9 @@ func _on_host_pressed() -> void:
 	multiplayer_peer.create_server(1221)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	$Control/VBoxContainer/Id.text = str(multiplayer.get_unique_id())
+	
+	$Control/VBoxContainer/join.visible = false
+	$Control/VBoxContainer/host.visible = false
 
 	add_player_character(1)
 
@@ -56,6 +59,9 @@ func _on_join_pressed() -> void:
 	multiplayer_peer.create_client("localhost", PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 	$Control/VBoxContainer/Id.text = str(multiplayer.get_unique_id())
+
+	$Control/VBoxContainer/join.visible = false
+	$Control/VBoxContainer/host.visible = false
 
 func add_player_character(id):
 	connected_peer_ids.append(id)
