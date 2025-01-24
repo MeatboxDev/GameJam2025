@@ -1,7 +1,8 @@
 extends CharacterBody3D
 
 @onready var head: Node = $Head
-@onready var p_cam: Camera3D = $Head/PlayerCamera
+@onready var spring_arm: SpringArm3D = $Head/SpringArm3D
+@onready var p_cam: Camera3D = $Head/SpringArm3D/PlayerCamera
 
 func _ready() -> void:
 	name = str(get_multiplayer_authority())
@@ -13,7 +14,7 @@ const DEG_N45: float = -DEG_45
 
 const SPEED: float = 1.0
 const DECEL_SPEED: float = 2.0
-const MAX_SPEED: float = 10.0
+const MAX_SPEED: float = 15.0
 
 var _up: bool = Input.is_key_pressed(KEY_UP) or Input.is_key_pressed(KEY_W)
 var _down: bool = Input.is_key_pressed(KEY_DOWN) or Input.is_key_pressed(KEY_S)
@@ -49,6 +50,9 @@ func _process(_delta: float) -> void:
 	if (is_on_floor()): velocity.y = 0
 	else: velocity.y -= 1
 
+	if (is_on_floor() and Input.is_key_pressed(KEY_SPACE)):
+		velocity.y += 40
+
 	calculate_horizontal_movement()
 	move_and_slide()
 	rpc("remote_set_position", global_position)
@@ -74,11 +78,10 @@ func _process_keyboard(ev: InputEventKey) -> void:
 		KEY_S, KEY_DOWN: _down = ev.pressed
 		KEY_D, KEY_RIGHT: _right = ev.pressed
 
-
 func _input(event):
 	if event is InputEventKey:
 		_process_keyboard(event); return
 	if event is InputEventMouseMotion:
 		head.rotate_y(-event.relative.x * SENSITIVITY)
-		p_cam.rotate_x(-event.relative.y * SENSITIVITY)
-
+		spring_arm.rotate_x(-event.relative.y * SENSITIVITY)
+		spring_arm.rotation.x =clamp(spring_arm.rotation.x, -1, .2)
