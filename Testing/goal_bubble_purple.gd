@@ -8,12 +8,12 @@ const MAX_SIZE: float = 5.0
 @onready var area: Area3D = $Area
 
 
-
 func _trigger_boss_burst() -> void:
 	var arr: Array = explosion_area.collision_result
 	for x: Dictionary in arr:
 		var obj: Node3D = x["collider"]
-		if obj == null: continue
+		if obj == null:
+			continue
 		if not obj.is_in_group("Player"):
 			continue
 		obj.velocity = -(position - position.move_toward(obj.position, 1)) * 300
@@ -39,8 +39,10 @@ func _net_boss_grow() -> void:
 
 
 func _handle_enter(_area: Node3D) -> void:
+	# only allow bubbles
 	if not _area.is_in_group("Bubble"):
 		return
+
 	var par: Node3D = _area.get_parent()
 	if par == null:
 		return
@@ -56,8 +58,10 @@ func _handle_enter(_area: Node3D) -> void:
 
 
 func _ready() -> void:
-	area.connect("area_entered", _handle_enter)
+	if not is_multiplayer_authority():
+		return
 	if is_good:
 		SignalBus.place_good_boss.emit()
 	else:
 		SignalBus.place_bad_boss.emit()
+	area.connect("area_entered", _handle_enter)
