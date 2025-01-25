@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://bhiprel4s1fa5"]
+
+[ext_resource type="PackedScene" uid="uid://clh421s70u8c4" path="res://Assets/Maps/Mall_ad/Mall_ad_model.tscn" id="1_cwksb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxoy1"]
+size = Vector3(6, 4, 4)
+
+[node name="Mall_ad_collisions" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_cwksb")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 2, 2)
+shape = SubResource("BoxShape3D_mxoy1")

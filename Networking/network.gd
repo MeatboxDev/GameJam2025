@@ -1,7 +1,7 @@
 extends Node
 
 const PORT: int = 1221
-const IPADDR: String = "localhost"  # "100.93.129.57"
+const IPADDR: String = "100.93.129.57"  # "100.93.129.57"
 
 var multiplayer_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
