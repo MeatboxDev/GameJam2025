@@ -31,6 +31,7 @@ var _movement: Vector3 = Vector3.ZERO
 @onready var head_mesh: Node = $Head/HeadMesh
 @onready var spring_arm: SpringArm3D = $Head/SpringArm3D
 @onready var p_cam: Camera3D = $Head/SpringArm3D/PlayerCamera
+@onready var bubble_cast: ShapeCast3D = $BubbleCast
 
 
 func _ready() -> void:
@@ -202,9 +203,22 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 func _shoot_bubble() -> void:
 	var bubble: Node3D = (BUBBLE_GOOD if is_good else BUBBLE_BAD).instantiate()
 	get_tree().get_root().add_child(bubble)
-	var bubble_dir: Vector3 = -p_cam.global_basis.z
-	bubble.position = position + bubble_dir * 8
-	bubble.direction = bubble_dir
+
+	bubble_cast.position = head_node.position + (-p_cam.global_basis.z) * 3
+	bubble_cast.force_update_transform()
+	bubble_cast.force_shapecast_update()
+	var arr: Array = bubble_cast.collision_result
+	for x: Dictionary in arr:
+		var obj: Node3D = x["collider"]
+		if not obj.is_in_group("Terrain"):
+			continue
+		bubble.queue_free()
+		return
+
+	bubble.position = position + bubble_cast.position
+	bubble.direction = (-p_cam.global_basis.z)
+	bubble.scale = Vector3.ZERO
+	bubble.speed += (bubble.direction.dot(velocity.normalized())) / 2
 	bubble.set_multiplayer_authority(get_multiplayer_authority())
 
 

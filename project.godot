@@ -28,3 +28,4 @@ gdscript/warnings/untyped_declaration=2
 Bubble=""
 BossBubble=""
 Player=""
+Terrain=""
