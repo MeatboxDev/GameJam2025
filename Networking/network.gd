@@ -3,16 +3,26 @@ extends Node
 const PORT: int = 1221
 const IPADDR: String = "localhost"  # "100.93.129.57"
 
+@export var good_guys_spawn_points: Array[Node3D]
+@export var bad_guys_spawn_points: Array[Node3D]
+@export var good_guys_stands: Array[Node3D]
+@export var bad_guys_stands: Array[Node3D]
+
 var multiplayer_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
-
-var good_balls: int = 0
-var bad_balls: int = 0
+var instantiated_characters: Array[CharacterBody3D] = []
 var connected_peer_ids: Array[int] = []
-var good_guys: Array[int] = []
-var bad_guys: Array[int] = []
 
-@onready var good_guys_spawn: Node3D = $World/GoodGuysSpawn
-@onready var bad_guys_spawn: Node3D = $World/BadGuysSpawn
+var good_guys: Array[int] = []
+var good_balls: int = 0
+var good_ball_list: Array[Node3D] = []
+
+var bad_guys: Array[int] = []
+var bad_balls: int = 0
+var bad_ball_list: Array[Node3D] = []
+
+var _started: bool = false
+
+@onready var start_game_button: Button = $Control/StartGame
 @onready var join_lobby_cont: VBoxContainer = $Control/JoinLobby
 @onready var join_btn: Button = $Control/JoinLobby/join
 @onready var host_btn: Button = $Control/JoinLobby/host
@@ -26,38 +36,44 @@ var bad_guys: Array[int] = []
 
 func _handle_place_good_boss() -> void:
 	good_balls += 1
-	print("GOOD: ", good_balls)
-	print("BAD: ", bad_balls)
 
 
 func _handle_place_bad_boss() -> void:
 	bad_balls += 1
-	print("GOOD: ", good_balls)
-	print("BAD: ", bad_balls)
 
 
 func _handle_burst_good_boss() -> void:
-	good_balls += 1
-	print("GOOD: ", good_balls)
-	print("BAD: ", bad_balls)
+	good_balls -= 1
 	if good_balls == 0:
-		print("Good loses :(")
-		return
-	if bad_balls == 0:
-		print("Bad loses :(")
-		return
+		rpc("_end_game")
 
 
 func _handle_burst_bad_boss() -> void:
-	bad_balls += 1
-	print("GOOD: ", good_balls)
-	print("BAD: ", bad_balls)
-	if good_balls == 0:
-		print("Good loses :(")
-		return
+	bad_balls -= 1
 	if bad_balls == 0:
-		print("Bad loses :(")
-		return
+		rpc("_end_game")
+
+
+@rpc("authority", "call_local", "reliable")
+func _end_game() -> void:
+	await get_tree().create_timer(3.0).timeout
+	$RespawnCamera.make_current()
+	join_team_container.visible = true
+	_started = false
+
+	for c in instantiated_characters:
+		c.queue_free()
+	instantiated_characters.clear()
+	good_guys.clear()
+	bad_guys.clear()
+
+	for b in good_ball_list:
+		b.queue_free()
+	good_ball_list.clear()
+
+	for b in bad_ball_list:
+		b.queue_free()
+	good_ball_list.clear()
 
 
 # # Called when the node enters the scene tree for the first time.
@@ -81,20 +97,38 @@ func _handle_burst_bad_boss() -> void:
 # 	upnp.delete_port_mapping(1221, "TCP")
 # 	upnp.delete_port_mapping(1221, "UDP")
 
+@rpc("authority", "call_local", "reliable")
+func start_game() -> void:
+	_started = true
+	start_game_button.visible = false
+	for st in good_guys_stands:
+		var boss: Node3D = preload("res://Testing/goal_bubble_purple.tscn").instantiate()
+		boss.set_multiplayer_authority(get_multiplayer_authority())
+		add_child(boss)
+		boss.position = st.position + Vector3.UP * 5
+	for st in bad_guys_stands:
+		var boss: Node3D = preload("res://Testing/goal_bubble_pink.tscn").instantiate()
+		boss.set_multiplayer_authority(get_multiplayer_authority())
+		add_child(boss)
+		boss.position = st.position + Vector3.UP * 5
+	for c in instantiated_characters:
+		_respawn_player(c)
+
+
 @rpc("any_peer", "call_local", "reliable")
-func add_new_connections(id: int) -> void:
+func add_new_connections(id: int, is_good: bool) -> void:
 	connected_peer_ids.append(id)
-	add_player_character(id)
+	add_player_character(id, is_good)
 
 
 @rpc("any_peer", "reliable")
 func add_previous_characters(good_ids: Array[int], bad_ids: Array[int]) -> void:
 	for peer_id in good_ids:
 		good_guys.append(peer_id)
-		add_player_character(peer_id)
+		add_player_character(peer_id, true)
 	for peer_id in bad_ids:
 		bad_guys.append(peer_id)
-		add_player_character(peer_id)
+		add_player_character(peer_id, false)
 
 
 @rpc("any_peer", "reliable")
@@ -102,22 +136,30 @@ func show_join_team() -> void:
 	join_team_container.visible = true
 
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func handle_team_join(id: int, is_good: bool) -> void:
-	# Host registers if someone is good or bad
 	if is_good:
 		good_guys.append(id)
 	else:
 		bad_guys.append(id)
 
-	# Host tells everyone, this guy joined
-	print("SENDING ADD NEW TO ALL PLAYERS")
-	rpc("add_new_connections", id)
+	if good_guys.size() >= 1 and bad_guys.size() >= 1:
+		start_game_button.show()
+
+	rpc("add_new_connections", id, is_good)
+
+
+func _handle_start_button() -> void:
+	for c: Node in get_children():
+		if c.is_in_group("Bubble"):
+			c.rpc("burst")
+	rpc("start_game")
 
 
 func _ready() -> void:
 	join_good_btn.connect("pressed", join_good_team)
 	join_bad_btn.connect("pressed", join_bad_team)
+	start_game_button.connect("pressed", _handle_start_button)
 	SignalBus.place_good_boss.connect(_handle_place_good_boss)
 	SignalBus.place_bad_boss.connect(_handle_place_bad_boss)
 	SignalBus.burst_good_boss.connect(_handle_burst_good_boss)
@@ -126,21 +168,23 @@ func _ready() -> void:
 
 
 func _respawn_player(player: CharacterBody3D) -> void:
-	var is_good: bool = good_guys.has(player.get_multiplayer_authority())
-	player.is_good = is_good
-	var spawn: Node3D = good_guys_spawn if is_good else bad_guys_spawn
-	player.position = spawn.position
-	player.position.y = spawn.position.y + 3
+	var spawn_pool: Array[Node3D] = (
+		good_guys_spawn_points if player.is_good else bad_guys_spawn_points
+	)
+	player.position = spawn_pool[0].position
+	player.position.y = spawn_pool[0].position.y + 3
+	spawn_pool.push_back(spawn_pool.pop_front())
 
-	if (player.get_multiplayer_authority() == multiplayer.get_unique_id()):
+	if player.get_multiplayer_authority() == multiplayer.get_unique_id():
 		player.p_cam.make_current()
 
+	player.health = 100
 	player.rpc("trigger_respawn")
 
 
 func _handle_player_defeat(player: CharacterBody3D) -> void:
 	print("A player has been defeated!")
-	if (player.get_multiplayer_authority() == multiplayer.get_unique_id()):
+	if player.get_multiplayer_authority() == multiplayer.get_unique_id():
 		$RespawnCamera.make_current()
 	# TODO: Show in UI
 	var timer: SceneTreeTimer = get_tree().create_timer(3)
@@ -148,27 +192,13 @@ func _handle_player_defeat(player: CharacterBody3D) -> void:
 
 
 func join_good_team() -> void:
-	var id: int = multiplayer.get_unique_id()
-	good_guys.append(id)
 	join_team_container.visible = false
-
-	if id == 1:
-		add_player_character(1)
-	else:
-		rpc_id(1, "handle_team_join", id, true)
-	connected_peer_ids.append(id)
+	rpc_id(1, "handle_team_join", multiplayer.get_unique_id(), true)
 
 
 func join_bad_team() -> void:
-	var id: int = multiplayer.get_unique_id()
-	bad_guys.append(id)
 	join_team_container.visible = false
-
-	if id == 1:
-		add_player_character(1)
-	else:
-		rpc_id(1, "handle_team_join", id, false)
-	connected_peer_ids.append(id)
+	rpc_id(1, "handle_team_join", multiplayer.get_unique_id(), false)
 
 
 func _on_host_pressed() -> void:
@@ -200,20 +230,30 @@ func _on_join_pressed() -> void:
 	id_label.text = str(multiplayer.get_unique_id())
 
 
-func add_player_character(id: int) -> void:
+func add_player_character(id: int, is_good: bool) -> void:
 	var p_instance: CharacterBody3D = preload("res://Networking/test_character.tscn").instantiate()
 	p_instance.set_multiplayer_authority(id)
 
-	var is_good: bool = good_guys.has(id)
 	p_instance.is_good = is_good
-	var spawn: Node3D = good_guys_spawn if is_good else bad_guys_spawn
+	var spawn: Node3D = (
+		good_guys_spawn_points.pick_random() if is_good else bad_guys_spawn_points.pick_random()
+	)
 	p_instance.position = spawn.position
 	p_instance.position.y = spawn.position.y + 3
 
 	add_child(p_instance)
 
+	instantiated_characters.append(p_instance)
+
 
 func _input(event: InputEvent) -> void:
+	if (
+		event is InputEventKey
+		and event.pressed
+		and event.keycode == KEY_P
+		and start_game_button.visible
+	):
+		rpc("start_game")
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		toggle_mouse_capture()
 

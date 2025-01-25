@@ -13,6 +13,18 @@ var _start_deccel: bool = false
 @onready var area: Area3D = $Area
 
 
+func _handle_body_entered(body: Node3D) -> void:
+	var collider: Node3D = body
+	if not collider.is_in_group("Player"):
+		return
+	var norm: Vector3 = (body.global_position - global_position).normalized()
+	if norm.y > .5:
+		body.rpc("stomp")
+	else:
+		body.rpc("pushback", self)
+	rpc("burst")
+
+
 func _handle_body_exited(_body: Node3D) -> void:
 	if collision_layer != 0:
 		return
@@ -39,8 +51,10 @@ func _on_timeout() -> void:
 func _ready() -> void:
 	multiplayer.allow_object_decoding = true
 	name += "BUBBLE"
-	area.connect("area_entered", _handle_area_collision)
-	area.connect("body_exited", _handle_body_exited)
+	if is_multiplayer_authority():
+		area.connect("area_entered", _handle_area_collision)
+		area.connect("body_exited", _handle_body_exited)
+		area.connect("body_entered", _handle_body_entered)
 	var tween: Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_ELASTIC)
@@ -89,7 +103,6 @@ func _process(delta: float) -> void:
 
 	speed = max(speed, 0)
 	var col: KinematicCollision3D = move_and_collide(direction * speed, false, 0, true)
-	# _check_for_players(col)
 	if col:
 		for c: int in col.get_collision_count():
 			if col.get_collider(c).is_in_group("Terrain"):
