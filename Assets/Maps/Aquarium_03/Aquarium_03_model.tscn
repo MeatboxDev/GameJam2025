@@ -1,0 +1,211 @@
+[gd_scene load_steps=18 format=4 uid="uid://dfrtowb3tjqf7"]
+
+[ext_resource type="PackedScene" uid="uid://dblttp0igtl11" path="res://Assets/Maps/Aquarium_03/aquariumfloor2.gltf" id="1_cbjfm"]
+[ext_resource type="Texture2D" uid="uid://bji7c01vka7xi" path="res://Assets/Maps/Aquarium_03/aquariumfloor2_0.png" id="2_qgcqe"]
+[ext_resource type="Texture2D" uid="uid://c16ugg7si85iv" path="res://Assets/Maps/Aquarium_03/aquariumfloor2_1.png" id="3_5d0vt"]
+[ext_resource type="Animation" uid="uid://dp5xl71cxc263" path="res://Assets/Maps/Aquarium_04/Aquarium_04_fish.res" id="4_b8lqi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hd1k8"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_qgcqe")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_jjr4u"]
+_surfaces = [{
+"aabb": AABB(-1.4375, 0, -2.5, 2.875, 3, 5),
+"format": 34896613377,
+"index_count": 24,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUAAwAGAAEAAwAHAAYAAQAEAAAAAQAGAAQA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_qkqia"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-1.4375, 0, -2.5, 2.875, 3, 5),
+"attribute_data": PackedByteArray("/1AAAP9Q/y//oAAA/6D/L/+g/zD/UP8w/6D/YP9Q/2D/T/9QAAD/UP9P/6AAAP+g/6D/Yf9Q/2H/oP+R/1D/kQ=="),
+"format": 34896613399,
+"index_count": 24,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0A"),
+"material": SubResource("StandardMaterial3D_hd1k8"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 16,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v///AAD///+/AAAAAP///7///wAAAAD/vwAAAAAAAP+/////////AIAAAP////8AgP//AAD//wCAAAAAAP//AID/fwAA/38AAP9/AAD/fwAA/3////9/////f////3///wAA/38AAP9/AAD/fwAA/3//f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_jjr4u")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1g67q"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_qgcqe")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_gktm7"]
+_surfaces = [{
+"aabb": AABB(-1.4375, 0, -2.5, 2.875, 3, 1e-05),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("/////wAAAAD//wAAAAAAAAAA//8AAAAAAAAAAAAAAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6o2o6"]
+resource_name = "blockbench_export_mesh2"
+_surfaces = [{
+"aabb": AABB(-1.4375, 0, -2.5, 2.875, 3, 1e-05),
+"attribute_data": PackedByteArray("/1D/kv9Q/8L/oP+S/6D/wg=="),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"material": SubResource("StandardMaterial3D_1g67q"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("/////wAA/////wAAAAD//wAA//8AAP//AAAAAAAA////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_gktm7")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_21qay"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_color = Color(0.45098, 0.662745, 0.839216, 1)
+albedo_texture = ExtResource("2_qgcqe")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_tchdg"]
+_surfaces = [{
+"aabb": AABB(-1.4375, 3, -2.5, 2.875, 1e-05, 5),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("//8AAP//AAD//wAAAAAAAAAAAAD//wAAAAAAAAAAAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1jl7g"]
+resource_name = "blockbench_export_mesh3"
+_surfaces = [{
+"aabb": AABB(-1.4375, 3, -2.5, 2.875, 1e-05, 5),
+"attribute_data": PackedByteArray("/0//T/9PAAAAAP9PAAAAAA=="),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"material": SubResource("StandardMaterial3D_21qay"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("//8AAP///7///wAAAAD/vwAAAAD///+/AAAAAAAA/7////9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_tchdg")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkrge"]
+resource_name = "material_1"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("3_5d0vt")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_hbrs2"]
+_surfaces = [{
+"aabb": AABB(-1.40625, 0, -2.4375, 2.8125, 2.875, 4.875),
+"format": 34896613377,
+"index_count": 30,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUABAACAAAABAAFAAIAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_xs5c3"]
+resource_name = "blockbench_export_mesh4"
+_surfaces = [{
+"aabb": AABB(-1.40625, 0, -2.4375, 2.8125, 2.875, 4.875),
+"attribute_data": PackedByteArray("/0wAAP9M/y3/mAAA/5j/Lf+Y/y7/TP8u/5j/XP9M/1z/S/9L/0sAAAAA/0sAAAAA/5j/Xf9M/13/mP+L/0z/i/9M/4z/TP+6/5j/jP+Y/7o="),
+"format": 34896613399,
+"index_count": 30,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEA"),
+"material": SubResource("StandardMaterial3D_pkrge"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v/////////+//////wAA/78AAP//////vwAA//8AAP+/////////AIAAAP////8AgP//AAD//wCAAAAAAP//AID/////AAD/////AAAAAP//AAD//wAA//8AAAAAAAD///9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///////f////3////9/////f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_hbrs2")
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5mim2"]
+_data = {
+"fish swim": ExtResource("4_b8lqi")
+}
+
+[node name="Aquarium_03_model" instance=ExtResource("1_cbjfm")]
+
+[node name="Node" parent="." index="0"]
+transform = Transform3D(1.05, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="glass pane" parent="Node/glass" index="0"]
+mesh = SubResource("ArrayMesh_qkqia")
+
+[node name="glass pane2" parent="Node/glass" index="1"]
+mesh = SubResource("ArrayMesh_6o2o6")
+
+[node name="glass pane_selection" parent="Node/glass" index="2"]
+mesh = SubResource("ArrayMesh_1jl7g")
+
+[node name="water block" parent="Node/water" index="0"]
+mesh = SubResource("ArrayMesh_xs5c3")
+
+[node name="fish 12" parent="Node/fish" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.614384, 0.8125, 1.5625)
+
+[node name="fish 22" parent="Node/fish" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.602588, 1.3125, 1.1875)
+
+[node name="fish 32" parent="Node/fish" index="2"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.116242, 1.875, -1.6875)
+
+[node name="fish 42" parent="Node/fish" index="3"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.425979, 0.125, -0.3125)
+
+[node name="algae" parent="Node" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.44054, 0, -2.5)
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_5mim2")
+}
+autoplay = "fish swim"
+speed_scale = 0.3
