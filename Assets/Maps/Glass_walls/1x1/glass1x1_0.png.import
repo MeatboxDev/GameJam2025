@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8eyfsxqm4h0x"
-path.s3tc="res://.godot/imported/quartercircle_ul.png-c833301639d9afea396f5da348f64dd8.s3tc.ctex"
+uid="uid://e107djtnao8o"
+path.s3tc="res://.godot/imported/glass1x1_0.png-aa41541d1497135f9a8c5ce5c678409f.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "88dfe727d6c56aa63ae768aad255ac08"
+}
 
 [deps]
 
-source_file="res://Assets/Maps/Mesh_Library/quartercircle_ul.png"
-dest_files=["res://.godot/imported/quartercircle_ul.png-c833301639d9afea396f5da348f64dd8.s3tc.ctex"]
+source_file="res://Assets/Maps/Glass_walls/1x1/glass1x1_0.png"
+dest_files=["res://.godot/imported/glass1x1_0.png-aa41541d1497135f9a8c5ce5c678409f.s3tc.ctex"]
 
 [params]
 
