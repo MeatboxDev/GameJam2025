@@ -3,10 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cry0rs3tmu31k"
-path.s3tc="res://.godot/imported/Shipping_Container(2)_0.png-c7c0d291385cdd5e152ad4c3b8e9c117.s3tc.ctex"
+path="res://.godot/imported/Shipping_Container(2)_0.png-c7c0d291385cdd5e152ad4c3b8e9c117.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "cbc6c97de8dd1439da7540b084e7e333"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/Maps/Shipping_Container/Shipping_Container(2)_0.png"
-dest_files=["res://.godot/imported/Shipping_Container(2)_0.png-c7c0d291385cdd5e152ad4c3b8e9c117.s3tc.ctex"]
+dest_files=["res://.godot/imported/Shipping_Container(2)_0.png-c7c0d291385cdd5e152ad4c3b8e9c117.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
