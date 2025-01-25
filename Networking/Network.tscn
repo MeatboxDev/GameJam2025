@@ -118,6 +118,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 6, 0)
 
 [node name="BossBubblePink" parent="World" instance=ExtResource("4_3lxo3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 6, 0)
+is_good = false
 
 [connection signal="pressed" from="Control/JoinLobby/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="Control/JoinLobby/host" to="." method="_on_host_pressed"]
