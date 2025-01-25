@@ -47,9 +47,10 @@ func _process(delta: float) -> void:
 	var col: KinematicCollision3D = move_and_collide(direction * speed)
 
 	if col:
-		if col.get_normal().x: direction.x *= -1
-		if col.get_normal().y: direction.y *= -1
-		if col.get_normal().z: direction.z *= -1
+		if col.get_collider().is_in_group("Terrain"):
+			if col.get_normal().x: direction.x *= -1
+			if col.get_normal().y: direction.y *= -1
+			if col.get_normal().z: direction.z *= -1
 	if not _start_deccel:
 		return
 	speed -= decel_speed
