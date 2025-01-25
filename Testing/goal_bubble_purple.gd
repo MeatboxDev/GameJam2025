@@ -13,6 +13,7 @@ func _trigger_boss_burst() -> void:
 	var arr: Array = explosion_area.collision_result
 	for x: Dictionary in arr:
 		var obj: Node3D = x["collider"]
+		if obj == null: continue
 		if not obj.is_in_group("Player"):
 			continue
 		obj.velocity = -(position - position.move_toward(obj.position, 1)) * 300
