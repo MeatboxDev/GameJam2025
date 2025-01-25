@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccirp6jhaka6b"]
+
+[ext_resource type="Texture2D" uid="uid://bd0hvs57kceft" path="res://Assets/Maps/mall_floor.png" id="1_vfx4t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcyli"]
+albedo_texture = ExtResource("1_vfx4t")
+texture_filter = 0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_c1y5k"]
+material = SubResource("StandardMaterial3D_dcyli")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nwkmu"]
+size = Vector3(1, 0.5, 1)
+
+[node name="floor_birch_tile" type="MeshInstance3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.5, 0, 0.5)
+mesh = SubResource("PlaneMesh_c1y5k")
+skeleton = NodePath("StaticBody3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -1, 0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, -0.251, 0.5)
+shape = SubResource("BoxShape3D_nwkmu")
