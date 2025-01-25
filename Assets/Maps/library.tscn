@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://brubudprudnax"]
+
+[ext_resource type="PackedScene" uid="uid://ccirp6jhaka6b" path="res://Assets/Maps/floor_tile.tscn" id="1_dhth2"]
+
+[node name="Library" type="Node3D"]
+
+[node name="floor_birch_tile" parent="." instance=ExtResource("1_dhth2")]
