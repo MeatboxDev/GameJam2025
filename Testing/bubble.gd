@@ -24,30 +24,32 @@ func _handle_area_collision(_area: Area3D) -> void:
 		speed = new_speed
 
 
+func _on_timeout() -> void:
+	_start_deccel = true
+
 func _ready() -> void:
 	area.connect("area_entered", _handle_area_collision)
 	var tween: Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
-	tween.set_trans(Tween.TRANS_SPRING)
-	tween.tween_property(self, "scale", Vector3.ONE, decel_start_time / 2)
-	await get_tree().create_timer(decel_start_time).timeout
-	_start_deccel = true
+	tween.set_trans(Tween.TRANS_ELASTIC)
+	tween.tween_property(self, "scale", Vector3.ONE, decel_start_time * 3)
+
+	var timer: SceneTreeTimer = get_tree().create_timer(decel_start_time)
+	timer.connect("timeout", _on_timeout)
 
 
 func _process(delta: float) -> void:
 	position.y = position.y + sin(_height_mod) / 256
 	_height_mod += delta
 
-	var bodies: Array[Node3D] = area.get_overlapping_bodies()
-	var bodies_terrain: Array[Node3D] = bodies.filter(
-		func(t: Node3D) -> bool: return t.is_in_group("Terrain")
-	)
-	if bodies_terrain.size() > 0:
-		queue_free()
-
 	if speed < 0:
 		return
-	position += direction * speed
+	var col: KinematicCollision3D = move_and_collide(direction * speed)
+
+	if col:
+		if col.get_normal().x: direction.x *= -1
+		if col.get_normal().y: direction.y *= -1
+		if col.get_normal().z: direction.z *= -1
 	if not _start_deccel:
 		return
 	speed -= decel_speed
