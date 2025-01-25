@@ -6,5 +6,41 @@
 
 [node name="floor_birch_tile" parent="." instance=ExtResource("1_dhth2")]
 
-[node name="floor_birch_tile2" parent="." instance=ExtResource("1_dhth2")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.5, 0, 0.5)
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 2.5, 0, 0.5)
+
+[node name="floor_birch_tile3" parent="Node3D" instance=ExtResource("1_dhth2")]
+transform = Transform3D(4.77672e-16, -1, 4.37114e-08, 1, -4.12566e-16, 4.37114e-08, -4.37114e-08, 4.37114e-08, 1, -1, -5.96046e-08, -1)
+skeleton = NodePath("../floor_birch_tile2/StaticBody3D")
+
+[node name="floor_birch_tile4" parent="Node3D" instance=ExtResource("1_dhth2")]
+transform = Transform3D(-8.74228e-08, 1, -4.37114e-08, -1, -8.74228e-08, 4.37114e-08, 4.37114e-08, 4.37114e-08, 1, 1, -5.96046e-08, -1)
+skeleton = NodePath("../floor_birch_tile2/StaticBody3D")
+
+[node name="floor_birch_tile5" parent="Node3D" instance=ExtResource("1_dhth2")]
+transform = Transform3D(-1, -8.74228e-08, 3.82137e-15, 8.74228e-08, -1, 8.74228e-08, -3.82137e-15, 8.74228e-08, 1, 0, -1, -1)
+skeleton = NodePath("../floor_birch_tile2/StaticBody3D")
+
+[node name="floor_birch_tile2" parent="Node3D" instance=ExtResource("1_dhth2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1)
+
+[node name="Node3D2" type="Node3D" parent="."]
+
+[node name="floor_birch_tile" parent="Node3D2" instance=ExtResource("1_dhth2")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 4.5, 1, 0.5)
+
+[node name="floor_birch_tile6" parent="Node3D2" instance=ExtResource("1_dhth2")]
+transform = Transform3D(2.38836e-16, -0.5, 2.18557e-08, -1.77636e-15, -2.18557e-08, -0.5, 0.5, -1.16163e-15, 1.77636e-15, 4, 0.5, 0.5)
+skeleton = NodePath("../../Node3D/floor_birch_tile2/StaticBody3D")
+
+[node name="floor_birch_tile7" parent="Node3D2" instance=ExtResource("1_dhth2")]
+transform = Transform3D(-0.5, -4.37114e-08, 1.91069e-15, 0, -2.18557e-08, -0.5, 4.37114e-08, -0.5, 2.18557e-08, 4.5, 0.5, 2.98023e-08)
+skeleton = NodePath("../../Node3D/floor_birch_tile2/StaticBody3D")
+
+[node name="floor_birch_tile8" parent="Node3D2" instance=ExtResource("1_dhth2")]
+transform = Transform3D(-4.37114e-08, 0.5, -2.18557e-08, 0, -2.18557e-08, -0.5, -0.5, -4.37114e-08, -1.77636e-15, 5, 0.5, 0.5)
+skeleton = NodePath("../../Node3D/floor_birch_tile2/StaticBody3D")
+
+[node name="floor_birch_tile9" parent="Node3D2" instance=ExtResource("1_dhth2")]
+transform = Transform3D(0.5, 0, 0, 0, -2.18557e-08, -0.5, 0, 0.5, -2.18557e-08, 4.5, 0.5, 1)
+skeleton = NodePath("../floor_birch_tile6/StaticBody3D")

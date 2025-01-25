@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://baoi4sp0b6jag"]
+
+[ext_resource type="PackedScene" uid="uid://c0p7whs46eghy" path="res://Assets/Maps/Checkpoint/Platform_high/Checkpoint_high.gltf" id="1_v5w64"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_iirim"]
+size = Vector3(5, 5, 5)
+
+[node name="Platform_high_collisions" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_v5w64")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0, -2.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, -2.5)
+shape = SubResource("BoxShape3D_iirim")
