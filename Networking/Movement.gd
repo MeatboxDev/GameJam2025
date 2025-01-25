@@ -109,18 +109,19 @@ func _stomp(node: Node3D) -> void:
 
 
 func _check_for_bubbles() -> void:
-	var pushbacks: Array[Node3D]
-	var stomps: Array[Node3D]
-
-	pushbacks = push_area.get_overlapping_bodies()
-	pushbacks = pushbacks.filter(func(b: Node3D) -> bool: return b.is_in_group("Bubble"))
-	for b in pushbacks:
-		_pushback(b)
-
-	stomps = stomp_area.get_overlapping_bodies()
-	stomps = stomps.filter(func(s: Node3D) -> bool: return s.is_in_group("Bubble"))
-	for s in stomps:
-		_stomp(s)
+	var col: KinematicCollision3D = get_last_slide_collision()
+	if col == null:
+		return
+	for c in col.get_collision_count():
+		var collider: Node3D = col.get_collider(c)
+		if collider == null:
+			return
+		if not collider.is_in_group("Bubble"):
+			return
+		var norm: Vector3 = col.get_normal(c)
+		if norm.y != 0:
+			return _stomp(collider)
+		return _pushback(collider)
 
 
 func _process(_delta: float) -> void:
@@ -137,11 +138,10 @@ func _process(_delta: float) -> void:
 
 	_calculate_horizontal_movement()
 	_check_for_bubbles()
-
 	move_and_slide()
 
 	rpc("remote_set_position", global_position)
-	rpc("remote_set_head_rotation", head_node.rotation, spring_arm.rotation)
+	rpc("remote_set_head_rotation", head_node.rotation, spring_arm.rotation, velocity)
 
 
 @rpc("unreliable")
@@ -150,13 +150,16 @@ func remote_set_position(real_pos: Vector3) -> void:
 
 
 @rpc("unreliable")
-func remote_set_head_rotation(real_rotation: Vector3, real_spring_rotation: Vector3) -> void:
+func remote_set_head_rotation(
+	real_rotation: Vector3, real_spring_rotation: Vector3, real_velocity: Vector3
+) -> void:
+	velocity = real_velocity
 	head_node.rotation = real_rotation
 	head_mesh.rotation = real_rotation
 	spring_arm.rotation = real_spring_rotation
 
 
-@rpc("unreliable")
+@rpc("any_peer", "reliable")
 func _net_shoot_bubble() -> void:
 	_shoot_bubble()
 
@@ -190,6 +193,9 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 	var move_y: float = ev.relative.y
 	var head_body_diff: float
 
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
+
 	head_node.rotate_y(-move_x * p_cam_sensitivity)
 	spring_arm.rotate_x(-move_y * p_cam_sensitivity)
 	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -1, 1.5)
@@ -217,8 +223,8 @@ func _shoot_bubble() -> void:
 
 	bubble.position = position + bubble_cast.position
 	bubble.direction = (-p_cam.global_basis.z)
-	bubble.scale = Vector3.ZERO
-	bubble.speed += (bubble.direction.dot(velocity.normalized())) / 2
+	bubble.scale = Vector3.ONE * 0.01
+	bubble.speed += (bubble.direction.normalized().dot(velocity.normalized())) / 2
 	bubble.set_multiplayer_authority(get_multiplayer_authority())
 
 
