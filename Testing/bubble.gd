@@ -27,7 +27,6 @@ func _handle_area_collision(_area: Area3D) -> void:
 func _on_timeout() -> void:
 	_start_deccel = true
 
-
 func _ready() -> void:
 	area.connect("area_entered", _handle_area_collision)
 	var tween: Tween = get_tree().create_tween()
@@ -46,15 +45,12 @@ func _process(delta: float) -> void:
 	if speed < 0:
 		return
 	var col: KinematicCollision3D = move_and_collide(direction * speed)
-	for c: int in col.get_collision_count():
-		if col.get_collider(c).is_in_group("Terrain"):
-			if col.get_normal().x:
-				direction.x *= -1
-			if col.get_normal().y:
-				direction.y *= -1
-			if col.get_normal().z:
-				direction.z *= -1
-
+	if col:
+		for c: int in col.get_collision_count():
+			if col.get_collider(c).is_in_group("Terrain"):
+				if col.get_normal().x: direction.x *= -1
+				if col.get_normal().y: direction.y *= -1
+				if col.get_normal().z: direction.z *= -1
 	if not _start_deccel:
 		return
 	speed -= decel_speed
