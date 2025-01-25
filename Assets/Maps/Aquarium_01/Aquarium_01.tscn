@@ -1,21 +1,21 @@
-[gd_scene load_steps=12 format=4 uid="uid://ci05ta1b70d18"]
+[gd_scene load_steps=12 format=4 uid="uid://cv5ulvqh7vudu"]
 
-[ext_resource type="PackedScene" uid="uid://bkskx8nipf8br" path="res://Assets/Maps/Aquarium_02/aquariumfloor.gltf" id="1_ybhm6"]
-[ext_resource type="Texture2D" uid="uid://crsol3brvf1b2" path="res://Assets/Maps/Aquarium_02/aquariumfloor_0.png" id="2_62ben"]
-[ext_resource type="Texture2D" uid="uid://6kayq2ml0ei7" path="res://Assets/Maps/Aquarium_02/aquariumfloor_1.png" id="2_j6dur"]
-[ext_resource type="Animation" uid="uid://ehah65jcdrbt" path="res://Assets/Maps/Aquarium_02/fish_swim_02.res" id="4_qen1o"]
+[ext_resource type="PackedScene" uid="uid://cwutomnovo5qu" path="res://Assets/Maps/Aquarium_01/aquarium(2).gltf" id="1_lvicl"]
+[ext_resource type="Animation" uid="uid://o7yyqy5ttwf" path="res://Assets/Maps/Aquarium_01/Aquarium_01.res" id="1_pv44n"]
+[ext_resource type="Texture2D" uid="uid://do5ktplq2l873" path="res://Assets/Maps/Aquarium_01/aquarium(2)_0.png" id="2_abh3j"]
+[ext_resource type="Texture2D" uid="uid://byeu2onjq26ig" path="res://Assets/Maps/Aquarium_01/aquarium(2)_1.png" id="3_g6tyu"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsluf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f1i53"]
 resource_name = "material_0"
 transparency = 1
 cull_mode = 2
-albedo_texture = ExtResource("2_62ben")
+albedo_texture = ExtResource("2_abh3j")
 texture_filter = 0
 texture_repeat = false
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_mba2e"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_4d5ia"]
 _surfaces = [{
-"aabb": AABB(-3, 3, -3, 6, 1e-05, 6),
+"aabb": AABB(-2.5, 0, -2.5, 5, 3, 1e-05),
 "format": 34896613377,
 "index_count": 6,
 "index_data": PackedByteArray("AgABAAAAAgADAAEA"),
@@ -23,39 +23,39 @@ _surfaces = [{
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 4,
-"vertex_data": PackedByteArray("//8AAP//AAD//wAAAAAAAAAAAAD//wAAAAAAAAAAAAA=")
+"vertex_data": PackedByteArray("/////wAAAAD//wAAAAAAAAAA//8AAAAAAAAAAAAAAAA=")
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_b0ubf"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_noqv1"]
 resource_name = "blockbench_export_mesh2"
 _surfaces = [{
-"aabb": AABB(-3, 3, -3, 6, 1e-05, 6),
-"attribute_data": PackedByteArray("/0//T/9PAAAAAP9PAAAAAA=="),
+"aabb": AABB(-2.5, 0, -2.5, 5, 3, 1e-05),
+"attribute_data": PackedByteArray("/1D/kv9Q/8L/oP+S/6D/wg=="),
 "format": 34896613399,
 "index_count": 6,
 "index_data": PackedByteArray("AgABAAAAAgADAAEA"),
-"material": SubResource("StandardMaterial3D_wsluf"),
+"material": SubResource("StandardMaterial3D_f1i53"),
 "name": "material_0",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 4,
-"vertex_data": PackedByteArray("//8AAP///7///wAAAAD/vwAAAAD///+/AAAAAAAA/7////9/////f////3////9/")
+"vertex_data": PackedByteArray("/////wAA/////wAAAAD//wAA//8AAP//AAAAAAAA////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_mba2e")
+shadow_mesh = SubResource("ArrayMesh_4d5ia")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0gcvx"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b8at2"]
 resource_name = "material_1"
 transparency = 1
 cull_mode = 2
-albedo_texture = ExtResource("2_j6dur")
+albedo_texture = ExtResource("3_g6tyu")
 texture_filter = 0
 texture_repeat = false
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_8gc66"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_jmwfh"]
 _surfaces = [{
-"aabb": AABB(-2.90625, -2.22045e-16, -2.90625, 5.8125, 2.875, 5.8125),
+"aabb": AABB(-2.375, 0, -2.375, 4.75, 2.875, 4.75),
 "format": 34896613377,
 "index_count": 30,
 "index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUABAACAAAABAAFAAIAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
@@ -67,15 +67,15 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_g84ny"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_eunri"]
 resource_name = "blockbench_export_mesh4"
 _surfaces = [{
-"aabb": AABB(-2.90625, -2.22045e-16, -2.90625, 5.8125, 2.875, 5.8125),
+"aabb": AABB(-2.375, 0, -2.375, 4.75, 2.875, 4.75),
 "attribute_data": PackedByteArray("/0wAAP9M/y3/mAAA/5j/Lf+Y/y7/TP8u/5j/XP9M/1z/S/9L/0sAAAAA/0sAAAAA/5j/Xf9M/13/mP+L/0z/i/9M/4z/TP+6/5j/jP+Y/7o="),
 "format": 34896613399,
 "index_count": 30,
 "index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEA"),
-"material": SubResource("StandardMaterial3D_0gcvx"),
+"material": SubResource("StandardMaterial3D_b8at2"),
 "name": "material_1",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -83,24 +83,24 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v/////////+//////wAA/78AAP//////vwAA//8AAP+/////////AIAAAP////8AgP//AAD//wCAAAAAAP//AID/////AAD/////AAAAAP//AAD//wAA//8AAAAAAAD///9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///////f////3////9/////f/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_8gc66")
+shadow_mesh = SubResource("ArrayMesh_jmwfh")
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_w758u"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_spwkb"]
 _data = {
-"fish swim": ExtResource("4_qen1o")
+"fish swim": ExtResource("1_pv44n")
 }
 
-[node name="blockbench_export" instance=ExtResource("1_ybhm6")]
+[node name="blockbench_export" instance=ExtResource("1_lvicl")]
 
 [node name="glass pane_selection" parent="Node/glass" index="1"]
-mesh = SubResource("ArrayMesh_b0ubf")
+mesh = SubResource("ArrayMesh_noqv1")
 
-[node name="water block" parent="Node/water" index="0"]
-mesh = SubResource("ArrayMesh_g84ny")
+[node name="water block" parent="Node/water" index="1"]
+mesh = SubResource("ArrayMesh_eunri")
 
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_w758u")
+"": SubResource("AnimationLibrary_spwkb")
 }
 autoplay = "fish swim"
 speed_scale = 0.2
