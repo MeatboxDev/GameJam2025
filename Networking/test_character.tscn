@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://bgm7yu8dotoe7"]
+[gd_scene load_steps=50 format=4 uid="uid://bgm7yu8dotoe7"]
 
 [ext_resource type="Script" path="res://Networking/Movement.gd" id="1_n8brg"]
 
@@ -665,7 +665,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_toh4y")
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_2330t"]
+radius = 1.5
+
+[node name="CharacterBody3D" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_n8brg")
 
 [node name="Head" type="Node3D" parent="."]
@@ -810,3 +813,9 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125, 0.01875, 0.01875)
 mesh = SubResource("ArrayMesh_7gedo")
 skeleton = NodePath("")
+
+[node name="BubbleCast" type="ShapeCast3D" parent="."]
+shape = SubResource("SphereShape3D_2330t")
+target_position = Vector3(0, 0, 0)
+margin = 0.2
+debug_shape_custom_color = Color(0, 1, 0, 1)
