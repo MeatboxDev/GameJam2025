@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://crqbqe60pjvvj"]
+[gd_scene load_steps=15 format=4 uid="uid://dea3eac4egg23"]
 
 [ext_resource type="Script" path="res://Testing/bubble.gd" id="1_foqrf"]
 [ext_resource type="Texture2D" uid="uid://baakgpww21oes" path="res://Assets/Projectiles/default_bubble_0.png" id="2_nlqdw"]
@@ -184,14 +184,12 @@ shape = SubResource("SphereShape3D_02rix")
 mesh = SubResource("ArrayMesh_mqyle")
 skeleton = NodePath("")
 
-[node name="BubbleMeshDefault2" type="MeshInstance3D" parent="."]
+[node name="BubbleMeshPink" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
-visible = false
 mesh = SubResource("ArrayMesh_4kypb")
 skeleton = NodePath("")
 
-[node name="BubbleMeshDefault3" type="MeshInstance3D" parent="."]
+[node name="BubbleMeshPurple" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
-visible = false
 mesh = SubResource("ArrayMesh_u8vbq")
 skeleton = NodePath("")
