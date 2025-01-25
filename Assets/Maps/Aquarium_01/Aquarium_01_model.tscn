@@ -9,6 +9,8 @@
 resource_name = "material_0"
 transparency = 1
 cull_mode = 2
+depth_draw_mode = 1
+albedo_color = Color(0.72501, 0.838526, 0.937193, 1)
 albedo_texture = ExtResource("2_abh3j")
 texture_filter = 0
 texture_repeat = false

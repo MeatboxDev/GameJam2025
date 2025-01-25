@@ -1,0 +1,170 @@
+[gd_scene load_steps=15 format=4 uid="uid://f8pfypgp5avm"]
+
+[ext_resource type="PackedScene" uid="uid://bd5sj76g28stk" path="res://Assets/Maps/Aquarium_04/floor_aquarium_3.gltf" id="1_632wd"]
+[ext_resource type="Texture2D" uid="uid://dx5gw0lgkd4oq" path="res://Assets/Maps/Aquarium_04/floor_aquarium_3_0.png" id="2_ewdcn"]
+[ext_resource type="Texture2D" uid="uid://x5xrh8fhp1lh" path="res://Assets/Maps/Aquarium_04/floor_aquarium_3_1.png" id="3_ugeft"]
+[ext_resource type="Animation" uid="uid://da5axxcmhwrd3" path="res://Assets/Maps/Aquarium_04/Aquarium_04.res" id="4_8iftx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kpwfn"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_ewdcn")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_eb7ps"]
+_surfaces = [{
+"aabb": AABB(-5, 0, -1.5, 10, 3, 3),
+"format": 34896613377,
+"index_count": 30,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUAAwAGAAEAAwAHAAYAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_non0n"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-5, 0, -1.5, 10, 3, 3),
+"attribute_data": PackedByteArray("/6AAAP+g/y//0AAA/9D/L//Q/zD/oP8w/9D/YP+g/2D/n/8wAAD/MP+f/2AAAP9g/5//YQAA/2H/n/+RAAD/kQAA/5IAAP/C/5//kv+f/8I="),
+"format": 34896613399,
+"index_count": 30,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEA"),
+"material": SubResource("StandardMaterial3D_kpwfn"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 20,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v///AAD///+/AAAAAP///7///wAAAAD/vwAAAAAAAP+/////////AIAAAP////8AgP//AAD//wCAAAAAAP//AID/////AAD/////AAAAAP//AAD//wAA//8AAAAAAAD///9/AAD/fwAA/38AAP9/AAD/f////3////9/////f///AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_eb7ps")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g8ol2"]
+resource_name = "material_0"
+transparency = 1
+albedo_color = Color(0.45098, 0.662745, 0.839216, 1)
+albedo_texture = ExtResource("2_ewdcn")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_pm28b"]
+_surfaces = [{
+"aabb": AABB(-5, 3, -1.5, 10, 1e-05, 3),
+"format": 34896613377,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("//8AAP//AAD//wAAAAAAAAAAAAD//wAAAAAAAAAAAAA=")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_kxay0"]
+resource_name = "blockbench_export_mesh2"
+_surfaces = [{
+"aabb": AABB(-5, 3, -1.5, 10, 1e-05, 3),
+"attribute_data": PackedByteArray("/5//L/+fAAAAAP8vAAAAAA=="),
+"format": 34896613399,
+"index_count": 6,
+"index_data": PackedByteArray("AgABAAAAAgADAAEA"),
+"material": SubResource("StandardMaterial3D_g8ol2"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 4,
+"vertex_data": PackedByteArray("//8AAP///7///wAAAAD/vwAAAAD///+/AAAAAAAA/7////9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_pm28b")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kmu2t"]
+resource_name = "material_1"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("3_ugeft")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_lnkwk"]
+_surfaces = [{
+"aabb": AABB(-4.90625, 0, -1.4375, 9.8125, 2.875, 2.875),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUABAACAAAABAAFAAIAAwAGAAEAAwAHAAYAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_65ndw"]
+resource_name = "blockbench_export_mesh3"
+_surfaces = [{
+"aabb": AABB(-4.90625, 0, -1.4375, 9.8125, 2.875, 2.875),
+"attribute_data": PackedByteArray("/50AAP+d/y3/ywAA/8v/Lf/L/y7/nf8u/8v/XP+d/1z/nP8t/5wAAAAA/y0AAAAA/5z/LgAA/y7/nP9cAAD/XP+c/10AAP9d/5z/iwAA/4sAAP+MAAD/uv+c/4z/nP+6"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEAFgAVABQAFgAXABUA"),
+"material": SubResource("StandardMaterial3D_kmu2t"),
+"name": "material_1",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v/////////+//////wAA/78AAP//////vwAA//8AAP+///8AAP///78AAAAA////v///AAAAAP+/AAAAAAAA/7////////8AgAAA/////wCA//8AAP//AIAAAAAA//8AgP////8AAP////8AAAAA//8AAP//AAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_lnkwk")
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sxgy6"]
+_data = {
+"fish swim": ExtResource("4_8iftx")
+}
+
+[node name="blockbench_export" instance=ExtResource("1_632wd")]
+
+[node name="glass" parent="Node/glass2" index="0"]
+mesh = SubResource("ArrayMesh_non0n")
+
+[node name="glass_selection" parent="Node/glass2" index="1"]
+mesh = SubResource("ArrayMesh_kxay0")
+
+[node name="water" parent="Node/water2" index="0"]
+mesh = SubResource("ArrayMesh_65ndw")
+
+[node name="fish 12" parent="Node/fishes" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.41526, 0.8125, -0.75)
+
+[node name="fish_2" parent="Node/fishes" index="1"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.454548, 0.8125, 0.5625)
+
+[node name="fish_3" parent="Node/fishes" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.00863, 0.8125, -0.125)
+
+[node name="fish_4" parent="Node/fishes" index="3"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.735034, 0.8125, 0.25)
+
+[node name="fish_5" parent="Node/fishes" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34737, 0, 1)
+
+[node name="fish_6" parent="Node/fishes" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.54572, 0.8125, -0.9375)
+
+[node name="algae" parent="Node" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.44316, 0, -1.75)
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_sxgy6")
+}
+autoplay = "fish swim"
+speed_scale = 0.104

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ddf6yinwqsjj7"]
+
+[ext_resource type="PackedScene" uid="uid://bcssj76s8eybo" path="res://Assets/Maps/Glass_walls/Glass_walls_01_model.tscn" id="1_yiyh0"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g8u6m"]
+size = Vector3(5, 5, 0.1)
+
+[node name="Glass_walls_01_collisions" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_yiyh0")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -0.05)
+shape = SubResource("BoxShape3D_g8u6m")

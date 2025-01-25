@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://begglqpodlnbg"]
+
+[ext_resource type="PackedScene" uid="uid://dfrtowb3tjqf7" path="res://Assets/Maps/Aquarium_03/Aquarium_03_model.tscn" id="1_xcbl1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q4bjx"]
+size = Vector3(3, 3, 5)
+
+[node name="Node3D" type="StaticBody3D"]
+
+[node name="Aquarium_03_model" parent="." instance=ExtResource("1_xcbl1")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, -2.5)
+shape = SubResource("BoxShape3D_q4bjx")

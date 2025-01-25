@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=4 uid="uid://bcssj76s8eybo"]
+
+[ext_resource type="PackedScene" uid="uid://d0vyrsupasdgt" path="res://Assets/Maps/Glass_walls/glass.gltf" id="1_l6few"]
+[ext_resource type="Texture2D" uid="uid://cwumh4x2kstgq" path="res://Assets/Maps/Glass_walls/glass_0.png" id="2_50y73"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4oc1y"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_50y73")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_avidx"]
+_surfaces = [{
+"aabb": AABB(-2.5, 0, -2.5, 5, 0.125, 5),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUABAACAAAABAAFAAIAAwAGAAEAAwAHAAYAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_j33g8"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-2.5, 0, -2.5, 5, 0.125, 5),
+"attribute_data": PackedByteArray("/1AAAP9Q/wH/oAAA/6D/Af+g/wL/UP8C/6D/BP9Q/wT/T/9P/08AAAAA/08AAAAA/0//UAAA/1D/T/+gAAD/oP+g/wX/UP8F/6D/B/9Q/wf/UP8I/1D/Cv+g/wj/oP8K"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEAFgAVABQAFgAXABUA"),
+"material": SubResource("StandardMaterial3D_4oc1y"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v/////////+//////wAA/78AAP//////vwAA//8AAP+///8AAP///78AAAAA////v///AAAAAP+/AAAAAAAA/7////////8AgAAA/////wCA//8AAP//AIAAAAAA//8AgP////8AAP////8AAAAA//8AAP//AAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_avidx")
+
+[node name="blockbench_export" instance=ExtResource("1_l6few")]
+
+[node name="glass_panel" parent="Node" index="0"]
+mesh = SubResource("ArrayMesh_j33g8")

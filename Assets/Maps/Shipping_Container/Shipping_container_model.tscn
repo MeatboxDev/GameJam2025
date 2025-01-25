@@ -3,3 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://c4hyn3ay4f36s" path="res://Assets/Maps/Shipping_Container/Shipping_Container.gltf" id="1_ksrst"]
 
 [node name="blockbench_export" instance=ExtResource("1_ksrst")]
+
+[node name="Node" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0, 0)
