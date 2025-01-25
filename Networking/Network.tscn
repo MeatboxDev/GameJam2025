@@ -90,8 +90,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
 mesh = SubResource("BoxMesh_wul2k")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.9727, 0.5, -0.0546317)
+[node name="CSGBox3D2" type="CSGBox3D" parent="World" groups=["Terrain"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.0704, 0.393303, -0.0116401)
 use_collision = true
 size = Vector3(20, 5, 20)
 
@@ -100,7 +100,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.2301, 2.66473, 0)
 use_collision = true
 material = SubResource("StandardMaterial3D_4rl0d")
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="World"]
+[node name="CSGBox3D4" type="CSGBox3D" parent="World" groups=["Terrain"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4548, 0.5, -0.0546317)
 use_collision = true
 size = Vector3(20, 5, 20)
