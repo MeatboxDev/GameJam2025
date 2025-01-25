@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://brubudprudnax"]
 
-[ext_resource type="PackedScene" uid="uid://ccirp6jhaka6b" path="res://Assets/Maps/floor_tile.tscn" id="1_dhth2"]
+[ext_resource type="PackedScene" uid="uid://ccirp6jhaka6b" path="res://Assets/Maps/Mesh_Library/floor_tile.tscn" id="1_dhth2"]
 
 [node name="Library" type="Node3D"]
 

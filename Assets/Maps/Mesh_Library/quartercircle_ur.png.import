@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cctxod84xspiw"
-path="res://.godot/imported/Ad_02.svg-776382f86b3f96d55c664f4ec88e4967.ctex"
+uid="uid://c8dyhfa7mvykr"
+path="res://.godot/imported/quartercircle_ur.png-3fd5fc54b549979857669a895c21c245.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Maps/Ads/Ad_02.svg"
-dest_files=["res://.godot/imported/Ad_02.svg-776382f86b3f96d55c664f4ec88e4967.ctex"]
+source_file="res://Assets/Maps/Mesh_Library/quartercircle_ur.png"
+dest_files=["res://.godot/imported/quartercircle_ur.png-3fd5fc54b549979857669a895c21c245.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=0
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
