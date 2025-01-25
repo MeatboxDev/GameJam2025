@@ -175,6 +175,12 @@ shadow_mesh = SubResource("ArrayMesh_8wyfy")
 
 [node name="StaticBody3D" type="StaticBody3D" groups=["Bubble"]]
 script = ExtResource("1_foqrf")
+is_good = null
+direction = null
+speed = null
+decel_speed = null
+decel_start_time = null
+magnitude = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 visible = false

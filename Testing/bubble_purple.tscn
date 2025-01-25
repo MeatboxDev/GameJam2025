@@ -60,9 +60,12 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_8wyfy")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_02rix"]
+margin = 0.05
 radius = 1.4
 
 [node name="StaticBody3D" type="StaticBody3D" groups=["Bubble"]]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_x8xid")
 is_good = true
 
@@ -75,5 +78,5 @@ shape = SubResource("SphereShape3D_02rix")
 
 [node name="Area" type="Area3D" parent="." groups=["Bubble"]]
 
-[node name="Shape" type="CollisionShape3D" parent="Area"]
+[node name="Shape2" type="CollisionShape3D" parent="Area"]
 shape = SubResource("SphereShape3D_02rix")
