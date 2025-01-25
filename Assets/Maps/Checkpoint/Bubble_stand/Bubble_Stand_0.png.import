@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcdcps4s8y30g"
-path.s3tc="res://.godot/imported/aq_1.png-aaf772f3a7fa73b6e813d1ce36dc8e2a.s3tc.ctex"
+uid="uid://cq5tp0sl58bjg"
+path.s3tc="res://.godot/imported/Bubble_Stand_0.png-367fc89077518b5bb87cb63834ccb4e6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "b224d74d29f6ba7e3d3eeb11f5da7d6b"
+"md5": "55ccdf395617193154123d3f5c4b8633"
 }
 
 [deps]
 
-source_file="res://Assets/Testing/aq_1.png"
-dest_files=["res://.godot/imported/aq_1.png-aaf772f3a7fa73b6e813d1ce36dc8e2a.s3tc.ctex"]
+source_file="res://Assets/Maps/Checkpoint/Bubble_stand/Bubble_Stand_0.png"
+dest_files=["res://.godot/imported/Bubble_Stand_0.png-367fc89077518b5bb87cb63834ccb4e6.s3tc.ctex"]
 
 [params]
 

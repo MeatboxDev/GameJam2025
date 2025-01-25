@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cstvxd2wtgm7b"]
+
+[ext_resource type="PackedScene" uid="uid://dtdcsgoqupvub" path="res://Assets/Maps/Checkpoint/Bubble_stand/Bubble_Stand.gltf" id="1_2mlnr"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ady3f"]
+height = 0.2
+
+[node name="Bubble_stand_collisions" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_2mlnr")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("CylinderShape3D_ady3f")

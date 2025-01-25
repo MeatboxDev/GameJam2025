@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c7kdh36tuthue"
-path="res://.godot/imported/aq.gltf-b16695515942e9012e84cb4e9cd4db16.scn"
+uid="uid://hp7qb5j322sq"
+path="res://.godot/imported/mall_stand.gltf-841e1eb6283a352e5fcbcea9d46e9fe3.scn"
 
 [deps]
 
-source_file="res://Assets/Testing/aq.gltf"
-dest_files=["res://.godot/imported/aq.gltf-b16695515942e9012e84cb4e9cd4db16.scn"]
+source_file="res://Assets/Maps/Mall_ad/mall_stand.gltf"
+dest_files=["res://.godot/imported/mall_stand.gltf-841e1eb6283a352e5fcbcea9d46e9fe3.scn"]
 
 [params]
 
