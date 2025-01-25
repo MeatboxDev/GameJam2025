@@ -42,6 +42,9 @@ func _process(delta: float) -> void:
 	position.y = position.y + sin(_height_mod) / 256
 	_height_mod += delta
 
+	if not is_multiplayer_authority():
+		return
+
 	if speed < 0:
 		return
 	var col: KinematicCollision3D = move_and_collide(direction * speed)
@@ -53,6 +56,11 @@ func _process(delta: float) -> void:
 	if not _start_deccel:
 		return
 	speed -= decel_speed
+	rpc("_net_update_position", global_position)
+
+@rpc("unreliable")
+func _net_update_position(real_pos: Vector3) -> void:
+	global_position = real_pos
 
 
 @rpc("any_peer", "reliable")
