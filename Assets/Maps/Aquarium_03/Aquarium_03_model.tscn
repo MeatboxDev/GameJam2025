@@ -188,21 +188,6 @@ mesh = SubResource("ArrayMesh_1jl7g")
 [node name="water block" parent="Node/water" index="0"]
 mesh = SubResource("ArrayMesh_xs5c3")
 
-[node name="fish 12" parent="Node/fish" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.614384, 0.8125, 1.5625)
-
-[node name="fish 22" parent="Node/fish" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.602588, 1.3125, 1.1875)
-
-[node name="fish 32" parent="Node/fish" index="2"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0.116242, 1.875, -1.6875)
-
-[node name="fish 42" parent="Node/fish" index="3"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.425979, 0.125, -0.3125)
-
-[node name="algae" parent="Node" index="3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.44054, 0, -2.5)
-
 [node name="AnimationPlayer" parent="." index="1"]
 libraries = {
 "": SubResource("AnimationLibrary_5mim2")
