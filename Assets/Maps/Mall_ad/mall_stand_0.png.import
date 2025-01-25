@@ -2,30 +2,29 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cobwugs3oeg2y"
-path.s3tc="res://.godot/imported/aq_2.png-5aae1032e7029b4e2c0086c92ccd8387.s3tc.ctex"
+uid="uid://dgnsnq6ectn5d"
+path="res://.godot/imported/mall_stand_0.png-04e074002b20db238637df1aa097b1e5.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
-"md5": "00b9e7da753b532886ffe645691008d6"
+"md5": "954fe7588ba814d6d1009219be1ae547"
 }
 
 [deps]
 
-source_file="res://Assets/Testing/aq_2.png"
-dest_files=["res://.godot/imported/aq_2.png-5aae1032e7029b4e2c0086c92ccd8387.s3tc.ctex"]
+source_file="res://Assets/Maps/Mall_ad/mall_stand_0.png"
+dest_files=["res://.godot/imported/mall_stand_0.png-04e074002b20db238637df1aa097b1e5.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

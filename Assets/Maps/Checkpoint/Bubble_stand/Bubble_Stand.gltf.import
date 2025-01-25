@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://hp7qb5j322sq"
-path="res://.godot/imported/mall_stand.gltf-49c3999369df840ab790db3672ee0c75.scn"
+uid="uid://dtdcsgoqupvub"
+path="res://.godot/imported/Bubble_Stand.gltf-d9a23e4836b4e210e8dd73d94b2b18ec.scn"
 
 [deps]
 
-source_file="res://Assets/Testing/mall_stand.gltf"
-dest_files=["res://.godot/imported/mall_stand.gltf-49c3999369df840ab790db3672ee0c75.scn"]
+source_file="res://Assets/Maps/Checkpoint/Bubble_stand/Bubble_Stand.gltf"
+dest_files=["res://.godot/imported/Bubble_Stand.gltf-d9a23e4836b4e210e8dd73d94b2b18ec.scn"]
 
 [params]
 

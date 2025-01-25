@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://clh421s70u8c4"]
 
-[ext_resource type="PackedScene" uid="uid://hp7qb5j322sq" path="res://Assets/Testing/mall_stand.gltf" id="1_vaiof"]
+[ext_resource type="PackedScene" uid="uid://hp7qb5j322sq" path="res://Assets/Maps/Mall_ad/mall_stand.gltf" id="1_vaiof"]
 
 [node name="blockbench_export" instance=ExtResource("1_vaiof")]
 
