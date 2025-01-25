@@ -30,6 +30,10 @@ BossBubble=""
 Player=""
 Terrain=""
 
+[layer_names]
+
+3d_physics/layer_2="Spring Arm"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

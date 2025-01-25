@@ -1,7 +1,7 @@
 extends Node
 
 const PORT: int = 1221
-const IPADDR: String = "100.93.129.57"  # "100.93.129.57"
+const IPADDR: String = "localhost"  # "100.93.129.57"
 
 var multiplayer_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
@@ -24,7 +24,6 @@ var bad_guys: Array[int] = []
 @onready var join_bad_btn: Button = $Control/JoinTeam/JoinBad
 
 
-
 func _handle_place_good_boss() -> void:
 	good_balls += 1
 	print("GOOD: ", good_balls)
@@ -41,10 +40,10 @@ func _handle_burst_good_boss() -> void:
 	good_balls += 1
 	print("GOOD: ", good_balls)
 	print("BAD: ", bad_balls)
-	if (good_balls == 0):
+	if good_balls == 0:
 		print("Good loses :(")
 		return
-	if (bad_balls == 0):
+	if bad_balls == 0:
 		print("Bad loses :(")
 		return
 
@@ -53,10 +52,10 @@ func _handle_burst_bad_boss() -> void:
 	bad_balls += 1
 	print("GOOD: ", good_balls)
 	print("BAD: ", bad_balls)
-	if (good_balls == 0):
+	if good_balls == 0:
 		print("Good loses :(")
 		return
-	if (bad_balls == 0):
+	if bad_balls == 0:
 		print("Bad loses :(")
 		return
 
@@ -82,13 +81,13 @@ func _handle_burst_bad_boss() -> void:
 # 	upnp.delete_port_mapping(1221, "TCP")
 # 	upnp.delete_port_mapping(1221, "UDP")
 
-@rpc
+@rpc("any_peer", "call_local", "reliable")
 func add_new_connections(id: int) -> void:
 	connected_peer_ids.append(id)
 	add_player_character(id)
 
 
-@rpc
+@rpc("any_peer", "reliable")
 func add_previous_characters(good_ids: Array[int], bad_ids: Array[int]) -> void:
 	for peer_id in good_ids:
 		good_guys.append(peer_id)
@@ -98,28 +97,22 @@ func add_previous_characters(good_ids: Array[int], bad_ids: Array[int]) -> void:
 		add_player_character(peer_id)
 
 
-@rpc
+@rpc("any_peer", "reliable")
 func show_join_team() -> void:
 	join_team_container.visible = true
 
 
 @rpc("any_peer", "reliable")
 func handle_team_join(id: int, is_good: bool) -> void:
-	# Host tells everyone, this guy joined
-	print("SENDING ADD NEW TO ALL PLAYERS")
-	rpc("add_new_connections", id)
-
-	# Host tells the player that just joined, these guys are in the game
-	print("SENDING PREVIOUS CHARACTERS TO PEER")
-	rpc_id(id, "add_previous_characters", good_guys, bad_guys)
-
 	# Host registers if someone is good or bad
 	if is_good:
 		good_guys.append(id)
 	else:
 		bad_guys.append(id)
 
-	add_player_character(id)
+	# Host tells everyone, this guy joined
+	print("SENDING ADD NEW TO ALL PLAYERS")
+	rpc("add_new_connections", id)
 
 
 func _ready() -> void:
@@ -129,6 +122,29 @@ func _ready() -> void:
 	SignalBus.place_bad_boss.connect(_handle_place_bad_boss)
 	SignalBus.burst_good_boss.connect(_handle_burst_good_boss)
 	SignalBus.burst_bad_boss.connect(_handle_burst_bad_boss)
+	SignalBus.player_defeat.connect(_handle_player_defeat)
+
+
+func _respawn_player(player: CharacterBody3D) -> void:
+	var is_good: bool = good_guys.has(player.get_multiplayer_authority())
+	player.is_good = is_good
+	var spawn: Node3D = good_guys_spawn if is_good else bad_guys_spawn
+	player.position = spawn.position
+	player.position.y = spawn.position.y + 3
+
+	if (player.get_multiplayer_authority() == multiplayer.get_unique_id()):
+		player.p_cam.make_current()
+
+	player.rpc("trigger_respawn")
+
+
+func _handle_player_defeat(player: CharacterBody3D) -> void:
+	print("A player has been defeated!")
+	if (player.get_multiplayer_authority() == multiplayer.get_unique_id()):
+		$RespawnCamera.make_current()
+	# TODO: Show in UI
+	var timer: SceneTreeTimer = get_tree().create_timer(3)
+	timer.connect("timeout", _respawn_player.bind(player))
 
 
 func join_good_team() -> void:
@@ -171,6 +187,7 @@ func _on_host_pressed() -> void:
 		func(id: int) -> void:
 			print("Connection...")
 			rpc_id(id, "show_join_team")
+			rpc_id(id, "add_previous_characters", good_guys, bad_guys)
 	)
 
 
@@ -194,3 +211,15 @@ func add_player_character(id: int) -> void:
 	p_instance.position.y = spawn.position.y + 3
 
 	add_child(p_instance)
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		toggle_mouse_capture()
+
+
+func toggle_mouse_capture() -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
