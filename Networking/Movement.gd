@@ -1,6 +1,7 @@
 extends CharacterBody3D
 
-const BUBBLE: PackedScene = preload("res://Testing/bubble.tscn")
+const BUBBLE_GOOD: PackedScene = preload("res://Testing/bubble_purple.tscn")
+const BUBBLE_BAD: PackedScene = preload("res://Testing/bubble_pink.tscn")
 const DEG_45: float = PI / 4.0
 const DEG_N45: float = -DEG_45
 const XZ = preload("res://Networking/xyz_to_xz.gd")
@@ -88,17 +89,15 @@ func _calculate_horizontal_movement() -> void:
 
 
 func _pushback(node: Node3D) -> void:
-	node.burst()
-
-	velocity.x += sign(abs(node.position.x) - abs(position.x)) * max_speed
-	if node.position.z > position.z:
-		velocity.z += sign(abs(node.position.z) - abs(position.z)) * max_speed
-	else:
-		velocity.z -= sign(abs(node.position.z) - abs(position.z)) * max_speed
+	if not node.is_in_group("BossBubble"):
+		node.burst()
+	velocity.x = -(node.position.x - move_toward(position.x, node.position.x, 1)) * max_speed
+	velocity.z = -(node.position.z - move_toward(position.z, node.position.z, 1)) * max_speed
 
 
 func _stomp(node: Node3D) -> void:
-	node.burst()
+	if not node.is_in_group("BossBubble"):
+		node.burst()
 
 	# If not pressing anything, halt and bounce up
 	if not (_up or _down or _left or _right):
@@ -201,7 +200,7 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 
 
 func _shoot_bubble() -> void:
-	var bubble: Node3D = BUBBLE.instantiate()
+	var bubble: Node3D = (BUBBLE_GOOD if is_good else BUBBLE_BAD).instantiate()
 	get_tree().get_root().add_child(bubble)
 	var bubble_dir: Vector3 = -p_cam.global_basis.z
 	bubble.position = position + bubble_dir * 8

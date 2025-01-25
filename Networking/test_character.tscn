@@ -665,8 +665,17 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_toh4y")
 
-[node name="CharacterBody3D" type="CharacterBody3D"]
+[node name="CharacterBody3D" type="CharacterBody3D" groups=["Player"]]
 script = ExtResource("1_n8brg")
+body_rotation_strength = null
+decel_speed = null
+impulse_max_speed = null
+jump_force = null
+jump_speed_boost = null
+max_speed = null
+p_cam_sensitivity = null
+speed = null
+gravity = null
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09931, 0)

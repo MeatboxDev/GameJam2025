@@ -15,6 +15,10 @@ run/main_scene="res://Networking/Network.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SignalBus="*res://Helper/SignalBus.gd"
+
 [debug]
 
 gdscript/warnings/untyped_declaration=2
@@ -22,3 +26,5 @@ gdscript/warnings/untyped_declaration=2
 [global_group]
 
 Bubble=""
+BossBubble=""
+Player=""
