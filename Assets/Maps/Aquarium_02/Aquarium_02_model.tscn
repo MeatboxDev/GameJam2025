@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://6kayq2ml0ei7" path="res://Assets/Maps/Aquarium_02/aquariumfloor_1.png" id="2_j6dur"]
 [ext_resource type="Animation" uid="uid://ehah65jcdrbt" path="res://Assets/Maps/Aquarium_02/fish_swim_02.res" id="4_qen1o"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsluf"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ion5k"]
 resource_name = "material_0"
 transparency = 1
-cull_mode = 2
+albedo_color = Color(0.451911, 0.662548, 0.838053, 1)
 albedo_texture = ExtResource("2_62ben")
 texture_filter = 0
 texture_repeat = false
@@ -27,7 +27,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_b0ubf"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_qcmx0"]
 resource_name = "blockbench_export_mesh2"
 _surfaces = [{
 "aabb": AABB(-3, 3, -3, 6, 1e-05, 6),
@@ -35,7 +35,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 6,
 "index_data": PackedByteArray("AgABAAAAAgADAAEA"),
-"material": SubResource("StandardMaterial3D_wsluf"),
+"material": SubResource("StandardMaterial3D_ion5k"),
 "name": "material_0",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -93,7 +93,7 @@ _data = {
 [node name="blockbench_export" instance=ExtResource("1_ybhm6")]
 
 [node name="glass pane_selection" parent="Node/glass" index="1"]
-mesh = SubResource("ArrayMesh_b0ubf")
+mesh = SubResource("ArrayMesh_qcmx0")
 
 [node name="water block" parent="Node/water" index="0"]
 mesh = SubResource("ArrayMesh_g84ny")

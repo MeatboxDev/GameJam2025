@@ -5,3 +5,6 @@
 [node name="Library" type="Node3D"]
 
 [node name="floor_birch_tile" parent="." instance=ExtResource("1_dhth2")]
+
+[node name="floor_birch_tile2" parent="." instance=ExtResource("1_dhth2")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.5, 0, 0.5)

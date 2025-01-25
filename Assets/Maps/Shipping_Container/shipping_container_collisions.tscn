@@ -3,12 +3,14 @@
 [ext_resource type="PackedScene" uid="uid://5wiogksn1sbx" path="res://Assets/Maps/Shipping_Container/Shipping_container_model.tscn" id="1_uxbcu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0pcgm"]
-size = Vector3(10, 4, 4.5)
+size = Vector3(10, 4, 3.5)
 
 [node name="Shipping_container_collisions" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.1, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 2, 2.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.04, -5, 2, 1.805)
 shape = SubResource("BoxShape3D_0pcgm")
 
 [node name="blockbench_export" parent="." instance=ExtResource("1_uxbcu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9, 0, 0, 0)
