@@ -1,9 +1,12 @@
 extends Node
 
 const PORT: int = 1221
+const IPADDR: String = "localhost"  # "100.93.129.57"
 
 var multiplayer_peer: ENetMultiplayerPeer = ENetMultiplayerPeer.new()
 
+var good_balls: int = 0
+var bad_balls: int = 0
 var connected_peer_ids: Array[int] = []
 var good_guys: Array[int] = []
 var bad_guys: Array[int] = []
@@ -19,6 +22,44 @@ var bad_guys: Array[int] = []
 @onready var join_team_container: VBoxContainer = $Control/JoinTeam
 @onready var join_good_btn: Button = $Control/JoinTeam/JoinGood
 @onready var join_bad_btn: Button = $Control/JoinTeam/JoinBad
+
+
+
+func _handle_place_good_boss() -> void:
+	good_balls += 1
+	print("GOOD: ", good_balls)
+	print("BAD: ", bad_balls)
+
+
+func _handle_place_bad_boss() -> void:
+	bad_balls += 1
+	print("GOOD: ", good_balls)
+	print("BAD: ", bad_balls)
+
+
+func _handle_burst_good_boss() -> void:
+	good_balls += 1
+	print("GOOD: ", good_balls)
+	print("BAD: ", bad_balls)
+	if (good_balls == 0):
+		print("Good loses :(")
+		return
+	if (bad_balls == 0):
+		print("Bad loses :(")
+		return
+
+
+func _handle_burst_bad_boss() -> void:
+	bad_balls += 1
+	print("GOOD: ", good_balls)
+	print("BAD: ", bad_balls)
+	if (good_balls == 0):
+		print("Good loses :(")
+		return
+	if (bad_balls == 0):
+		print("Bad loses :(")
+		return
+
 
 # # Called when the node enters the scene tree for the first time.
 # func _ready() -> void:
@@ -81,10 +122,13 @@ func handle_team_join(id: int, is_good: bool) -> void:
 	add_player_character(id)
 
 
-
 func _ready() -> void:
 	join_good_btn.connect("pressed", join_good_team)
 	join_bad_btn.connect("pressed", join_bad_team)
+	SignalBus.place_good_boss.connect(_handle_place_good_boss)
+	SignalBus.place_bad_boss.connect(_handle_place_bad_boss)
+	SignalBus.burst_good_boss.connect(_handle_burst_good_boss)
+	SignalBus.burst_bad_boss.connect(_handle_burst_bad_boss)
 
 
 func join_good_team() -> void:
@@ -131,7 +175,7 @@ func _on_host_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
-	multiplayer_peer.create_client("100.93.129.57", PORT)
+	multiplayer_peer.create_client(IPADDR, PORT)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 	join_lobby_cont.visible = false
