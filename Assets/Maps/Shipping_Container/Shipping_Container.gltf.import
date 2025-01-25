@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c4hyn3ay4f36s"
-path="res://.godot/imported/Shipping_Container(2).gltf-318d7b71c941c7f7396f526bc6f83067.scn"
+path="res://.godot/imported/Shipping_Container.gltf-8a3c95014bdbd9404ca94b14dd4c1012.scn"
 
 [deps]
 
-source_file="res://Assets/Maps/Shipping_Container/Shipping_Container(2).gltf"
-dest_files=["res://.godot/imported/Shipping_Container(2).gltf-318d7b71c941c7f7396f526bc6f83067.scn"]
+source_file="res://Assets/Maps/Shipping_Container/Shipping_Container.gltf"
+dest_files=["res://.godot/imported/Shipping_Container.gltf-8a3c95014bdbd9404ca94b14dd4c1012.scn"]
 
 [params]
 

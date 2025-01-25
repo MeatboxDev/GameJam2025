@@ -3,10 +3,9 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6kayq2ml0ei7"
-path.s3tc="res://.godot/imported/aquariumfloor_1.png-4a08f6c5d10fcb852c1c4432e346ee58.s3tc.ctex"
+path="res://.godot/imported/aquariumfloor_1.png-4a08f6c5d10fcb852c1c4432e346ee58.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
 "md5": "97acf940bc93a1185655bc5354b08aa4"
@@ -15,11 +14,11 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/Maps/Aquarium_02/aquariumfloor_1.png"
-dest_files=["res://.godot/imported/aquariumfloor_1.png-4a08f6c5d10fcb852c1c4432e346ee58.s3tc.ctex"]
+dest_files=["res://.godot/imported/aquariumfloor_1.png-4a08f6c5d10fcb852c1c4432e346ee58.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
