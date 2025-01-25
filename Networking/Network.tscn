@@ -88,26 +88,31 @@ vertical_alignment = 1
 [node name="CSGMesh3D" type="CSGMesh3D" parent="World" groups=["Terrain"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
+collision_layer = 3
 mesh = SubResource("BoxMesh_wul2k")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="World" groups=["Terrain"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.0704, 0.393303, -0.0116401)
 use_collision = true
+collision_layer = 3
 size = Vector3(20, 5, 20)
 
 [node name="GoodGuysSpawn" type="CSGBox3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.2301, 2.66473, 0)
 use_collision = true
+collision_layer = 3
 material = SubResource("StandardMaterial3D_4rl0d")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="World" groups=["Terrain"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4548, 0.5, -0.0546317)
 use_collision = true
+collision_layer = 3
 size = Vector3(20, 5, 20)
 
 [node name="BadGuysSpawn" type="CSGBox3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6746, 2.66473, 0)
 use_collision = true
+collision_layer = 3
 material = SubResource("StandardMaterial3D_4rl0d")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
@@ -119,6 +124,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 6, 0)
 [node name="BossBubblePink" parent="World" instance=ExtResource("4_3lxo3")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 6, 0)
 is_good = false
+
+[node name="RespawnCamera" type="Camera3D" parent="."]
+transform = Transform3D(-1, -4.37114e-08, 7.57103e-08, 0, 0.866025, 0.5, -8.74228e-08, 0.5, -0.866025, 0, 30, -70)
+fov = 50.0
+near = 0.001
 
 [connection signal="pressed" from="Control/JoinLobby/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="Control/JoinLobby/host" to="." method="_on_host_pressed"]

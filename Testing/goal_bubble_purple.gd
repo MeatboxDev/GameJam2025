@@ -33,7 +33,7 @@ func _boss_grow() -> void:
 		_trigger_boss_burst()
 
 
-@rpc("reliable", "any_peer")
+@rpc("any_peer", "reliable")
 func _net_boss_grow() -> void:
 	_boss_grow()
 
@@ -45,9 +45,9 @@ func _handle_enter(_area: Node3D) -> void:
 	if par == null:
 		return
 	if par.is_good == is_good:
-		par.burst()
+		par.rpc("burst")
 		return
-	par.burst()
+	par.rpc("burst")
 	self.scale += Vector3.ONE * 0.05
 	position.y += 0.025 * self.scale.y
 	rpc("_net_boss_grow")
