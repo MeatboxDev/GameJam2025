@@ -8,7 +8,7 @@ size = Vector3(6, 0.5, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_4s3or"]
 size = Vector3(0.5, 0.5, 5)
 
-[node name="Node3D" type="StaticBody3D"]
+[node name="Checkpoint_stairs" type="StaticBody3D"]
 
 [node name="blockbench_export" parent="." instance=ExtResource("1_05pmt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0, -0.5)
