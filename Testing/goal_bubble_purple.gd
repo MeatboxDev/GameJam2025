@@ -1,10 +1,12 @@
 extends StaticBody3D
 
+const MAX_SIZE: float = 5.0
 
 @export var is_good: bool = false
 
 @onready var explosion_area: ShapeCast3D = $Explosion
 @onready var area: Area3D = $Area
+
 
 
 func _trigger_boss_burst() -> void:
@@ -26,7 +28,7 @@ func _trigger_boss_burst() -> void:
 func _boss_grow() -> void:
 	self.scale += Vector3.ONE * 0.05
 	position.y += 0.025 * self.scale.y
-	if self.scale.x > 1.2:
+	if self.scale.x > MAX_SIZE:
 		_trigger_boss_burst()
 
 
@@ -48,7 +50,7 @@ func _handle_enter(_area: Node3D) -> void:
 	self.scale += Vector3.ONE * 0.05
 	position.y += 0.025 * self.scale.y
 	rpc("_net_boss_grow")
-	if self.scale.x > 1.2:
+	if self.scale.x > MAX_SIZE:
 		_trigger_boss_burst()
 
 

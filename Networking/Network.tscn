@@ -5,8 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://7aff7vtjxqmu" path="res://Testing/goal_bubble_purple.tscn" id="3_x6ark"]
 [ext_resource type="PackedScene" uid="uid://bw51occa2vyf3" path="res://Testing/goal_bubble_pink.tscn" id="4_3lxo3"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_swkyh"]
-size = Vector2(200, 200)
+[sub_resource type="BoxMesh" id="BoxMesh_wul2k"]
+size = Vector3(200, 2, 200)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4rl0d"]
 albedo_texture = ExtResource("2_onyyg")
@@ -66,11 +66,29 @@ text = "Join Good"
 layout_mode = 2
 text = "Join Bad"
 
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 12.5
+offset_right = 20.0
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="World" type="Node3D" parent="."]
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="World"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="World" groups=["Terrain"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 use_collision = true
-mesh = SubResource("PlaneMesh_swkyh")
+mesh = SubResource("BoxMesh_wul2k")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.9727, 0.5, -0.0546317)
