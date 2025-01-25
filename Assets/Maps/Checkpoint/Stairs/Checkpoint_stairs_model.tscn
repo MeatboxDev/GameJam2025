@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://yrbfa23fle7o"]
+
+[ext_resource type="PackedScene" uid="uid://i1cxc1q776vi" path="res://Assets/Maps/Checkpoint/Stairs/Checkpoint_platform(1).gltf" id="1_needc"]
+
+[node name="blockbench_export" instance=ExtResource("1_needc")]
