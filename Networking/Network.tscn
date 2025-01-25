@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://8j6tos5wm2f3"]
+[gd_scene load_steps=7 format=3 uid="uid://8j6tos5wm2f3"]
 
 [ext_resource type="Script" path="res://Networking/network.gd" id="1_d0cgp"]
 [ext_resource type="Texture2D" uid="uid://c7c4ntyebp14p" path="res://Assets/Testing/noFilter.webp" id="2_onyyg"]
+[ext_resource type="PackedScene" uid="uid://7aff7vtjxqmu" path="res://Testing/goal_bubble_purple.tscn" id="3_x6ark"]
+[ext_resource type="PackedScene" uid="uid://bw51occa2vyf3" path="res://Testing/goal_bubble_pink.tscn" id="4_3lxo3"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_swkyh"]
 size = Vector2(200, 200)
@@ -75,33 +77,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.9727, 0.5, -0.0546317)
 use_collision = true
 size = Vector3(20, 5, 20)
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.9626, 6, -0.00760269)
-use_collision = true
-radius = 2.0
-
 [node name="GoodGuysSpawn" type="CSGBox3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.2301, 2.66473, 0)
 use_collision = true
 material = SubResource("StandardMaterial3D_4rl0d")
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 58.0273, 0.5, -0.0546317)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.4548, 0.5, -0.0546317)
 use_collision = true
 size = Vector3(20, 5, 20)
 
-[node name="CSGSphere3D2" type="CSGSphere3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 57.0374, 6, -0.00760269)
-use_collision = true
-radius = 2.0
-
 [node name="BadGuysSpawn" type="CSGBox3D" parent="World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 51.7699, 2.66473, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6746, 2.66473, 0)
 use_collision = true
 material = SubResource("StandardMaterial3D_4rl0d")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 0.188478, 0.982077, 0, -0.982077, 0.188478, 0, 52.1754, 0)
+
+[node name="BossBubblePurple" parent="World" instance=ExtResource("3_x6ark")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 6, 0)
+
+[node name="BossBubblePink" parent="World" instance=ExtResource("4_3lxo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 6, 0)
 
 [connection signal="pressed" from="Control/JoinLobby/join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="Control/JoinLobby/host" to="." method="_on_host_pressed"]
