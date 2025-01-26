@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://chdvyhhy1el2e"]
+
+[ext_resource type="Script" path="res://Coral_Randomizer.gd" id="1_dnm1b"]
+[ext_resource type="PackedScene" uid="uid://c65dcgh7alh3h" path="res://Assets/Maps/Coral/coral_pink(1).gltf" id="2_m6b13"]
+[ext_resource type="PackedScene" uid="uid://joxnm80r4tu8" path="res://Assets/Maps/Coral/coral_blue(1).gltf" id="3_0et0y"]
+[ext_resource type="PackedScene" uid="uid://dx0jbvq1ovt07" path="res://Assets/Maps/Coral/coral_yellow.gltf" id="4_uwo7s"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1570r"]
+height = 2.15144
+
+[node name="Coral_Display" type="StaticBody3D"]
+script = ExtResource("1_dnm1b")
+
+[node name="coral_01" parent="." instance=ExtResource("2_m6b13")]
+visible = false
+
+[node name="coral_02" parent="." instance=ExtResource("3_0et0y")]
+visible = false
+
+[node name="coral_03" parent="." instance=ExtResource("4_uwo7s")]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.7325, 0, 0, 0, 0.968, 0, 0, 0, 1.76, 0.9, 1, -0.85)
+shape = SubResource("CylinderShape3D_1570r")

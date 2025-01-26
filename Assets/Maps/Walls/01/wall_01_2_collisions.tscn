@@ -9,8 +9,8 @@ size = Vector3(2, 1, 0.15)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, 0.125)
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 1, 1, 0.1)
 shape = SubResource("BoxShape3D_4qblg")
 
 [node name="blockbench_export" parent="." instance=ExtResource("1_bmxbj")]
-transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0.15)

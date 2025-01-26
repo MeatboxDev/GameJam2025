@@ -2,24 +2,23 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvbjsxgx7tbhb"
-path.s3tc="res://.godot/imported/coral_pink_coral.png-4edc506200252b5da3ba0fb050d8bd7a.s3tc.ctex"
+uid="uid://2khk8g562aru"
+path="res://.godot/imported/coral_yellow_1.png-5034334c7eba72f98e925156f7c6e182.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 generator_parameters={
-"md5": "47276d7aea0b8fd60b944889ed258da3"
+"md5": "be08f24b97b2a3be757576f00b08bc5a"
 }
 
 [deps]
 
-source_file="res://Assets/Maps/Coral/Coral_01/coral_pink_coral.png"
-dest_files=["res://.godot/imported/coral_pink_coral.png-4edc506200252b5da3ba0fb050d8bd7a.s3tc.ctex"]
+source_file="res://Assets/Maps/Coral/coral_yellow_1.png"
+dest_files=["res://.godot/imported/coral_yellow_1.png-5034334c7eba72f98e925156f7c6e182.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=3
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
