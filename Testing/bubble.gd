@@ -1,5 +1,9 @@
 extends StaticBody3D
 
+const BUBBLE_LIFE_DURATION := 5.0
+const BUBBLE_FLASH_DURATION := 1.0
+const BUBBLE_FLASH_TIMES := 18
+
 @export var is_good: bool = false
 @export var direction: Vector3 = Vector3.ZERO
 @export var speed: float = 0.15
@@ -7,10 +11,14 @@ extends StaticBody3D
 @export var decel_start_time: float = 0.2
 @export var magnitude: float = PI / 6
 
-var _height_mod: float = 0
-var _start_deccel: bool = false
+var _flash_times := 0
+var _height_mod := 0.0
+var _start_deccel := false
 
 @onready var area: Area3D = $Area
+@onready var bubble_popping: AudioStreamPlayer3D = $BubblePoppingStream
+@onready var pop_particles: CPUParticles3D = $PopParticles
+
 
 func _handle_body_entered(body: Node3D) -> void:
 	var collider: Node3D = body
@@ -51,6 +59,16 @@ func _on_timeout() -> void:
 	collision_layer = 1
 	collision_mask = 1
 
+
+func _flash_out() -> void:
+	if _flash_times == 0:
+		rpc("burst")
+		return
+	_flash_times -= 1
+	visible = !visible
+	get_tree().create_timer(BUBBLE_FLASH_DURATION / BUBBLE_FLASH_TIMES).timeout.connect(_flash_out)
+
+
 func _ready() -> void:
 	multiplayer.allow_object_decoding = true
 	name += "BUBBLE"
@@ -58,6 +76,11 @@ func _ready() -> void:
 		area.connect("area_entered", _handle_area_collision)
 		area.connect("body_exited", _handle_body_exited)
 		area.connect("body_entered", _handle_body_entered)
+		get_tree().create_timer(BUBBLE_LIFE_DURATION - BUBBLE_FLASH_DURATION).timeout.connect(
+			func() -> void:
+				_flash_times = BUBBLE_FLASH_TIMES
+				_flash_out()
+		)
 	var tween: Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_ELASTIC)
@@ -129,4 +152,23 @@ func _net_update_position(real_pos: Vector3) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func burst() -> void:
+	bubble_popping.stream = preload("res://Assets/SoundEffects/shooting_bubble.wav")
+	bubble_popping.play(0.14)
+	bubble_popping.pitch_scale = randf_range(0.95, 1.05)
+	remove_child(bubble_popping)
+	get_tree().get_current_scene().add_child(bubble_popping)
+	bubble_popping.position = global_position
+
+	remove_child(pop_particles)
+	get_tree().get_current_scene().add_child(pop_particles)
+	pop_particles.position = global_position
+	pop_particles.restart()
+	pop_particles.material_override = (
+		$BubbleGood.material_override if is_good else $BubbleBad.material_override
+	)
+
+	get_tree().create_timer(bubble_popping.stream.get_length()).timeout.connect(
+		bubble_popping.queue_free
+	)
+	get_tree().create_timer(pop_particles.lifetime).timeout.connect(pop_particles.queue_free)
 	self.queue_free()
