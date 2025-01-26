@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cviy2wekd26um"
 path.s3tc="res://.godot/imported/baranda_2_bajando_1.png-5011f000b077f802b77bf0d54bb52e2a.s3tc.ctex"
+path.etc2="res://.godot/imported/baranda_2_bajando_1.png-5011f000b077f802b77bf0d54bb52e2a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/Maps/Walls/02/baranda_2_bajando_1.png"
-dest_files=["res://.godot/imported/baranda_2_bajando_1.png-5011f000b077f802b77bf0d54bb52e2a.s3tc.ctex"]
+dest_files=["res://.godot/imported/baranda_2_bajando_1.png-5011f000b077f802b77bf0d54bb52e2a.s3tc.ctex", "res://.godot/imported/baranda_2_bajando_1.png-5011f000b077f802b77bf0d54bb52e2a.etc2.ctex"]
 
 [params]
 
