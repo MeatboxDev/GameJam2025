@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+const NW := preload("res://Networking/network.gd")
+
 const BUBBLE_GOOD: PackedScene = preload("res://Testing/bubble_purple.tscn")
 const BUBBLE_BAD: PackedScene = preload("res://Testing/bubble_pink.tscn")
 const DEG_45: float = PI / 4.0
@@ -32,7 +34,6 @@ var _down: bool = Input.is_key_pressed(KEY_DOWN) or Input.is_key_pressed(KEY_S)
 var _right: bool = Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D)
 var _left: bool = Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A)
 var _movement: Vector3 = Vector3.ZERO
-
 
 @onready var body_mesh: Node = $Body
 @onready var head_node: Node = $Head
@@ -142,6 +143,7 @@ func pushback_pos(pos: Vector3) -> void:
 	velocity.x = -(pos.x - move_toward(position.x, pos.x, 1)) * max_speed
 	velocity.z = -(pos.z - move_toward(position.z, pos.z, 1)) * max_speed
 
+
 @rpc("any_peer", "reliable", "call_local")
 func pushback(node: Node3D) -> void:
 	velocity.x = -(node.position.x - move_toward(position.x, node.position.x, 1)) * max_speed
@@ -234,6 +236,10 @@ func _process_keyboard(ev: InputEventKey) -> void:
 			_down = ev.pressed
 		KEY_D, KEY_RIGHT:
 			_right = ev.pressed
+		KEY_C:
+			if ev.is_released(): return
+			SignalBus.player_change_team.emit(multiplayer.get_unique_id())
+
 
 
 func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
