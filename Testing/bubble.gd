@@ -12,7 +12,6 @@ var _start_deccel: bool = false
 
 @onready var area: Area3D = $Area
 
-
 func _handle_body_entered(body: Node3D) -> void:
 	var collider: Node3D = body
 	if not collider.is_in_group("Player"):

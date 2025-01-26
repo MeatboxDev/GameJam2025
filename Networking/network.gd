@@ -45,18 +45,19 @@ func _handle_place_bad_boss() -> void:
 func _handle_burst_good_boss() -> void:
 	good_balls -= 1
 	if good_balls == 0:
+		await get_tree().create_timer(3.0).timeout
 		rpc("_end_game")
 
 
 func _handle_burst_bad_boss() -> void:
 	bad_balls -= 1
 	if bad_balls == 0:
+		await get_tree().create_timer(3.0).timeout
 		rpc("_end_game")
 
 
 @rpc("authority", "call_local", "reliable")
 func _end_game() -> void:
-	await get_tree().create_timer(3.0).timeout
 	$RespawnCamera.make_current()
 	join_team_container.visible = true
 	_started = false
@@ -114,6 +115,23 @@ func start_game() -> void:
 	for c in instantiated_characters:
 		_respawn_player(c)
 
+@rpc("any_peer", "call_local", "reliable")
+func change_team(id: int) -> void:
+	var player: Node3D = instantiated_characters.filter(func(c: Node3D) -> bool: return c.name.to_int() == id).front()
+	if player.is_good:
+		good_guys.erase(id)
+	else:
+		bad_guys.erase(id)
+	instantiated_characters.erase(player)
+	player.queue_free()
+	if id == multiplayer.get_unique_id():
+		$RespawnCamera.make_current()
+		show_join_team()
+	if good_guys.size() >= 1 and bad_guys.size() >= 1 and not _started:
+		start_game_button.show()
+	else:
+		start_game_button.hide()
+	
 
 @rpc("any_peer", "call_local", "reliable")
 func add_new_connections(id: int, is_good: bool) -> void:
@@ -137,14 +155,16 @@ func show_join_team() -> void:
 
 
 @rpc("any_peer", "call_local", "reliable")
-func handle_team_join(id: int, is_good: bool) -> void:
+func handle_join_team(id: int, is_good: bool) -> void:
 	if is_good:
 		good_guys.append(id)
 	else:
 		bad_guys.append(id)
 
-	if good_guys.size() >= 1 and bad_guys.size() >= 1:
+	if good_guys.size() >= 1 and bad_guys.size() >= 1 and not _started:
 		start_game_button.show()
+	else:
+		start_game_button.hide()
 
 	rpc("add_new_connections", id, is_good)
 
@@ -157,6 +177,7 @@ func _handle_start_button() -> void:
 
 
 func _ready() -> void:
+	multiplayer.allow_object_decoding = true
 	join_good_btn.connect("pressed", join_good_team)
 	join_bad_btn.connect("pressed", join_bad_team)
 	start_game_button.connect("pressed", _handle_start_button)
@@ -165,6 +186,7 @@ func _ready() -> void:
 	SignalBus.burst_good_boss.connect(_handle_burst_good_boss)
 	SignalBus.burst_bad_boss.connect(_handle_burst_bad_boss)
 	SignalBus.player_defeat.connect(_handle_player_defeat)
+	SignalBus.player_change_team.connect(_handle_player_change_team)
 
 
 func _respawn_player(player: CharacterBody3D) -> void:
@@ -190,15 +212,31 @@ func _handle_player_defeat(player: CharacterBody3D) -> void:
 	var timer: SceneTreeTimer = get_tree().create_timer(3)
 	timer.connect("timeout", _respawn_player.bind(player))
 
+func _handle_player_change_team(id: int) -> void:
+	rpc("change_team", id)
+
 
 func join_good_team() -> void:
 	join_team_container.visible = false
-	rpc_id(1, "handle_team_join", multiplayer.get_unique_id(), true)
+	rpc_id(1, "handle_join_team", multiplayer.get_unique_id(), true)
 
 
 func join_bad_team() -> void:
 	join_team_container.visible = false
-	rpc_id(1, "handle_team_join", multiplayer.get_unique_id(), false)
+	rpc_id(1, "handle_join_team", multiplayer.get_unique_id(), false)
+
+@rpc("authority", "reliable")
+func sync_bubble(b: Node3D) -> void:
+	var new_bubble: Node3D
+	if b.is_in_group("BossBubble"):
+		new_bubble = preload("res://Testing/goal_bubble_purple.tscn").instantiate() if b.is_good else preload("res://Testing/goal_bubble_pink.tscn").instantiate()
+	else:
+		new_bubble = preload("res://Testing/bubble_purple.tscn").instantiate() if b.is_good else preload("res://Testing/bubble_pink.tscn").instantiate()
+
+	for g in b.get_groups():
+		new_bubble.add_to_group(g)
+	add_child(new_bubble)
+
 
 
 func _on_host_pressed() -> void:
@@ -211,6 +249,15 @@ func _on_host_pressed() -> void:
 
 	show_join_team()
 
+	multiplayer.peer_disconnected.connect(
+		func(id: int) -> void:
+			print("Disconnection...")
+			var players: Array[CharacterBody3D] = instantiated_characters.filter(func(c: Node3D) -> bool: return c.name.to_int() == id)
+			if players.size() == 0:
+				return
+			players.front().queue_free()
+	)
+
 	multiplayer.peer_connected.connect(
 		# This function runs IN THE HOST when someone joins
 		# Send them instructions with the rpc_id() function
@@ -218,6 +265,10 @@ func _on_host_pressed() -> void:
 			print("Connection...")
 			rpc_id(id, "show_join_team")
 			rpc_id(id, "add_previous_characters", good_guys, bad_guys)
+			for c in get_children():
+				if not c.is_in_group("Bubble"): continue
+				rpc_id(id, "sync_bubble", c)
+				
 	)
 
 
@@ -228,6 +279,17 @@ func _on_join_pressed() -> void:
 	join_lobby_cont.visible = false
 	status_label.text = "Client"
 	id_label.text = str(multiplayer.get_unique_id())
+
+	multiplayer.peer_disconnected.connect(
+		func(id: int) -> void:
+			if id != 1: return
+			_end_game()
+			for c in get_children():
+				if not c.is_in_group("Bubble"): continue
+				c.queue_free()
+			join_team_container.hide()
+			join_lobby_cont.show()
+	)
 
 
 func add_player_character(id: int, is_good: bool) -> void:
