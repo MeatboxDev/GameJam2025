@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dgyya82uckhvp"
 path.s3tc="res://.godot/imported/quartercircle_dl.png-9f85ab9cd1e7939d83eb84cc762080d3.s3tc.ctex"
+path.etc2="res://.godot/imported/quartercircle_dl.png-9f85ab9cd1e7939d83eb84cc762080d3.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Maps/Mesh_Library/quartercircle_dl.png"
-dest_files=["res://.godot/imported/quartercircle_dl.png-9f85ab9cd1e7939d83eb84cc762080d3.s3tc.ctex"]
+dest_files=["res://.godot/imported/quartercircle_dl.png-9f85ab9cd1e7939d83eb84cc762080d3.s3tc.ctex", "res://.godot/imported/quartercircle_dl.png-9f85ab9cd1e7939d83eb84cc762080d3.etc2.ctex"]
 
 [params]
 

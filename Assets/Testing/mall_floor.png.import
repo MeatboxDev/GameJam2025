@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://iy85uygqcqsv"
 path.s3tc="res://.godot/imported/mall_floor.png-3f93a0eff72043cdff6a1039a110db33.s3tc.ctex"
+path.etc2="res://.godot/imported/mall_floor.png-3f93a0eff72043cdff6a1039a110db33.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Testing/mall_floor.png"
-dest_files=["res://.godot/imported/mall_floor.png-3f93a0eff72043cdff6a1039a110db33.s3tc.ctex"]
+dest_files=["res://.godot/imported/mall_floor.png-3f93a0eff72043cdff6a1039a110db33.s3tc.ctex", "res://.godot/imported/mall_floor.png-3f93a0eff72043cdff6a1039a110db33.etc2.ctex"]
 
 [params]
 
