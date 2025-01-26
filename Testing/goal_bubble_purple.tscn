@@ -78,13 +78,13 @@ radius = 5.0
 script = ExtResource("1_ijdi2")
 is_good = true
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-light_color = Color(0.470588, 0, 1, 1)
-light_energy = 5.0
-
-[node name="BubbleGoalPurple" type="MeshInstance3D" parent="."]
+[node name="BubbleMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_qj4ma")
 skeleton = NodePath("")
+
+[node name="BubbleLight" type="OmniLight3D" parent="."]
+light_color = Color(0.470588, 0, 1, 1)
+light_energy = 5.0
 
 [node name="Shape" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_nvjte")
