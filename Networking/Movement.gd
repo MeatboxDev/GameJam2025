@@ -13,6 +13,7 @@ const HURT_SOUNDS := [
 	preload("res://Assets/SoundEffects/herida_3.wav"),
 ]
 
+const PLAYER_SCALE := Vector3.ONE * 0.3
 const SHOOT_COOLDOWN := .5
 const INVIS_TIME := 1.5
 const FLASH_TIMES := 18
@@ -45,6 +46,7 @@ var health: float = 100:
 			rpc("_trigger_defeat")
 		health = val
 
+var _respawning := false
 var _is_shooting := false
 var _shoot_disabled := false
 var _invincible := false
@@ -74,15 +76,17 @@ func trigger_respawn() -> void:
 	collision_layer = 1
 	collision_mask = 1
 
+	_respawning = false
 	var tween: Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_BACK)
-	tween.tween_property(self, "scale", Vector3.ONE, 1)
+	tween.tween_property(self, "scale", PLAYER_SCALE, 1)
 	tween.tween_callback(func() -> void: audio_player.stop())
 
 	is_alive = true
 	audio_player.stream = preload("res://Assets/SoundEffects/respawn.wav")
 	audio_player.play()
+
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -110,6 +114,9 @@ func _trigger_defeat() -> void:
 		tween_2.set_ease(Tween.EASE_IN_OUT)
 		tween_2.set_trans(Tween.TRANS_BACK)
 		tween_2.tween_property(p_cam, "global_transform", resp_cam.global_transform, 1.5)
+		tween_2.tween_callback(func() -> void:
+			_respawning = true
+		)
 	SignalBus.player_defeat.emit(self)
 
 
@@ -288,6 +295,11 @@ func _attempt_shoot() -> void:
 var prev_vel := Vector3.ZERO
 
 func _process(_delta: float) -> void:
+	if _respawning:
+		var resp_cam: Camera3D = get_tree().current_scene.find_child("RespawnCamera")
+		p_cam.position = resp_cam.position
+		p_cam.rotation = resp_cam.rotation
+
 	if _animation_player.current_animation == "attack-player":
 		return
 
@@ -334,7 +346,7 @@ func _physics_process(_delta: float) -> void:
 	else:
 		p_cam.fov = clamp(p_cam.fov - _delta * 100, 75, 100)
 
-	if global_position.y < -10 and is_alive:
+	if global_position.y < -1 and is_alive:
 		rpc("_trigger_defeat")
 		return
 

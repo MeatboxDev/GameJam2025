@@ -87,6 +87,9 @@ func _end_game() -> void:
 		b.queue_free()
 	good_ball_list.clear()
 
+	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.mp3")
+	$MusicPlayer.play()
+
 
 # # Called when the node enters the scene tree for the first time.
 # func _ready() -> void:
@@ -121,7 +124,7 @@ func start_game() -> void:
 		boss.find_child("BubbleMesh").material_override.albedo_color = good_guys_colors[color_team_number] * 3
 		boss.find_child("BubbleLight").light_color = good_guys_colors[color_team_number]
 		st.find_child("Light").light_color = good_guys_colors[color_team_number]
-		boss.global_position = st.global_position + Vector3.UP * 5
+		boss.global_position = st.global_position + Vector3.UP * 2
 		add_child(boss)
 	for st in bad_guys_stands:
 		var boss: Node3D = preload("res://Testing/goal_bubble_pink.tscn").instantiate()
@@ -130,9 +133,11 @@ func start_game() -> void:
 		boss.find_child("BubbleMesh").material_override.albedo_color = bad_guys_colors[color_team_number] * 3
 		boss.find_child("BubbleLight").light_color = bad_guys_colors[color_team_number]
 		st.find_child("Light").light_color = bad_guys_colors[color_team_number]
-		boss.global_position = st.global_position + Vector3.UP * 5
+		boss.global_position = st.global_position + Vector3.UP * 2
 		add_child(boss)
 
+	$MusicPlayer.stream = preload("res://Assets/Music/Splattack ! - Splatoon OST.mp3")
+	$MusicPlayer.play()
 	for c in instantiated_characters:
 		_respawn_player(c)
 
@@ -214,13 +219,14 @@ func get_all_children(in_node: Node, arr: Array[Node]) -> Array[Node]:
 
 
 func _ready() -> void:
+	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.mp3")
+	$MusicPlayer.play()
 	var arr: Array[Node] = get_all_children(self, [])
 	for n in arr:
 		if n is StaticBody3D:
 			print(n)
 			n.add_to_group("Terrain")
 
-	$MusicPlayer.play()
 	multiplayer.allow_object_decoding = true
 	join_btn.connect("pressed", _on_join_pressed)
 	host_btn.connect("pressed", _on_host_pressed)
