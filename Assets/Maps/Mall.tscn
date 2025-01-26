@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bg4e1fd6q8l1f"]
+[gd_scene load_steps=41 format=3 uid="uid://bg4e1fd6q8l1f"]
 
 [ext_resource type="Script" path="res://Networking/network.gd" id="1_wc5cs"]
 [ext_resource type="Texture2D" uid="uid://8eyfsxqm4h0x" path="res://Assets/Maps/Mesh_Library/quartercircle_ul.png" id="2_nklqx"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bebr0x3koynac" path="res://Assets/Maps/Shipping_Container/02/Shipping_container_02_collisions.tscn" id="18_hcqtt"]
 [ext_resource type="PackedScene" uid="uid://b32xuagu3efos" path="res://Assets/Maps/Walls/02/wall_02_1_collision.tscn" id="21_00oiq"]
 [ext_resource type="PackedScene" uid="uid://b6xxkv1gnykih" path="res://Assets/Maps/Walls/03/wall_03_collisions.tscn" id="26_epli4"]
+[ext_resource type="Texture2D" uid="uid://bmolufyva1v7u" path="res://Assets/Testing/skybox/lightBlueSky.jpg" id="27_6s18w"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51wxc"]
 
@@ -69,6 +70,17 @@ size = Vector2(1.275, 1.275)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f31mf"]
 size = Vector3(0.15, 1.5, 9)
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mpfqb"]
+panorama = ExtResource("27_6s18w")
+
+[sub_resource type="Sky" id="Sky_jmtg8"]
+sky_material = SubResource("PanoramaSkyMaterial_mpfqb")
+
+[sub_resource type="Environment" id="Environment_4qxyi"]
+background_mode = 2
+sky = SubResource("Sky_jmtg8")
+ambient_light_source = 3
 
 [node name="Network" type="Node3D" node_paths=PackedStringArray("good_guys_spawn_points", "bad_guys_spawn_points", "good_guys_stands", "bad_guys_stands")]
 script = ExtResource("1_wc5cs")
@@ -849,6 +861,24 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.13
 [node name="Node3D14" parent="BaseBad/Walls/circle2" instance=ExtResource("11_jnej6")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.9833, 9.5, 50.0333)
 
+[node name="Node3D5" parent="BaseBad/Walls" instance=ExtResource("21_00oiq")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -18, 9.5, 53.15)
+
+[node name="Node3D6" parent="BaseBad/Walls" instance=ExtResource("21_00oiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 9.5, 53.15)
+
+[node name="Node3D7" parent="BaseBad/Walls" instance=ExtResource("21_00oiq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.1333, 9.5, 47.9833)
+
+[node name="Node3D8" parent="BaseBad/Walls" instance=ExtResource("21_00oiq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.1333, 9.5, 50.9833)
+
+[node name="Node3D9" parent="BaseBad/Walls" instance=ExtResource("21_00oiq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.9833, 9.5, 47.9833)
+
+[node name="Node3D20" parent="BaseBad/Walls" instance=ExtResource("21_00oiq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.9833, 9.5, 50.9833)
+
 [node name="BaseGood" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -26, 0, -34)
 
@@ -1189,20 +1219,5 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(-14, 5, 0)
 
-[node name="Node3D" parent="." instance=ExtResource("21_00oiq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18, 9.5, 53.15)
-
-[node name="Node3D2" parent="." instance=ExtResource("21_00oiq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 9.5, 53.15)
-
-[node name="Node3D3" parent="." instance=ExtResource("21_00oiq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.1333, 9.5, 47.9833)
-
-[node name="Node3D4" parent="." instance=ExtResource("21_00oiq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -18.1333, 9.5, 50.9833)
-
-[node name="Node3D5" parent="." instance=ExtResource("21_00oiq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.9833, 9.5, 47.9833)
-
-[node name="Node3D6" parent="." instance=ExtResource("21_00oiq")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -12.9833, 9.5, 50.9833)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4qxyi")
