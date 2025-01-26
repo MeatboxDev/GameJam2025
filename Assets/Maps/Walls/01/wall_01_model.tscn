@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=4 uid="uid://d1vwswg5bflma"]
+
+[ext_resource type="PackedScene" uid="uid://b0sk5l2vrfya8" path="res://Assets/Maps/Walls/01/baranda.gltf" id="1_qhb3s"]
+[ext_resource type="Texture2D" uid="uid://djgxpmkv84p3j" path="res://Assets/Maps/Walls/01/baranda_0.png" id="2_v7jwk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fgjgm"]
+resource_name = "material_0"
+transparency = 1
+cull_mode = 2
+albedo_texture = ExtResource("2_v7jwk")
+texture_filter = 0
+texture_repeat = false
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_cj7yo"]
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 0.125, 1),
+"format": 34896613377,
+"index_count": 36,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUABAACAAAABAAFAAIAAwAGAAEAAwAHAAYAAQAEAAAAAQAGAAQABQADAAIABQAHAAMA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////////AAD//wAA//8AAP////8AAAAA//8AAAAAAAAAAP////8AAAAA//8AAAAAAAAAAP//AAAAAAAAAAAAAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_glrin"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 0.125, 1),
+"attribute_data": PackedByteArray("/0MAAP9D/wf/gwAA/4P/B/+D/wv/Q/8L/4P/E/9D/xP/P/8//z8AAAAA/z8AAAAA/z//QwAA/0P/P/+DAAD/g/+D/xf/Q/8X/4P/H/9D/x//Q/8j/0P/K/+D/yP/g/8r"),
+"format": 34896613399,
+"index_count": 36,
+"index_data": PackedByteArray("AgABAAAAAgADAAEABgAFAAQABgAHAAUACgAJAAgACgALAAkADgANAAwADgAPAA0AEgARABAAEgATABEAFgAVABQAFgAXABUA"),
+"material": SubResource("StandardMaterial3D_fgjgm"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("/////////7///wAA////v/////8AAP+///8AAAAA/78AAP//////vwAA//8AAP+/AAAAAP///78AAAAAAAD/v/////////+//////wAA/78AAP//////vwAA//8AAP+///8AAP///78AAAAA////v///AAAAAP+/AAAAAAAA/7////////8AgAAA/////wCA//8AAP//AIAAAAAA//8AgP////8AAP////8AAAAA//8AAP//AAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9///////9/////f////3////9/AAD/fwAA/38AAP9/AAD/f/9/////f////3////9/////f////3////9/////f///")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_cj7yo")
+
+[node name="blockbench_export" instance=ExtResource("1_qhb3s")]
+
+[node name="glass_panel" parent="Node" index="0"]
+mesh = SubResource("ArrayMesh_glrin")
