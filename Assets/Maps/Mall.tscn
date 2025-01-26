@@ -20,6 +20,8 @@
 [ext_resource type="Texture2D" uid="uid://dgyya82uckhvp" path="res://Assets/Maps/Mesh_Library/quartercircle_dl.png" id="16_ugatr"]
 [ext_resource type="PackedScene" uid="uid://bebr0x3koynac" path="res://Assets/Maps/Shipping_Container/02/Shipping_container_02_collisions.tscn" id="18_hcqtt"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51wxc"]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f71fo"]
 transparency = 1
 albedo_texture = ExtResource("2_nklqx")

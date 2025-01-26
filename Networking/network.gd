@@ -15,10 +15,15 @@ var connected_peer_ids: Array[int] = []
 var good_guys: Array[int] = []
 var good_balls: int = 0
 var good_ball_list: Array[Node3D] = []
+var good_guys_colors := [Color(2, 1, 1)]
+var current_good_guy_color : Color
+
 
 var bad_guys: Array[int] = []
 var bad_balls: int = 0
 var bad_ball_list: Array[Node3D] = []
+var bad_guys_colors := [Color(1, 1, 2)]
+var current_bad_guy_color : Color
 
 var _started: bool = false
 
@@ -102,16 +107,26 @@ func _end_game() -> void:
 func start_game() -> void:
 	_started = true
 	start_game_button.visible = false
+
+
+
 	for st in good_guys_stands:
 		var boss: Node3D = preload("res://Testing/goal_bubble_purple.tscn").instantiate()
 		boss.set_multiplayer_authority(get_multiplayer_authority())
-		add_child(boss)
+		boss.find_child("BubbleMesh").material_override = load("res://Materials/bubble_goal_material.tres")
+		boss.find_child("BubbleMesh").material_override.albedo_color = current_good_guy_color
+		boss.find_child("BubbleLight").light_color = current_good_guy_color
 		boss.position = st.position + Vector3.UP * 5
+		add_child(boss)
 	for st in bad_guys_stands:
 		var boss: Node3D = preload("res://Testing/goal_bubble_pink.tscn").instantiate()
 		boss.set_multiplayer_authority(get_multiplayer_authority())
-		add_child(boss)
+		boss.find_child("BubbleMesh").material_override = load("res://Materials/bubble_goal_material.tres")
+		boss.find_child("BubbleMesh").material_override.albedo_color = current_bad_guy_color
+		boss.find_child("BubbleLight").light_color = current_bad_guy_color
 		boss.position = st.position + Vector3.UP * 5
+		add_child(boss)
+
 	for c in instantiated_characters:
 		_respawn_player(c)
 
@@ -140,7 +155,9 @@ func add_new_connections(id: int, is_good: bool) -> void:
 
 
 @rpc("any_peer", "reliable")
-func add_previous_characters(good_ids: Array[int], bad_ids: Array[int]) -> void:
+func add_previous_characters(good_ids: Array[int], good_color: Color, bad_ids: Array[int], bad_color: Color) -> void:
+	current_good_guy_color = good_color
+	current_bad_guy_color = bad_color
 	for peer_id in good_ids:
 		good_guys.append(peer_id)
 		add_player_character(peer_id, true)
@@ -153,12 +170,23 @@ func add_previous_characters(good_ids: Array[int], bad_ids: Array[int]) -> void:
 func show_join_team() -> void:
 	join_team_container.visible = true
 
+@rpc("any_peer", "reliable", "call_local")
+func _net_set_color(color: Color, good: bool) -> void:
+	if good:
+		current_good_guy_color = color
+	else:
+		current_bad_guy_color = color
+
 
 @rpc("any_peer", "call_local", "reliable")
 func handle_join_team(id: int, is_good: bool) -> void:
 	if is_good:
+		if good_guys.size() == 0:
+			rpc("_net_set_color",good_guys_colors.pick_random(), true)
 		good_guys.append(id)
 	else:
+		if bad_guys.size() == 0:
+			rpc("_net_set_color",bad_guys_colors.pick_random(), false)
 		bad_guys.append(id)
 
 	if good_guys.size() >= 1 and bad_guys.size() >= 1 and not _started:
@@ -264,7 +292,7 @@ func _on_host_pressed() -> void:
 		func(id: int) -> void:
 			print("Connection...")
 			rpc_id(id, "show_join_team")
-			rpc_id(id, "add_previous_characters", good_guys, bad_guys)
+			rpc_id(id, "add_previous_characters", good_guys, current_good_guy_color, bad_guys, current_bad_guy_color)
 			for c in get_children():
 				if not c.is_in_group("Bubble"): continue
 				rpc_id(id, "sync_bubble", c)
@@ -296,6 +324,7 @@ func add_player_character(id: int, is_good: bool) -> void:
 	var p_instance: CharacterBody3D = preload("res://Networking/test_character.tscn").instantiate()
 	p_instance.set_multiplayer_authority(id)
 
+	p_instance.color = current_good_guy_color if is_good else current_bad_guy_color
 	p_instance.is_good = is_good
 	var spawn: Node3D = (
 		good_guys_spawn_points.pick_random() if is_good else bad_guys_spawn_points.pick_random()

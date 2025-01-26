@@ -20,6 +20,7 @@ const XZ = preload("res://Networking/xyz_to_xz.gd")
 
 var is_good: bool = true
 var is_alive: bool = true
+var color: Color
 
 var health: float = 100:
 	get():
@@ -92,7 +93,7 @@ func _ready() -> void:
 		func(n: Node3D) -> bool: return n is MeshInstance3D
 	):
 		var new_material: StandardMaterial3D = StandardMaterial3D.new()
-		new_material.albedo_color = "0000ff" if is_good else "ff0000"
+		new_material.albedo_color = color
 		c.material_override = new_material
 
 
@@ -272,6 +273,10 @@ func _shoot_bubble() -> void:
 	bubble.position = bubble_cast.global_position - (p_cam.global_basis.z * 2)
 	bubble.direction = (-p_cam.global_basis.z)
 	bubble.scale = Vector3.ONE * 0.01
+	var mesh: MeshInstance3D = bubble.find_child("BubbleGood" if is_good else "BubbleBad")
+	var new_mat: StandardMaterial3D = load("res://Materials/bubble_material.tres")
+	new_mat.albedo_color = color
+	mesh.material_override = new_mat
 
 	var dot: float = bubble.direction.normalized().dot(velocity.normalized())
 	if dot > .5 or dot < -.5:
