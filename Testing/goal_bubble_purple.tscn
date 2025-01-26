@@ -78,6 +78,8 @@ radius = 5.0
 script = ExtResource("1_ijdi2")
 is_good = true
 
+[node name="ExplosionPlayer" type="AudioStreamPlayer3D" parent="."]
+
 [node name="BubbleMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_qj4ma")
 skeleton = NodePath("")

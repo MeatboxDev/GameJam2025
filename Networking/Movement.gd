@@ -2,6 +2,21 @@ extends CharacterBody3D
 
 const NW := preload("res://Networking/network.gd")
 
+const JUMP_SOUNDS := [
+	preload("res://Assets/SoundEffects/salto_1.wav"),
+	preload("res://Assets/SoundEffects/salto_2.wav")
+]
+
+const HURT_SOUNDS := [
+	preload("res://Assets/SoundEffects/herida_1.wav"),
+	preload("res://Assets/SoundEffects/herida_2.wav"),
+	preload("res://Assets/SoundEffects/herida_3.wav"),
+]
+
+const SHOOT_COOLDOWN := .5
+const INVIS_TIME := 1.5
+const FLASH_TIMES := 18
+
 const BUBBLE_GOOD: PackedScene = preload("res://Testing/bubble_purple.tscn")
 const BUBBLE_BAD: PackedScene = preload("res://Testing/bubble_pink.tscn")
 const DEG_45: float = PI / 4.0
@@ -30,12 +45,20 @@ var health: float = 100:
 			rpc("_trigger_defeat")
 		health = val
 
+var _is_shooting := false
+var _shoot_disabled := false
+var _invincible := false
+var _flash_count := 0
+var _last_player_hurt_sound: AudioStream = null
 var _up: bool = Input.is_key_pressed(KEY_UP) or Input.is_key_pressed(KEY_W)
 var _down: bool = Input.is_key_pressed(KEY_DOWN) or Input.is_key_pressed(KEY_S)
 var _right: bool = Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D)
 var _left: bool = Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A)
 var _movement: Vector3 = Vector3.ZERO
 
+@onready var voice_pitch := randf_range(0.92, 1.03)
+@onready var audio_player: AudioStreamPlayer3D = $Head/AudioStreamPlayer3D
+@onready var bubble_blowing_player: AudioStreamPlayer3D = $Head/BubbleBlowingAudioPlayer
 @onready var body_mesh: Node = $Body
 @onready var head_node: Node = $Head
 @onready var head_mesh: Node = $Head/HeadMesh
@@ -45,14 +68,19 @@ var _movement: Vector3 = Vector3.ZERO
 
 @rpc("any_peer", "call_local", "reliable")
 func trigger_respawn() -> void:
+	velocity = Vector3.ZERO
 	collision_layer = 1
 	collision_mask = 1
 
 	var tween: Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_BACK)
-	tween.tween_property(self, "scale", Vector3.ONE, 0.5)
+	tween.tween_property(self, "scale", Vector3.ONE, 1)
+	tween.tween_callback(func() -> void: audio_player.stop())
+
 	is_alive = true
+	audio_player.stream = preload("res://Assets/SoundEffects/respawn.wav")
+	audio_player.play()
 
 
 @rpc("any_peer", "call_local", "reliable")
@@ -72,6 +100,14 @@ func _trigger_defeat() -> void:
 	_right = false
 
 	pushback_pos(position - p_cam.basis.z * 2)
+
+	var resp_cam: Camera3D = get_tree().current_scene.find_child("RespawnCamera")
+	if resp_cam:
+		p_cam.top_level = true
+		var tween_2: Tween = get_tree().create_tween()
+		tween_2.set_ease(Tween.EASE_IN_OUT)
+		tween_2.set_trans(Tween.TRANS_BACK)
+		tween_2.tween_property(p_cam, "global_transform", resp_cam.global_transform, 1.5)
 	SignalBus.player_defeat.emit(self)
 
 
@@ -145,11 +181,34 @@ func pushback_pos(pos: Vector3) -> void:
 	velocity.z = -(pos.z - move_toward(position.z, pos.z, 1)) * max_speed
 
 
+func _flash_function() -> void:
+	if _flash_count == 0:
+		_invincible = false
+		visible = true
+		return
+	_flash_count -= 1
+	visible = !visible
+	get_tree().create_timer(INVIS_TIME / FLASH_TIMES).timeout.connect(_flash_function)
+
+
 @rpc("any_peer", "reliable", "call_local")
 func pushback(node: Node3D) -> void:
 	velocity.x = -(node.position.x - move_toward(position.x, node.position.x, 1)) * max_speed
 	velocity.z = -(node.position.z - move_toward(position.z, node.position.z, 1)) * max_speed
-	if node.is_good != is_good:
+
+	if not _invincible and node.is_good != is_good:
+		var to_play: AudioStream = _last_player_hurt_sound
+		while to_play == _last_player_hurt_sound:
+			to_play = HURT_SOUNDS.pick_random()
+		audio_player.stream = to_play
+		audio_player.play()
+		audio_player.pitch_scale = voice_pitch
+		_last_player_hurt_sound = to_play
+
+		_invincible = true
+		_flash_count = FLASH_TIMES
+		get_tree().create_timer(INVIS_TIME / FLASH_TIMES).timeout.connect(_flash_function)
+
 		health -= 33.33
 
 
@@ -183,9 +242,42 @@ func _check_for_bubbles() -> void:
 			collider.rpc("burst")
 
 
-func _process(_delta: float) -> void:
-	if not is_multiplayer_authority():
+@rpc("any_peer", "call_local", "reliable")
+func _net_jump() -> void:
+	if not JUMP_SOUNDS.has(audio_player.stream) and audio_player.playing:
 		return
+	audio_player.stream = JUMP_SOUNDS.pick_random()
+	audio_player.max_db = 1
+	audio_player.play(0.1)
+	audio_player.pitch_scale = voice_pitch + randf_range(-0.03, 0.01)
+
+
+func _jump() -> void:
+	velocity.y += jump_force
+	rpc("_net_jump")
+
+
+func _attempt_shoot() -> void:
+	if _invincible or _shoot_disabled:
+		return
+	_shoot_disabled = true
+	get_tree().create_timer(SHOOT_COOLDOWN).timeout.connect(func() -> void: _shoot_disabled = false)
+	rpc("_net_shoot_bubble")
+
+
+func _process(_delta: float) -> void:
+	if not is_alive:
+		p_cam.top_level = true
+		var resp_cam: Camera3D = get_tree().current_scene.find_child("RespawnCamera")
+		if resp_cam:
+			p_cam.global_position = resp_cam.position
+			p_cam.global_rotation = resp_cam.rotation
+
+	if not is_multiplayer_authority() or not is_alive:
+		return
+
+	if _is_shooting:
+		_attempt_shoot()
 
 	if is_on_floor():
 		velocity.y = 0
@@ -193,7 +285,7 @@ func _process(_delta: float) -> void:
 		velocity.y -= gravity
 
 	if is_on_floor() and Input.is_key_pressed(KEY_SPACE):
-		velocity.y += jump_force
+		_jump()
 
 	_calculate_horizontal_movement()
 	# _check_for_bubbles()
@@ -203,8 +295,19 @@ func _process(_delta: float) -> void:
 	else:
 		p_cam.fov = clamp(p_cam.fov - _delta * 100, 75, 100)
 
+	if global_position.y < -10 and is_alive:
+		rpc("_trigger_defeat")
+		return
+
 	rpc("remote_set_position", global_position)
-	rpc("remote_set_head_rotation", head_node.rotation, spring_arm.rotation, velocity)
+	rpc(
+		"_remote_set_head_rotation",
+		head_mesh.rotation,
+		head_node.rotation,
+		spring_arm.rotation,
+		velocity,
+		body_mesh.rotation
+	)
 
 
 @rpc("any_peer", "unreliable")
@@ -212,22 +315,32 @@ func remote_set_position(real_pos: Vector3) -> void:
 	global_position = real_pos
 
 
-@rpc("any_peer", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func _net_shoot_bubble() -> void:
+	bubble_blowing_player.stream = preload("res://Assets/SoundEffects/shooting_bubble.wav")
+	bubble_blowing_player.play(0.14)
+	bubble_blowing_player.pitch_scale = randf_range(0.95, 1.05)
 	_shoot_bubble()
 
 
 @rpc("any_peer", "unreliable")
-func remote_set_head_rotation(
-	real_rotation: Vector3, real_spring_rotation: Vector3, real_velocity: Vector3
+func _remote_set_head_rotation(
+	real_head_rotation: Vector3,
+	real_head_node_rotation: Vector3,
+	real_spring_rotation: Vector3,
+	real_velocity: Vector3,
+	real_body_rotation: Vector3
 ) -> void:
 	velocity = real_velocity
-	head_node.rotation = real_rotation
-	head_mesh.rotation = real_rotation
+	head_mesh.rotation = real_head_rotation
+	head_node.rotation = real_head_node_rotation
 	spring_arm.rotation = real_spring_rotation
+	body_mesh.rotation = real_body_rotation
 
 
 func _process_keyboard(ev: InputEventKey) -> void:
+	if not is_alive:
+		return
 	match ev.keycode:
 		KEY_W, KEY_UP:
 			_up = ev.pressed
@@ -244,6 +357,8 @@ func _process_keyboard(ev: InputEventKey) -> void:
 
 
 func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
+	if not is_alive:
+		return
 	var move_x: float = ev.relative.x
 	var move_y: float = ev.relative.y
 	var head_body_diff: float
@@ -253,7 +368,7 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 
 	head_node.rotate_y(-move_x * p_cam_sensitivity)
 	spring_arm.rotate_x(-move_y * p_cam_sensitivity)
-	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -1, 1.5)
+	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -0.8, 1.3)
 	head_mesh.rotation.x = spring_arm.rotation.x
 
 	head_body_diff = angle_difference(head_node.rotation.y, body_mesh.rotation.y)
@@ -292,15 +407,12 @@ func _shoot_bubble() -> void:
 
 
 func _process_mouse_button(ev: InputEventMouseButton) -> void:
-	if ev.pressed && ev.button_index == MOUSE_BUTTON_LEFT:
-		rpc("_net_shoot_bubble")
-		_shoot_bubble()
+	if ev.button_index == MOUSE_BUTTON_LEFT:
+		_is_shooting = ev.pressed
 
 
 func _input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
-		return
-	if not is_alive:
 		return
 	if event is InputEventKey:
 		_process_keyboard(event)
@@ -308,7 +420,6 @@ func _input(event: InputEvent) -> void:
 		_process_mouse_motion(event)
 	if event is InputEventMouseButton:
 		_process_mouse_button(event)
-
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		toggle_mouse_capture()
 
