@@ -230,6 +230,3 @@ skeleton = NodePath("")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40, 3, 0)
 mesh = SubResource("ArrayMesh_paqwf")
 skeleton = NodePath("")
-
-[connection signal="pressed" from="Control/JoinLobby/join" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="Control/JoinLobby/host" to="." method="_on_host_pressed"]
