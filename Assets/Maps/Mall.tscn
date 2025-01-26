@@ -13,8 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://cstvxd2wtgm7b" path="res://Assets/Maps/Checkpoint/Bubble_stand/Bubble_stand_collisions.tscn" id="9_cnrm4"]
 [ext_resource type="PackedScene" uid="uid://c0bj1qwabx1wg" path="res://Assets/Maps/Walls/01/wall_01_collisions.tscn" id="9_htixq"]
 [ext_resource type="PackedScene" uid="uid://begglqpodlnbg" path="res://Assets/Maps/Aquarium_03/Aquarium_03_collision.tscn" id="9_jj2hr"]
-[ext_resource type="PackedScene" uid="uid://chdvyhhy1el2e" path="res://Assets/Maps/Coral/coral_display.tscn" id="9_nerx3"]
-[ext_resource type="PackedScene" uid="uid://4dw1i068ujog" path="res://Assets/Maps/Walls/01/wall_01_2_collisions.tscn" id="9_yoem3"]
+[ext_resource type="PackedScene" path="res://Assets/Maps/Coral/coral_display.tscn" id="9_nerx3"]
+[ext_resource type="PackedScene" path="res://Assets/Maps/Walls/01/wall_01_2_collisions.tscn" id="9_yoem3"]
 [ext_resource type="PackedScene" uid="uid://ddf6yinwqsjj7" path="res://Assets/Maps/Glass_walls/Glass_walls_01_collisions.tscn" id="10_fpjb6"]
 [ext_resource type="PackedScene" uid="uid://dnnhoh34gdred" path="res://Assets/Maps/Walls/02/wall_02_2_collision.tscn" id="11_jnej6"]
 [ext_resource type="PackedScene" uid="uid://cxcv2ujpgvt6r" path="res://Assets/Maps/Aquarium_04/Aquarium_04_collisions.tscn" id="11_k8vsq"]
@@ -99,18 +99,44 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="JoinLobby" type="VBoxContainer" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="JoinLobby" type="HBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -38.0
+offset_right = 173.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="join" type="Button" parent="Control/JoinLobby"]
+[node name="Buttons" type="VBoxContainer" parent="Control/JoinLobby"]
+layout_mode = 2
+
+[node name="join" type="Button" parent="Control/JoinLobby/Buttons"]
 layout_mode = 2
 text = "Join"
 
-[node name="host" type="Button" parent="Control/JoinLobby"]
+[node name="host" type="Button" parent="Control/JoinLobby/Buttons"]
 layout_mode = 2
 text = "Host"
+
+[node name="Fields" type="VBoxContainer" parent="Control/JoinLobby"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ip" type="TextEdit" parent="Control/JoinLobby/Fields"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Server IP [Default: localhost]"
+
+[node name="port" type="TextEdit" parent="Control/JoinLobby/Fields"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "Server PORT [Default: 12354]"
 
 [node name="Status" type="VBoxContainer" parent="Control"]
 layout_mode = 1
@@ -127,10 +153,10 @@ layout_mode = 2
 [node name="Id" type="Label" parent="Control/Status"]
 layout_mode = 2
 
-[node name="JoinTeam" type="VBoxContainer" parent="Control"]
+[node name="JoinTeam" type="HBoxContainer" parent="Control"]
 visible = false
 layout_mode = 1
-offset_right = 83.0
+offset_right = 159.0
 offset_bottom = 66.0
 
 [node name="JoinGood" type="Button" parent="Control/JoinTeam"]
