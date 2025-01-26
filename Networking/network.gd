@@ -1,7 +1,7 @@
 extends Node
 
-const PORT: int = 1221
-const IPADDR: String = "localhost"  # "100.93.129.57"
+const PORT: int = 12354
+const IPADDR: String = "localhost"
 
 const TRANSITION_TIME := 1.0
 const RESPAWN_TIME := 5.0
@@ -32,13 +32,15 @@ var current_bad_guy_color : Color
 var _started: bool = false
 
 @onready var start_game_button: Button = $Control/StartGame
-@onready var join_lobby_cont: VBoxContainer = $Control/JoinLobby
-@onready var join_btn: Button = $Control/JoinLobby/join
-@onready var host_btn: Button = $Control/JoinLobby/host
+@onready var join_lobby_cont: HBoxContainer = $Control/JoinLobby
+@onready var join_btn: Button = $Control/JoinLobby/Buttons/join
+@onready var host_btn: Button = $Control/JoinLobby/Buttons/host
+@onready var ip_field: TextEdit = $Control/JoinLobby/Fields/ip
+@onready var port_field: TextEdit = $Control/JoinLobby/Fields/port
 @onready var status_container: VBoxContainer = $Control/Status
 @onready var status_label: Label = $Control/Status/Status
 @onready var id_label: Label = $Control/Status/Id
-@onready var join_team_container: VBoxContainer = $Control/JoinTeam
+@onready var join_team_container: HBoxContainer = $Control/JoinTeam
 @onready var join_good_btn: Button = $Control/JoinTeam/JoinGood
 @onready var join_bad_btn: Button = $Control/JoinTeam/JoinBad
 
@@ -278,7 +280,8 @@ func sync_bubble(b: Node3D) -> void:
 
 
 func _on_host_pressed() -> void:
-	multiplayer_peer.create_server(1221)
+	var port := (port_field.text).to_int()
+	multiplayer_peer.create_server(PORT if port == 0 else port)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 	join_lobby_cont.visible = false
@@ -311,7 +314,8 @@ func _on_host_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
-	multiplayer_peer.create_client(IPADDR, PORT)
+	var port := (port_field.text).to_int()
+	multiplayer_peer.create_client(ip_field.text if ip_field.text != "" else IPADDR, PORT if port == 0 else port)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 	join_lobby_cont.visible = false
