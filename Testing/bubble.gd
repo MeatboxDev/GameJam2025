@@ -69,7 +69,6 @@ func _flash_out() -> void:
 	visible = !visible
 	get_tree().create_timer(BUBBLE_FLASH_DURATION / BUBBLE_FLASH_TIMES).timeout.connect(_flash_out)
 
-
 func _ready() -> void:
 	multiplayer.allow_object_decoding = true
 	name += "BUBBLE"
@@ -119,6 +118,7 @@ func _check_for_players(col: KinematicCollision3D) -> void:
 		rpc("net_pushback", collider)
 		collider.pushback(self)
 		rpc("burst")
+
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
