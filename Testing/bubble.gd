@@ -17,7 +17,7 @@ func _handle_body_entered(body: Node3D) -> void:
 	if not collider.is_in_group("Player"):
 		return
 	var norm: Vector3 = (body.global_position - global_position).normalized()
-	if norm.y > .5:
+	if norm.y > .3:
 		body.rpc("stomp")
 	else:
 		body.rpc("pushback", self)
