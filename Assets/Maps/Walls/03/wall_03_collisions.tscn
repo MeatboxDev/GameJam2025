@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6xxkv1gnykih"]
+
+[ext_resource type="PackedScene" uid="uid://cqavptdhfs011" path="res://Assets/Maps/Walls/03/wall_03_model.tscn" id="1_ewk2p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g1abv"]
+size = Vector3(0.15, 1, 1)
+
+[node name="Node3D" type="StaticBody3D"]
+
+[node name="blockbench_export2" parent="." instance=ExtResource("1_ewk2p")]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0.075, 0.5, 3.5)
+shape = SubResource("BoxShape3D_g1abv")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.936117, 0.174311, -0.340719, -0.0818996, 1.99239, 0.029809, 0.34202, 3.72529e-09, 0.939693, 0.325, 0.5, 2.55)
+shape = SubResource("BoxShape3D_g1abv")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.815698, 0.168372, -0.572319, -0.0818996, 1.99239, 0.029809, 0.572651, 0.0451151, 0.819489, 0.825, 0.5, 1.65)
+shape = SubResource("BoxShape3D_g1abv")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.639691, 0.150958, -0.764917, -0.0818996, 1.99239, 0.029809, 0.764256, 0.0871557, 0.643438, 1.475, 0.5, 0.9)
+shape = SubResource("BoxShape3D_g1abv")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.497261, 0.13353, -0.865028, -0.0818996, 1.99239, 0.029809, 0.863727, 0.112045, 0.500836, 2.275, 0.5, 0.4)
+shape = SubResource("BoxShape3D_g1abv")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.256768, 0.0999809, -0.965179, -0.0818996, 1.99239, 0.029809, 0.962997, 0.142788, 0.259885, 2.875, 0.5, 0.15)
+shape = SubResource("BoxShape3D_g1abv")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.00122302, 0.059618, -0.999555, -0.0818996, 1.99239, 0.029809, 0.99664, 0.163799, 0.00122298, 3.525, 0.5, 0.05)
+shape = SubResource("BoxShape3D_g1abv")
