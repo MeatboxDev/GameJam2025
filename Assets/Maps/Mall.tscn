@@ -27,7 +27,6 @@
 [ext_resource type="PackedScene" uid="uid://bebr0x3koynac" path="res://Assets/Maps/Shipping_Container/02/Shipping_container_02_collisions.tscn" id="18_hcqtt"]
 [ext_resource type="PackedScene" uid="uid://b32xuagu3efos" path="res://Assets/Maps/Walls/02/wall_02_1_collision.tscn" id="21_00oiq"]
 [ext_resource type="PackedScene" uid="uid://b6xxkv1gnykih" path="res://Assets/Maps/Walls/03/wall_03_collisions.tscn" id="26_epli4"]
-[ext_resource type="Texture2D" uid="uid://bmolufyva1v7u" path="res://Assets/Testing/skybox/lightBlueSky.jpg" id="27_6s18w"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51wxc"]
 
@@ -73,7 +72,6 @@ size = Vector2(1.275, 1.275)
 size = Vector3(0.15, 1.5, 9)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mpfqb"]
-panorama = ExtResource("27_6s18w")
 
 [sub_resource type="Sky" id="Sky_jmtg8"]
 sky_material = SubResource("PanoramaSkyMaterial_mpfqb")
