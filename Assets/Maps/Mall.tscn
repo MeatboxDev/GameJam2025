@@ -1,8 +1,8 @@
 [gd_scene load_steps=29 format=3 uid="uid://bg4e1fd6q8l1f"]
 
+[ext_resource type="Script" path="res://Networking/network.gd" id="1_wc5cs"]
 [ext_resource type="Texture2D" uid="uid://8eyfsxqm4h0x" path="res://Assets/Maps/Mesh_Library/quartercircle_ul.png" id="2_nklqx"]
 [ext_resource type="PackedScene" uid="uid://baoi4sp0b6jag" path="res://Assets/Maps/Checkpoint/Platform_high/Platform_high_collisions.tscn" id="2_pmh7e"]
-[ext_resource type="PackedScene" uid="uid://bgm7yu8dotoe7" path="res://Networking/test_character.tscn" id="4_swfks"]
 [ext_resource type="PackedScene" uid="uid://re3kxtsmtjhx" path="res://Assets/Maps/Aquarium_02/Aquarium_02_collision.tscn" id="5_vhbr6"]
 [ext_resource type="PackedScene" uid="uid://ce2kx67hftbpn" path="res://Assets/Maps/Checkpoint/Platform/Checkpoint_platform_collisions.tscn" id="7_7b7u7"]
 [ext_resource type="PackedScene" uid="uid://ca73wsuj58xu0" path="res://Assets/Maps/Ads/Ad_Display.tscn" id="7_etr8l"]
@@ -60,10 +60,101 @@ texture_filter = 0
 material = SubResource("StandardMaterial3D_37tan")
 size = Vector2(1.275, 1.275)
 
-[node name="Node3D" type="Node3D"]
+[node name="Network" type="Node3D" node_paths=PackedStringArray("good_guys_spawn_points", "bad_guys_spawn_points", "good_guys_stands", "bad_guys_stands")]
+script = ExtResource("1_wc5cs")
+good_guys_spawn_points = [NodePath("BaseGood/GoodSpawnPoints/GoodSpawn"), NodePath("BaseGood/GoodSpawnPoints/GoodSpawn2"), NodePath("BaseGood/GoodSpawnPoints/GoodSpawn3"), NodePath("BaseGood/GoodSpawnPoints/GoodSpawn4")]
+bad_guys_spawn_points = [NodePath("BaseBad/BadSpawnPoints/BadSpawn"), NodePath("BaseBad/BadSpawnPoints/BadSpawn2"), NodePath("BaseBad/BadSpawnPoints/BadSpawn3"), NodePath("BaseBad/BadSpawnPoints/BadSpawn4")]
+good_guys_stands = [NodePath("BaseGood/Checkpoint3/BubbleGoodStand_3"), NodePath("BaseGood/Checkpoint2/BubbleGoodStand_2"), NodePath("BaseGood/Checkpoint1/BubbleGoodStand_1")]
+bad_guys_stands = [NodePath("BaseBad/Checkpoint1/BubbleBadStand_1"), NodePath("BaseBad/Checkpoint2/BubbleBadStand_2"), NodePath("BaseBad/Checkpoint3/BubbleBadStand_3")]
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("4_swfks")]
-transform = Transform3D(0.645, 0, 0, 0, 0.645, 0, 0, 0, 0.645, -6, 7, 25)
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="JoinLobby" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="join" type="Button" parent="Control/JoinLobby"]
+layout_mode = 2
+text = "Join"
+
+[node name="host" type="Button" parent="Control/JoinLobby"]
+layout_mode = 2
+text = "Host"
+
+[node name="Status" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -44.0
+offset_bottom = 67.0
+grow_horizontal = 0
+
+[node name="Status" type="Label" parent="Control/Status"]
+layout_mode = 2
+
+[node name="Id" type="Label" parent="Control/Status"]
+layout_mode = 2
+
+[node name="JoinTeam" type="VBoxContainer" parent="Control"]
+visible = false
+layout_mode = 1
+offset_right = 83.0
+offset_bottom = 66.0
+
+[node name="JoinGood" type="Button" parent="Control/JoinTeam"]
+layout_mode = 2
+text = "Join Good"
+
+[node name="JoinBad" type="Button" parent="Control/JoinTeam"]
+layout_mode = 2
+text = "Join Bad"
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = 12.5
+offset_right = 20.0
+offset_bottom = 35.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "x"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartGame" type="Button" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.0
+offset_top = -31.0
+offset_right = 88.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press P to start game!"
+
+[node name="RespawnCamera" type="Camera3D" parent="."]
+transform = Transform3D(-0.00873428, -0.190021, 0.981741, 0, 0.981779, 0.190028, -0.999962, 0.00165976, -0.00857513, 6.897, 16, -17.265)
+fov = 70.0
+near = 0.001
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.561458, 0.639939, -0.524636, -0.277999, 0.451282, 0.847975, 0.779411, 0.62195, -0.0754735, -26.981, 35.3289, 22.6015)
@@ -221,396 +312,388 @@ transform = Transform3D(0.00999999, 0, 0, 0, 1, 0, 0, 0, 0.812652, -4.3, -2.1, -
 
 [node name="Walls" type="Node3D" parent="Center"]
 
-[node name="Base_left" type="Node3D" parent="."]
+[node name="BaseBad" type="Node3D" parent="."]
 
-[node name="Checkpoint3" type="Node3D" parent="Base_left"]
+[node name="Checkpoint3" type="Node3D" parent="BaseBad"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="Checkpoint2_platform_Col" parent="Base_left/Checkpoint3" instance=ExtResource("7_7b7u7")]
+[node name="Checkpoint2_platform_Col" parent="BaseBad/Checkpoint3" instance=ExtResource("7_7b7u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 8.5, 22.5)
 
-[node name="Checkpoint2_stairs" parent="Base_left/Checkpoint3" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint2_stairs" parent="BaseBad/Checkpoint3" instance=ExtResource("8_abb0o")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -25, 5.5, 30)
 
-[node name="Aquarium_01_collisions" parent="Base_left/Checkpoint3" instance=ExtResource("8_5oof7")]
+[node name="Aquarium_01_collisions" parent="BaseBad/Checkpoint3" instance=ExtResource("8_5oof7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22, 5.5, 20)
 
-[node name="Glass_walls_01_collisions" parent="Base_left/Checkpoint3" instance=ExtResource("10_fpjb6")]
+[node name="Glass_walls_01_collisions" parent="BaseBad/Checkpoint3" instance=ExtResource("10_fpjb6")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22, 9.5, 25)
 
-[node name="Bubble_stand_collisions" parent="Base_left/Checkpoint3" instance=ExtResource("9_cnrm4")]
+[node name="BubbleBadStand_3" parent="BaseBad/Checkpoint3" instance=ExtResource("9_cnrm4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.5, 22.5)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Base_left/Checkpoint3/Bubble_stand_collisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.270409, 0)
-light_color = Color(1, 1, 0, 1)
-omni_range = 2.325
-omni_attenuation = -3.445
-
-[node name="AdDisplay2" parent="Base_left/Checkpoint3" instance=ExtResource("7_etr8l")]
+[node name="AdDisplay2" parent="BaseBad/Checkpoint3" instance=ExtResource("7_etr8l")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -25, 9, 19.95)
 
-[node name="Checkpoint2" type="Node3D" parent="Base_left"]
+[node name="Checkpoint2" type="Node3D" parent="BaseBad"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2.5, 45)
 
-[node name="Platform_high_collisions" parent="Base_left/Checkpoint2" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions" parent="BaseBad/Checkpoint2" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3, -11.5)
 
-[node name="Checkpoint_platform_Col" parent="Base_left/Checkpoint2" instance=ExtResource("7_7b7u7")]
+[node name="Checkpoint_platform_Col" parent="BaseBad/Checkpoint2" instance=ExtResource("7_7b7u7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.5, 8, -14)
 
-[node name="Glass_walls_01_collisions" parent="Base_left/Checkpoint2" instance=ExtResource("10_fpjb6")]
+[node name="Glass_walls_01_collisions" parent="BaseBad/Checkpoint2" instance=ExtResource("10_fpjb6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9, -11.5)
 
-[node name="Glass_walls_01_collisions2" parent="Base_left/Checkpoint2" instance=ExtResource("10_fpjb6")]
+[node name="Glass_walls_01_collisions2" parent="BaseBad/Checkpoint2" instance=ExtResource("10_fpjb6")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 9, -11.5)
 
-[node name="AdDisplay" parent="Base_left/Checkpoint2" instance=ExtResource("7_etr8l")]
+[node name="AdDisplay" parent="BaseBad/Checkpoint2" instance=ExtResource("7_etr8l")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 11, 8, -16.55)
 
-[node name="Bubble_stand_collisions" parent="Base_left/Checkpoint2" instance=ExtResource("9_cnrm4")]
+[node name="BubbleBadStand_2" parent="BaseBad/Checkpoint2" instance=ExtResource("9_cnrm4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 9, -14)
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="Base_left/Checkpoint2/Bubble_stand_collisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.540817, 0)
-light_color = Color(1, 1, 0, 1)
-omni_range = 2.325
-omni_attenuation = -3.445
+[node name="Checkpoint1" type="Node3D" parent="BaseBad"]
 
-[node name="Checkpoint1" type="Node3D" parent="Base_left"]
-
-[node name="Checkpoint1_stairs" parent="Base_left/Checkpoint1" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint1_stairs" parent="BaseBad/Checkpoint1" instance=ExtResource("8_abb0o")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 5.5, 43)
 
-[node name="Checkpoint1_platform_Col2" parent="Base_left/Checkpoint1" instance=ExtResource("7_7b7u7")]
+[node name="Checkpoint1_platform_Col2" parent="BaseBad/Checkpoint1" instance=ExtResource("7_7b7u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 8.5, 50.5)
 
-[node name="Bubble_stand_collisions2" parent="Base_left/Checkpoint1" instance=ExtResource("9_cnrm4")]
+[node name="BubbleBadStand_1" parent="BaseBad/Checkpoint1" instance=ExtResource("9_cnrm4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 9.5, 50.5)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Base_left/Checkpoint1/Bubble_stand_collisions2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.270409, 0)
-light_color = Color(1, 1, 0, 1)
-omni_range = 2.325
-omni_attenuation = -3.445
-
-[node name="Node3D2" parent="Base_left/Checkpoint1" instance=ExtResource("9_jj2hr")]
+[node name="Node3D2" parent="BaseBad/Checkpoint1" instance=ExtResource("9_jj2hr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2.5, 45)
 
-[node name="Node3D" parent="Base_left/Checkpoint1" instance=ExtResource("9_jj2hr")]
+[node name="Node3D" parent="BaseBad/Checkpoint1" instance=ExtResource("9_jj2hr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 2.5, 45)
 
-[node name="Center_Side" type="Node3D" parent="Base_left"]
+[node name="Center_Side" type="Node3D" parent="BaseBad"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.33, -14, 2.5, 35)
 
-[node name="Aquarium_02_collision" parent="Base_left/Center_Side" instance=ExtResource("5_vhbr6")]
+[node name="Aquarium_02_collision" parent="BaseBad/Center_Side" instance=ExtResource("5_vhbr6")]
 
-[node name="Mall_ad_collisions" parent="Base_left/Center_Side" instance=ExtResource("8_jch2e")]
+[node name="Mall_ad_collisions" parent="BaseBad/Center_Side" instance=ExtResource("8_jch2e")]
 transform = Transform3D(-5.81361e-08, 0, -1, 0, 1, 0, 1, 0, -3.28657e-08, 0, 3, 0)
 
-[node name="Shipping_container_collisions" parent="Base_left/Center_Side" instance=ExtResource("8_0if11")]
+[node name="Shipping_container_collisions" parent="BaseBad/Center_Side" instance=ExtResource("8_0if11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.827068, 6, 3, -9.02256)
 
-[node name="Aquarium_04_collisions" parent="Base_left/Center_Side" instance=ExtResource("11_k8vsq")]
+[node name="Aquarium_04_collisions" parent="BaseBad/Center_Side" instance=ExtResource("11_k8vsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -9.02256)
 
-[node name="bottom" type="Node3D" parent="Base_left/Center_Side"]
+[node name="bottom" type="Node3D" parent="BaseBad/Center_Side"]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 
-[node name="Platform_high_collisions9" parent="Base_left/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions9" parent="BaseBad/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.02, 0, 0, 0, 1, 0, 0, 0, 0.75188, 6.25, -2.05, -8.27068)
 
-[node name="Platform_high_collisions11" parent="Base_left/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions11" parent="BaseBad/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 6.25, -2.05, -12.1429)
 
-[node name="Platform_high_collisions12" parent="Base_left/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions12" parent="BaseBad/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 0.987082, -2.05, -12.1429)
 
-[node name="Platform_high_collisions13" parent="Base_left/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions13" parent="BaseBad/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 6.25, -2.05, -8.7594)
 
-[node name="Platform_high_collisions14" parent="Base_left/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions14" parent="BaseBad/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 0.987082, -2.05, -8.7594)
 
-[node name="Platform_high_collisions10" parent="Base_left/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions10" parent="BaseBad/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.00999999, 0, 0, 0, 1, 0, 0, 0, 0.812652, -4.3, -2.1, -8.62457)
 
-[node name="Bottom_internal_tank" type="Node3D" parent="Base_left/Center_Side"]
+[node name="Bottom_internal_tank" type="Node3D" parent="BaseBad/Center_Side"]
 process_mode = 4
 
-[node name="Platform_high_collisions2" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions2" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.75188, 7, -2.15, -3.7594)
 
-[node name="Platform_high_collisions" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.827068, 7, -2.05, 0.37594)
 
-[node name="Platform_high_collisions4" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions4" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(7.45058e-09, 0, 0.827068, 0, 1, 0, -0.1, 0, 6.16213e-08, 6.5, -2.05, 0.112783)
 
-[node name="Platform_high_collisions5" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions5" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(7.45058e-09, 0, 0.827068, 0, 1, 0, -0.1, 0, 6.16213e-08, 2.35, -2.05, 0.112783)
 
-[node name="Platform_high_collisions6" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions6" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, -9.68575e-08, 0, 1, 0, 9.8034e-09, 0, 0.827068, -0.0999994, -2.05, 0.112783)
 
-[node name="Platform_high_collisions7" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions7" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, -6.78003e-08, 0, 1, 0, 9.80339e-09, 0, 0.578947, -0.0999994, -2.05, -4.02255)
 
-[node name="Platform_high_collisions3" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions3" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-4.37115e-10, 0, 0.612782, 0, 1, 0, -0.0751882, 0, -2.01395e-07, 6.35, -2.2, -6.58601)
 
-[node name="Platform_high_collisions8" parent="Base_left/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions8" parent="BaseBad/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-4.37115e-10, 0, 0.67406, 0, 1, 0, -0.0751882, 0, -2.21535e-07, 3.3, -2.2, -6.58601)
 
-[node name="Special_Tiles" type="Node3D" parent="Base_left"]
+[node name="Special_Tiles" type="Node3D" parent="BaseBad"]
 
-[node name="Quarter_circle_UR" type="StaticBody3D" parent="Base_left/Special_Tiles"]
+[node name="Quarter_circle_UR" type="StaticBody3D" parent="BaseBad/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -19.95, 5.505, 15.025)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_left/Special_Tiles/Quarter_circle_UR"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
 mesh = SubResource("PlaneMesh_1vtsp")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_left/Special_Tiles/Quarter_circle_UR"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 2.27374e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.638162, -0.638161, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR2" type="StaticBody3D" parent="Base_left/Special_Tiles"]
+[node name="Quarter_circle_UR2" type="StaticBody3D" parent="BaseBad/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -5.95, 5.505, 15.025)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_left/Special_Tiles/Quarter_circle_UR2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR2"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.0319082, 0, 0)
 mesh = SubResource("PlaneMesh_4c6p6")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_left/Special_Tiles/Quarter_circle_UR2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR2"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 2.55795e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.638162, -0.638162, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR3" type="StaticBody3D" parent="Base_left/Special_Tiles"]
+[node name="Quarter_circle_UR3" type="StaticBody3D" parent="BaseBad/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -5.95, 5.505, 38.025)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_left/Special_Tiles/Quarter_circle_UR3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR3"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.0319083, 0.0159531, 0)
 mesh = SubResource("PlaneMesh_iup4r")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_left/Special_Tiles/Quarter_circle_UR3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR3"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 3.12639e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.654116, 0.62221, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR4" type="StaticBody3D" parent="Base_left/Special_Tiles"]
+[node name="Quarter_circle_UR4" type="StaticBody3D" parent="BaseBad/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -24.9, 5.505, 38.025)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_left/Special_Tiles/Quarter_circle_UR4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR4"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 3.69482e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.462668, 0.622211, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_left/Special_Tiles/Quarter_circle_UR4"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseBad/Special_Tiles/Quarter_circle_UR4"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.0319083, 0.0159531, 0)
 mesh = SubResource("PlaneMesh_l6b2b")
 skeleton = NodePath("../..")
 
-[node name="Base_right" type="Node3D" parent="."]
+[node name="BadSpawnPoints" type="Node" parent="BaseBad"]
+
+[node name="BadSpawn" type="Node3D" parent="BaseBad/BadSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.529, 5.45226, 44.0084)
+
+[node name="BadSpawn2" type="Node3D" parent="BaseBad/BadSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.4854, 5.45226, 40.9952)
+
+[node name="BadSpawn3" type="Node3D" parent="BaseBad/BadSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.5615, 5.45226, 43.8769)
+
+[node name="BadSpawn4" type="Node3D" parent="BaseBad/BadSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.6406, 5.45226, 40.6567)
+
+[node name="BaseGood" type="Node3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -26, 0, -32)
 
-[node name="Checkpoint3" type="Node3D" parent="Base_right"]
+[node name="Checkpoint3" type="Node3D" parent="BaseGood"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
 
-[node name="Checkpoint2_platform_Col" parent="Base_right/Checkpoint3" instance=ExtResource("7_7b7u7")]
+[node name="Checkpoint2_platform_Col" parent="BaseGood/Checkpoint3" instance=ExtResource("7_7b7u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 8.5, 22.5)
 
-[node name="Checkpoint2_stairs" parent="Base_right/Checkpoint3" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint2_stairs" parent="BaseGood/Checkpoint3" instance=ExtResource("8_abb0o")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -25, 5.5, 30)
 
-[node name="Aquarium_01_collisions" parent="Base_right/Checkpoint3" instance=ExtResource("8_5oof7")]
+[node name="Aquarium_01_collisions" parent="BaseGood/Checkpoint3" instance=ExtResource("8_5oof7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -22, 5.5, 20)
 
-[node name="Glass_walls_01_collisions" parent="Base_right/Checkpoint3" instance=ExtResource("10_fpjb6")]
+[node name="Glass_walls_01_collisions" parent="BaseGood/Checkpoint3" instance=ExtResource("10_fpjb6")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -22, 9.5, 25)
 
-[node name="Bubble_stand_collisions" parent="Base_right/Checkpoint3" instance=ExtResource("9_cnrm4")]
+[node name="BubbleGoodStand_3" parent="BaseGood/Checkpoint3" instance=ExtResource("9_cnrm4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5, 9.5, 22.5)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Base_right/Checkpoint3/Bubble_stand_collisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.270409, 0)
-light_color = Color(1, 1, 0, 1)
-omni_range = 2.325
-omni_attenuation = -3.445
-
-[node name="AdDisplay2" parent="Base_right/Checkpoint3" instance=ExtResource("7_etr8l")]
+[node name="AdDisplay2" parent="BaseGood/Checkpoint3" instance=ExtResource("7_etr8l")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, -25, 9, 19.95)
 
-[node name="Checkpoint2" type="Node3D" parent="Base_right"]
+[node name="Checkpoint2" type="Node3D" parent="BaseGood"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2.5, 45)
 
-[node name="Platform_high_collisions" parent="Base_right/Checkpoint2" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions" parent="BaseGood/Checkpoint2" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 3, -11.5)
 
-[node name="Checkpoint_platform_Col" parent="Base_right/Checkpoint2" instance=ExtResource("7_7b7u7")]
+[node name="Checkpoint_platform_Col" parent="BaseGood/Checkpoint2" instance=ExtResource("7_7b7u7")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 11.5, 8, -14)
 
-[node name="Glass_walls_01_collisions" parent="Base_right/Checkpoint2" instance=ExtResource("10_fpjb6")]
+[node name="Glass_walls_01_collisions" parent="BaseGood/Checkpoint2" instance=ExtResource("10_fpjb6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9, 9, -11.5)
 
-[node name="Glass_walls_01_collisions2" parent="Base_right/Checkpoint2" instance=ExtResource("10_fpjb6")]
+[node name="Glass_walls_01_collisions2" parent="BaseGood/Checkpoint2" instance=ExtResource("10_fpjb6")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 14, 9, -11.5)
 
-[node name="AdDisplay" parent="Base_right/Checkpoint2" instance=ExtResource("7_etr8l")]
+[node name="AdDisplay" parent="BaseGood/Checkpoint2" instance=ExtResource("7_etr8l")]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 11, 8, -16.55)
 
-[node name="Bubble_stand_collisions" parent="Base_right/Checkpoint2" instance=ExtResource("9_cnrm4")]
+[node name="BubbleGoodStand_2" parent="BaseGood/Checkpoint2" instance=ExtResource("9_cnrm4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5, 9, -14)
 
-[node name="OmniLight3D2" type="OmniLight3D" parent="Base_right/Checkpoint2/Bubble_stand_collisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.540817, 0)
-light_color = Color(1, 1, 0, 1)
-omni_range = 2.325
-omni_attenuation = -3.445
+[node name="Checkpoint1" type="Node3D" parent="BaseGood"]
 
-[node name="Checkpoint1" type="Node3D" parent="Base_right"]
-
-[node name="Checkpoint1_stairs" parent="Base_right/Checkpoint1" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint1_stairs" parent="BaseGood/Checkpoint1" instance=ExtResource("8_abb0o")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 5.5, 43)
 
-[node name="Checkpoint1_platform_Col2" parent="Base_right/Checkpoint1" instance=ExtResource("7_7b7u7")]
+[node name="Checkpoint1_platform_Col2" parent="BaseGood/Checkpoint1" instance=ExtResource("7_7b7u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 8.5, 50.5)
 
-[node name="Bubble_stand_collisions2" parent="Base_right/Checkpoint1" instance=ExtResource("9_cnrm4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 9.5, 50.5)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Base_right/Checkpoint1/Bubble_stand_collisions2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.270409, 0)
-light_color = Color(1, 1, 0, 1)
-omni_range = 2.325
-omni_attenuation = -3.445
-
-[node name="Node3D2" parent="Base_right/Checkpoint1" instance=ExtResource("9_jj2hr")]
+[node name="Node3D2" parent="BaseGood/Checkpoint1" instance=ExtResource("9_jj2hr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 2.5, 45)
 
-[node name="Node3D" parent="Base_right/Checkpoint1" instance=ExtResource("9_jj2hr")]
+[node name="Node3D" parent="BaseGood/Checkpoint1" instance=ExtResource("9_jj2hr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21, 2.5, 45)
 
-[node name="Center_Side" type="Node3D" parent="Base_right"]
+[node name="BubbleGoodStand_1" parent="BaseGood/Checkpoint1" instance=ExtResource("9_cnrm4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.5, 9.5, 50.5)
+
+[node name="Center_Side" type="Node3D" parent="BaseGood"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.33, -14, 2.5, 35)
 
-[node name="Aquarium_02_collision" parent="Base_right/Center_Side" instance=ExtResource("5_vhbr6")]
+[node name="Aquarium_02_collision" parent="BaseGood/Center_Side" instance=ExtResource("5_vhbr6")]
 
-[node name="Mall_ad_collisions" parent="Base_right/Center_Side" instance=ExtResource("8_jch2e")]
+[node name="Mall_ad_collisions" parent="BaseGood/Center_Side" instance=ExtResource("8_jch2e")]
 transform = Transform3D(-5.81361e-08, 0, -1, 0, 1, 0, 1, 0, -3.28657e-08, 0, 3, 0)
 
-[node name="Shipping_container_collisions" parent="Base_right/Center_Side" instance=ExtResource("8_0if11")]
+[node name="Shipping_container_collisions" parent="BaseGood/Center_Side" instance=ExtResource("8_0if11")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.827068, 6, 3, -9.02256)
 
-[node name="Aquarium_04_collisions" parent="Base_right/Center_Side" instance=ExtResource("11_k8vsq")]
+[node name="Aquarium_04_collisions" parent="BaseGood/Center_Side" instance=ExtResource("11_k8vsq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -9.02256)
 
-[node name="bottom" type="Node3D" parent="Base_right/Center_Side"]
+[node name="bottom" type="Node3D" parent="BaseGood/Center_Side"]
 process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.15, 0)
 
-[node name="Platform_high_collisions9" parent="Base_right/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions9" parent="BaseGood/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.02, 0, 0, 0, 1, 0, 0, 0, 0.75188, 6.25, -2.05, -8.27068)
 
-[node name="Platform_high_collisions11" parent="Base_right/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions11" parent="BaseGood/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 6.25, -2.05, -12.1429)
 
-[node name="Platform_high_collisions12" parent="Base_right/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions12" parent="BaseGood/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 0.987082, -2.05, -12.1429)
 
-[node name="Platform_high_collisions13" parent="Base_right/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions13" parent="BaseGood/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 6.25, -2.05, -8.7594)
 
-[node name="Platform_high_collisions14" parent="Base_right/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions14" parent="BaseGood/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-8.74227e-10, 0, 1.05263, 0, 1, 0, -0.02, 0, -4.6012e-08, 0.987082, -2.05, -8.7594)
 
-[node name="Platform_high_collisions10" parent="Base_right/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions10" parent="BaseGood/Center_Side/bottom" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.00999999, 0, 0, 0, 1, 0, 0, 0, 0.812652, -4.3, -2.1, -8.62457)
 
-[node name="Bottom_internal_tank" type="Node3D" parent="Base_right/Center_Side"]
+[node name="Bottom_internal_tank" type="Node3D" parent="BaseGood/Center_Side"]
 process_mode = 4
 
-[node name="Platform_high_collisions2" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions2" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.75188, 7, -2.15, -3.7594)
 
-[node name="Platform_high_collisions" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, 0, 0, 1, 0, 0, 0, 0.827068, 7, -2.05, 0.37594)
 
-[node name="Platform_high_collisions4" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions4" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(7.45058e-09, 0, 0.827068, 0, 1, 0, -0.1, 0, 6.16213e-08, 6.5, -2.05, 0.112783)
 
-[node name="Platform_high_collisions5" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions5" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(7.45058e-09, 0, 0.827068, 0, 1, 0, -0.1, 0, 6.16213e-08, 2.35, -2.05, 0.112783)
 
-[node name="Platform_high_collisions6" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions6" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, -9.68575e-08, 0, 1, 0, 9.8034e-09, 0, 0.827068, -0.0999994, -2.05, 0.112783)
 
-[node name="Platform_high_collisions7" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions7" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(0.1, 0, -6.78003e-08, 0, 1, 0, 9.80339e-09, 0, 0.578947, -0.0999994, -2.05, -4.02255)
 
-[node name="Platform_high_collisions3" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions3" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-4.37115e-10, 0, 0.612782, 0, 1, 0, -0.0751882, 0, -2.01395e-07, 6.35, -2.2, -6.58601)
 
-[node name="Platform_high_collisions8" parent="Base_right/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
+[node name="Platform_high_collisions8" parent="BaseGood/Center_Side/Bottom_internal_tank" instance=ExtResource("2_pmh7e")]
 transform = Transform3D(-4.37115e-10, 0, 0.67406, 0, 1, 0, -0.0751882, 0, -2.21535e-07, 3.3, -2.2, -6.58601)
 
-[node name="Special_Tiles" type="Node3D" parent="Base_right"]
+[node name="Special_Tiles" type="Node3D" parent="BaseGood"]
 
-[node name="Quarter_circle_UR" type="StaticBody3D" parent="Base_right/Special_Tiles"]
+[node name="Quarter_circle_UR" type="StaticBody3D" parent="BaseGood/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -19.95, 5.505, 15.025)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_right/Special_Tiles/Quarter_circle_UR"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0, 0, 0)
 mesh = SubResource("PlaneMesh_1vtsp")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_right/Special_Tiles/Quarter_circle_UR"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 2.27374e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.638162, -0.638161, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR2" type="StaticBody3D" parent="Base_right/Special_Tiles"]
+[node name="Quarter_circle_UR2" type="StaticBody3D" parent="BaseGood/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -5.95, 5.505, 15.025)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_right/Special_Tiles/Quarter_circle_UR2"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR2"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.0319082, 0, 0)
 mesh = SubResource("PlaneMesh_4c6p6")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_right/Special_Tiles/Quarter_circle_UR2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR2"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 2.55795e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.638162, -0.638162, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR3" type="StaticBody3D" parent="Base_right/Special_Tiles"]
+[node name="Quarter_circle_UR3" type="StaticBody3D" parent="BaseGood/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -5.95, 5.505, 38.025)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_right/Special_Tiles/Quarter_circle_UR3"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR3"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.0319083, 0.0159531, 0)
 mesh = SubResource("PlaneMesh_iup4r")
 skeleton = NodePath("../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_right/Special_Tiles/Quarter_circle_UR3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR3"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 3.12639e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.654116, 0.62221, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR4" type="StaticBody3D" parent="Base_right/Special_Tiles"]
+[node name="Quarter_circle_UR4" type="StaticBody3D" parent="BaseGood/Special_Tiles"]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -24.9, 5.505, 38.025)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Base_right/Special_Tiles/Quarter_circle_UR4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR4"]
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 3.69482e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.462668, 0.622211, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Base_right/Special_Tiles/Quarter_circle_UR4"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="BaseGood/Special_Tiles/Quarter_circle_UR4"]
 transform = Transform3D(-1, -8.74228e-08, 0, 0, -4.37114e-08, -1, 8.74228e-08, -1, 4.37114e-08, 0.0319083, 0.0159531, 0)
 mesh = SubResource("PlaneMesh_l6b2b")
 skeleton = NodePath("../..")
 
-[node name="Aquarium_04_collisions" parent="Base_right" instance=ExtResource("11_k8vsq")]
+[node name="Aquarium_04_collisions" parent="BaseGood" instance=ExtResource("11_k8vsq")]
 transform = Transform3D(-5.24537e-08, 0, 1.33, 0, 1, 0, -1.2, 0, -5.81361e-08, -21, 6.5, -9)
 
-[node name="Aquarium_04_collisions2" parent="Base_right" instance=ExtResource("11_k8vsq")]
+[node name="Aquarium_04_collisions2" parent="BaseGood" instance=ExtResource("11_k8vsq")]
 transform = Transform3D(-5.28908e-08, 0, 1.33, 0, 1, 0, -1.21, 0, -5.81361e-08, -0.999996, 6.5, -9)
+
+[node name="GoodSpawnPoints" type="Node" parent="BaseGood"]
+
+[node name="GoodSpawn" type="Node3D" parent="BaseGood/GoodSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51021, 5.45226, -76.0286)
+
+[node name="GoodSpawn2" type="Node3D" parent="BaseGood/GoodSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.51021, 5.45226, -72.7211)
+
+[node name="GoodSpawn3" type="Node3D" parent="BaseGood/GoodSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4738, 5.45226, -72.7211)
+
+[node name="GoodSpawn4" type="Node3D" parent="BaseGood/GoodSpawnPoints"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.4738, 5.45226, -76.0286)
 
 [node name="Tiles" type="Node3D" parent="."]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

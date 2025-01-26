@@ -274,8 +274,12 @@ func _shoot_bubble() -> void:
 	bubble.direction = (-p_cam.global_basis.z)
 	bubble.scale = Vector3.ONE * 0.01
 	var mesh: MeshInstance3D = bubble.find_child("BubbleGood" if is_good else "BubbleBad")
-	var new_mat: StandardMaterial3D = load("res://Materials/bubble_material.tres")
-	new_mat.albedo_color = color
+	var new_mat: StandardMaterial3D = (
+		load("res://Materials/bubble_material_good.tres")
+		if is_good
+		else load("res://Materials/bubble_material_bad.tres")
+	)
+	new_mat.albedo_color = color * 3
 	mesh.material_override = new_mat
 
 	var dot: float = bubble.direction.normalized().dot(velocity.normalized())
