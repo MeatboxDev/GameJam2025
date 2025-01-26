@@ -4557,17 +4557,12 @@ _data = {
 }
 
 [node name="CharacterBody3D" type="CharacterBody3D" groups=["Player"]]
-transform = Transform3D(0.565, 0, 0, 0, 0.565, 0, 0, 0, 0.565, 0, 0, 0)
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
 script = ExtResource("1_n8brg")
-body_rotation_strength = null
-decel_speed = null
 impulse_max_speed = 50.0
-jump_force = 25.0
-jump_speed_boost = null
-max_speed = 10.0
-p_cam_sensitivity = null
+jump_force = 20.0
+max_speed = 6.0
 speed = 0.83
-gravity = null
 
 [node name="rig" type="Node3D" parent="."]
 transform = Transform3D(1.76991, 0, 0, 0, 1.76991, 0, 0, 0, 1.76991, 0, 0, 0)

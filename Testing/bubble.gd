@@ -1,5 +1,6 @@
 extends StaticBody3D
 
+const BUBBLE_SCALE := Vector3.ONE * 0.5
 const BUBBLE_LIFE_DURATION := 5.0
 const BUBBLE_FLASH_DURATION := 1.0
 const BUBBLE_FLASH_TIMES := 18
@@ -84,7 +85,7 @@ func _ready() -> void:
 	var tween: Tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_trans(Tween.TRANS_ELASTIC)
-	tween.tween_property(self, "scale", Vector3.ONE, decel_start_time * 3)
+	tween.tween_property(self, "scale", BUBBLE_SCALE, decel_start_time * 3)
 
 	var timer: SceneTreeTimer = get_tree().create_timer(decel_start_time)
 	timer.connect("timeout", _on_timeout)
