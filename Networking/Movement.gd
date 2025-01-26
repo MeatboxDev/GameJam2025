@@ -265,13 +265,7 @@ func _attempt_shoot() -> void:
 	rpc("_net_shoot_bubble")
 
 
-func _process(_delta: float) -> void:
-	if not is_alive:
-		p_cam.top_level = true
-		var resp_cam: Camera3D = get_tree().current_scene.find_child("RespawnCamera")
-		if resp_cam:
-			p_cam.global_position = resp_cam.position
-			p_cam.global_rotation = resp_cam.rotation
+func _physics_process(_delta: float) -> void:
 
 	if not is_multiplayer_authority() or not is_alive:
 		return
@@ -385,7 +379,7 @@ func _shoot_bubble() -> void:
 
 	var bubble: Node3D = (BUBBLE_GOOD if is_good else BUBBLE_BAD).instantiate()
 
-	bubble.position = bubble_cast.global_position - (p_cam.global_basis.z * 2)
+	bubble.position = bubble_cast.global_position - (p_cam.global_basis.z * 3)
 	bubble.direction = (-p_cam.global_basis.z)
 	bubble.scale = Vector3.ONE * 0.01
 	var mesh: MeshInstance3D = bubble.find_child("BubbleGood" if is_good else "BubbleBad")

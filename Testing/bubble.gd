@@ -119,8 +119,7 @@ func _check_for_players(col: KinematicCollision3D) -> void:
 		collider.pushback(self)
 		rpc("burst")
 
-
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 
