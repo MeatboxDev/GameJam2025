@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=4 uid="uid://dtclk5g26eag5"]
 
 [ext_resource type="Script" path="res://Testing/bubble.gd" id="1_7tr6b"]
-[ext_resource type="Material" uid="uid://cv0mqbhk2dx1u" path="res://Materials/bubble_material.tres" id="2_6x142"]
+[ext_resource type="Material" uid="uid://cv0mqbhk2dx1u" path="res://Materials/bubble_material_bad.tres" id="2_6x142"]
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nq0pj"]
 _surfaces = [{
