@@ -3,6 +3,9 @@ extends Node
 const PORT: int = 1221
 const IPADDR: String = "localhost"  # "100.93.129.57"
 
+const TRANSITION_TIME := 1.0
+const RESPAWN_TIME := 5.0
+
 @export var good_guys_spawn_points: Array[Node3D]
 @export var bad_guys_spawn_points: Array[Node3D]
 @export var good_guys_stands: Array[Node3D]
@@ -222,19 +225,28 @@ func _respawn_player(player: CharacterBody3D) -> void:
 	player.position.y = spawn_pool[0].position.y + 3
 	spawn_pool.push_back(spawn_pool.pop_front())
 
-	if player.get_multiplayer_authority() == multiplayer.get_unique_id():
-		player.p_cam.make_current()
-
 	player.health = 100
 	player.rpc("trigger_respawn")
 
+func _respawn_transition(player: CharacterBody3D) -> void:
+	var spawn_point: Node3D = good_guys_spawn_points.front() if player.is_good else bad_guys_spawn_points.front()
+	var tween_2: Tween = get_tree().create_tween()
+	tween_2.set_ease(Tween.EASE_IN_OUT)
+	tween_2.set_trans(Tween.TRANS_BACK)
+	tween_2.parallel().tween_property(player.p_cam, "position", spawn_point.position + Vector3(0, 5, 5), TRANSITION_TIME)
+	tween_2.parallel().tween_property(player.p_cam, "rotation", player.spring_arm.global_rotation, TRANSITION_TIME)
+	tween_2.tween_callback(
+		func() -> void:
+			player.p_cam.top_level = false
+			player.p_cam.position = Vector3.ZERO
+			player.p_cam.rotation = Vector3.ZERO
+	)
 
 func _handle_player_defeat(player: CharacterBody3D) -> void:
 	print("A player has been defeated!")
-	if player.get_multiplayer_authority() == multiplayer.get_unique_id():
-		$RespawnCamera.make_current()
-	# TODO: Show in UI
-	var timer: SceneTreeTimer = get_tree().create_timer(3)
+	var timer_2: SceneTreeTimer = get_tree().create_timer(RESPAWN_TIME - TRANSITION_TIME)
+	timer_2.connect("timeout", _respawn_transition.bind(player))
+	var timer: SceneTreeTimer = get_tree().create_timer(RESPAWN_TIME)
 	timer.connect("timeout", _respawn_player.bind(player))
 
 func _handle_player_change_team(id: int) -> void:
