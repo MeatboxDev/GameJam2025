@@ -1,7 +1,24 @@
-[gd_scene load_steps=7 format=4 uid="uid://dtclk5g26eag5"]
+[gd_scene load_steps=10 format=4 uid="uid://dtclk5g26eag5"]
 
 [ext_resource type="Script" path="res://Testing/bubble.gd" id="1_7tr6b"]
 [ext_resource type="Material" uid="uid://cv0mqbhk2dx1u" path="res://Materials/bubble_material_bad.tres" id="2_6x142"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xosod"]
+lightmap_size_hint = Vector2i(5, 3)
+radius = 0.2
+height = 0.4
+radial_segments = 4
+rings = 1
+
+[sub_resource type="Curve" id="Curve_wt3ai"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(0.752941, -200), -56.5581, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_aa20l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_nq0pj"]
 _surfaces = [{
@@ -43,10 +60,37 @@ radius = 1.3
 margin = 1.0
 radius = 1.6
 
-[node name="StaticBody3D2" type="StaticBody3D" groups=["Bubble"]]
+[node name="StaticBody3D" type="StaticBody3D" groups=["Bubble"]]
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_7tr6b")
+is_good = null
+direction = null
+speed = null
+decel_speed = null
+decel_start_time = null
+magnitude = null
+
+[node name="PopParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 20
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.15
+mesh = SubResource("SphereMesh_xosod")
+emission_shape = 2
+emission_sphere_radius = 1.5
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 1.0
+radial_accel_max = 1.0
+radial_accel_curve = SubResource("Curve_wt3ai")
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_aa20l")
+
+[node name="BubblePoppingStream" type="AudioStreamPlayer3D" parent="."]
 
 [node name="BubbleBad" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_4kypb")

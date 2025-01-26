@@ -27,7 +27,7 @@ func _trigger_boss_burst() -> void:
 
 
 func _boss_grow() -> void:
-	self.scale += Vector3.ONE * 0.05
+	self.scale += Vector3.ONE * 0.1
 	position.y += 0.025 * self.scale.y
 	if self.scale.x > MAX_SIZE:
 		_trigger_boss_burst()

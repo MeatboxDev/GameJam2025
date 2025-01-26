@@ -1,6 +1,23 @@
-[gd_scene load_steps=8 format=4 uid="uid://fyao1cclicva"]
+[gd_scene load_steps=11 format=4 uid="uid://fyao1cclicva"]
 
 [ext_resource type="Script" path="res://Testing/bubble.gd" id="1_x8xid"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_rvx5m"]
+lightmap_size_hint = Vector2i(5, 3)
+radius = 0.1
+height = 0.2
+radial_segments = 4
+rings = 1
+
+[sub_resource type="Curve" id="Curve_qpcbx"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(0.752941, -200), -56.5581, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_asulv"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bl058"]
 load_path = "res://.godot/imported/default_bubble_0.png-afc610bdaf1d6b819a5ab4d9747c165b.s3tc.ctex"
@@ -72,6 +89,31 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_x8xid")
 is_good = true
+direction = null
+speed = null
+decel_speed = null
+decel_start_time = null
+magnitude = null
+
+[node name="PopParticles" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 32
+lifetime = 0.2
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+lifetime_randomness = 0.15
+mesh = SubResource("SphereMesh_rvx5m")
+emission_shape = 2
+emission_sphere_radius = 1.5
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 1.0
+radial_accel_max = 1.0
+radial_accel_curve = SubResource("Curve_qpcbx")
+scale_amount_curve = SubResource("Curve_asulv")
+
+[node name="BubblePoppingStream" type="AudioStreamPlayer3D" parent="."]
 
 [node name="BubbleGood" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_6p658")
