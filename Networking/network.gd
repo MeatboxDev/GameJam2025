@@ -1,7 +1,7 @@
-extends Node
+extends Node3D
 
-const PORT: int = 1221
-const IPADDR: String = "localhost"  # "100.93.129.57"
+const PORT: int = 12354
+const IPADDR: String = "localhost"
 
 const TRANSITION_TIME := 1.0
 const RESPAWN_TIME := 5.0
@@ -32,13 +32,15 @@ var current_bad_guy_color : Color
 var _started: bool = false
 
 @onready var start_game_button: Button = $Control/StartGame
-@onready var join_lobby_cont: VBoxContainer = $Control/JoinLobby
-@onready var join_btn: Button = $Control/JoinLobby/join
-@onready var host_btn: Button = $Control/JoinLobby/host
+@onready var join_lobby_cont: HBoxContainer = $Control/JoinLobby
+@onready var join_btn: Button = $Control/JoinLobby/Buttons/join
+@onready var host_btn: Button = $Control/JoinLobby/Buttons/host
+@onready var ip_field: TextEdit = $Control/JoinLobby/Fields/ip
+@onready var port_field: TextEdit = $Control/JoinLobby/Fields/port
 @onready var status_container: VBoxContainer = $Control/Status
 @onready var status_label: Label = $Control/Status/Status
 @onready var id_label: Label = $Control/Status/Id
-@onready var join_team_container: VBoxContainer = $Control/JoinTeam
+@onready var join_team_container: HBoxContainer = $Control/JoinTeam
 @onready var join_good_btn: Button = $Control/JoinTeam/JoinGood
 @onready var join_bad_btn: Button = $Control/JoinTeam/JoinBad
 
@@ -85,6 +87,9 @@ func _end_game() -> void:
 		b.queue_free()
 	good_ball_list.clear()
 
+	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.mp3")
+	$MusicPlayer.play()
+
 
 # # Called when the node enters the scene tree for the first time.
 # func _ready() -> void:
@@ -119,7 +124,7 @@ func start_game() -> void:
 		boss.find_child("BubbleMesh").material_override.albedo_color = good_guys_colors[color_team_number] * 3
 		boss.find_child("BubbleLight").light_color = good_guys_colors[color_team_number]
 		st.find_child("Light").light_color = good_guys_colors[color_team_number]
-		boss.global_position = st.global_position + Vector3.UP * 5
+		boss.global_position = st.global_position + Vector3.UP * 2
 		add_child(boss)
 	for st in bad_guys_stands:
 		var boss: Node3D = preload("res://Testing/goal_bubble_pink.tscn").instantiate()
@@ -128,9 +133,11 @@ func start_game() -> void:
 		boss.find_child("BubbleMesh").material_override.albedo_color = bad_guys_colors[color_team_number] * 3
 		boss.find_child("BubbleLight").light_color = bad_guys_colors[color_team_number]
 		st.find_child("Light").light_color = bad_guys_colors[color_team_number]
-		boss.global_position = st.global_position + Vector3.UP * 5
+		boss.global_position = st.global_position + Vector3.UP * 2
 		add_child(boss)
 
+	$MusicPlayer.stream = preload("res://Assets/Music/Splattack ! - Splatoon OST.mp3")
+	$MusicPlayer.play()
 	for c in instantiated_characters:
 		_respawn_player(c)
 
@@ -202,7 +209,24 @@ func _handle_start_button() -> void:
 	rpc("start_game")
 
 
+func get_all_children(in_node: Node, arr: Array[Node]) -> Array[Node]:
+	arr.push_back(in_node)
+	for child in in_node.get_children():
+		if child is AnimationPlayer:
+			continue
+		arr = get_all_children(child, arr)
+	return arr
+
+
 func _ready() -> void:
+	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.mp3")
+	$MusicPlayer.play()
+	var arr: Array[Node] = get_all_children(self, [])
+	for n in arr:
+		if n is StaticBody3D:
+			print(n)
+			n.add_to_group("Terrain")
+
 	multiplayer.allow_object_decoding = true
 	join_btn.connect("pressed", _on_join_pressed)
 	host_btn.connect("pressed", _on_host_pressed)
@@ -278,7 +302,8 @@ func sync_bubble(b: Node3D) -> void:
 
 
 func _on_host_pressed() -> void:
-	multiplayer_peer.create_server(1221)
+	var port := (port_field.text).to_int()
+	multiplayer_peer.create_server(PORT if port == 0 else port)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 	join_lobby_cont.visible = false
@@ -311,7 +336,8 @@ func _on_host_pressed() -> void:
 
 
 func _on_join_pressed() -> void:
-	multiplayer_peer.create_client(IPADDR, PORT)
+	var port := (port_field.text).to_int()
+	multiplayer_peer.create_client(ip_field.text if ip_field.text != "" else IPADDR, PORT if port == 0 else port)
 	multiplayer.multiplayer_peer = multiplayer_peer
 
 	join_lobby_cont.visible = false

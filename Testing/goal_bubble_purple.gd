@@ -1,6 +1,6 @@
 extends StaticBody3D
 
-const MAX_SIZE: float = 1.2
+const MAX_SIZE: float = 1.5
 
 @export var is_good: bool = false
 
@@ -17,7 +17,7 @@ func _trigger_boss_burst() -> void:
 			continue
 		if not obj.is_in_group("Player"):
 			continue
-		obj.velocity = -(position - position.move_toward(obj.position, 1)) * 300
+		obj.velocity = -(position - position.move_toward(obj.position, 1)) * 30
 		obj.velocity.y = abs(obj.velocity.y)
 		obj.move_and_slide()
 	if is_good:
@@ -58,6 +58,7 @@ func _handle_enter(_area: Node3D) -> void:
 
 
 func _ready() -> void:
+	scale = Vector3.ONE * 0.5
 	if not is_multiplayer_authority():
 		return
 	if is_good:
