@@ -230,7 +230,12 @@ height = 2.89632
 radius = 1.5
 
 [node name="CharacterBody3D" type="CharacterBody3D" groups=["Player"]]
+transform = Transform3D(0.565, 0, 0, 0, 0.565, 0, 0, 0, 0.565, 0, 0, 0)
 script = ExtResource("1_n8brg")
+impulse_max_speed = 50.0
+jump_force = 25.0
+max_speed = 10.0
+speed = 0.83
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09931, 0)
