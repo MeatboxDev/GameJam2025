@@ -316,12 +316,3 @@ func _input(event: InputEvent) -> void:
 		and start_game_button.visible
 	):
 		rpc("start_game")
-	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
-		toggle_mouse_capture()
-
-
-func toggle_mouse_capture() -> void:
-	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
