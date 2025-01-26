@@ -1,6 +1,7 @@
-[gd_scene load_steps=41 format=3 uid="uid://bg4e1fd6q8l1f"]
+[gd_scene load_steps=38 format=3 uid="uid://bg4e1fd6q8l1f"]
 
 [ext_resource type="Script" path="res://Networking/network.gd" id="1_wc5cs"]
+[ext_resource type="AudioStream" uid="uid://cxb38c3qgy33t" path="res://Assets/Music/Splattack ! - Splatoon OST.mp3" id="2_jvcn7"]
 [ext_resource type="Texture2D" uid="uid://8eyfsxqm4h0x" path="res://Assets/Maps/Mesh_Library/quartercircle_ul.png" id="2_nklqx"]
 [ext_resource type="PackedScene" uid="uid://baoi4sp0b6jag" path="res://Assets/Maps/Checkpoint/Platform_high/Platform_high_collisions.tscn" id="2_pmh7e"]
 [ext_resource type="PackedScene" uid="uid://re3kxtsmtjhx" path="res://Assets/Maps/Aquarium_02/Aquarium_02_collision.tscn" id="5_vhbr6"]
@@ -13,8 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://cstvxd2wtgm7b" path="res://Assets/Maps/Checkpoint/Bubble_stand/Bubble_stand_collisions.tscn" id="9_cnrm4"]
 [ext_resource type="PackedScene" uid="uid://c0bj1qwabx1wg" path="res://Assets/Maps/Walls/01/wall_01_collisions.tscn" id="9_htixq"]
 [ext_resource type="PackedScene" uid="uid://begglqpodlnbg" path="res://Assets/Maps/Aquarium_03/Aquarium_03_collision.tscn" id="9_jj2hr"]
-[ext_resource type="PackedScene" path="res://Assets/Maps/Coral/coral_display.tscn" id="9_nerx3"]
-[ext_resource type="PackedScene" path="res://Assets/Maps/Walls/01/wall_01_2_collisions.tscn" id="9_yoem3"]
+[ext_resource type="PackedScene" uid="uid://chdvyhhy1el2e" path="res://Assets/Maps/Coral/coral_display.tscn" id="9_nerx3"]
+[ext_resource type="PackedScene" uid="uid://4dw1i068ujog" path="res://Assets/Maps/Walls/01/wall_01_2_collisions.tscn" id="9_yoem3"]
 [ext_resource type="PackedScene" uid="uid://ddf6yinwqsjj7" path="res://Assets/Maps/Glass_walls/Glass_walls_01_collisions.tscn" id="10_fpjb6"]
 [ext_resource type="PackedScene" uid="uid://dnnhoh34gdred" path="res://Assets/Maps/Walls/02/wall_02_2_collision.tscn" id="11_jnej6"]
 [ext_resource type="PackedScene" uid="uid://cxcv2ujpgvt6r" path="res://Assets/Maps/Aquarium_04/Aquarium_04_collisions.tscn" id="11_k8vsq"]
@@ -88,6 +89,11 @@ good_guys_spawn_points = [NodePath("BaseGood/GoodSpawnPoints/GoodSpawn"), NodePa
 bad_guys_spawn_points = [NodePath("BaseBad/BadSpawnPoints/BadSpawn"), NodePath("BaseBad/BadSpawnPoints/BadSpawn2"), NodePath("BaseBad/BadSpawnPoints/BadSpawn3"), NodePath("BaseBad/BadSpawnPoints/BadSpawn4")]
 good_guys_stands = [NodePath("BaseGood/Checkpoint3/BubbleGoodStand_3"), NodePath("BaseGood/Checkpoint2/BubbleGoodStand_2"), NodePath("BaseGood/Checkpoint1/BubbleGoodStand_1")]
 bad_guys_stands = [NodePath("BaseBad/Checkpoint1/BubbleBadStand_1"), NodePath("BaseBad/Checkpoint2/BubbleBadStand_2"), NodePath("BaseBad/Checkpoint3/BubbleBadStand_3")]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_jvcn7")
+volume_db = -15.0
+playback_type = 1
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
