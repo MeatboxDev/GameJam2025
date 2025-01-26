@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b7urqms4rewxr"
-path.s3tc="res://.godot/imported/skibox_01.png-b5ec4f65416201fa8055f33d27c81a0b.s3tc.ctex"
+uid="uid://c7j7dli5n2bgw"
+path.s3tc="res://.godot/imported/skybox_09.png-4ee81a48290b66b56954f30f9f75b3c6.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Maps/skibox_01.png"
-dest_files=["res://.godot/imported/skibox_01.png-b5ec4f65416201fa8055f33d27c81a0b.s3tc.ctex"]
+source_file="res://Assets/Testing/skybox/skybox_09.png"
+dest_files=["res://.godot/imported/skybox_09.png-4ee81a48290b66b56954f30f9f75b3c6.s3tc.ctex"]
 
 [params]
 
