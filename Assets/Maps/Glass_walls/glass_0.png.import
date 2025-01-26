@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwumh4x2kstgq"
 path.s3tc="res://.godot/imported/glass_0.png-97343cca70ab8f45337e3b4211a4f2f5.s3tc.ctex"
+path.etc2="res://.godot/imported/glass_0.png-97343cca70ab8f45337e3b4211a4f2f5.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://Assets/Maps/Glass_walls/glass_0.png"
-dest_files=["res://.godot/imported/glass_0.png-97343cca70ab8f45337e3b4211a4f2f5.s3tc.ctex"]
+dest_files=["res://.godot/imported/glass_0.png-97343cca70ab8f45337e3b4211a4f2f5.s3tc.ctex", "res://.godot/imported/glass_0.png-97343cca70ab8f45337e3b4211a4f2f5.etc2.ctex"]
 
 [params]
 

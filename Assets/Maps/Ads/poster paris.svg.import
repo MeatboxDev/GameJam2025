@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dqlxm48jlxyxu"
 path.s3tc="res://.godot/imported/poster paris.svg-90f068e609ee35f33f379a7eccf1491f.s3tc.ctex"
+path.etc2="res://.godot/imported/poster paris.svg-90f068e609ee35f33f379a7eccf1491f.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Maps/Ads/poster paris.svg"
-dest_files=["res://.godot/imported/poster paris.svg-90f068e609ee35f33f379a7eccf1491f.s3tc.ctex"]
+dest_files=["res://.godot/imported/poster paris.svg-90f068e609ee35f33f379a7eccf1491f.s3tc.ctex", "res://.godot/imported/poster paris.svg-90f068e609ee35f33f379a7eccf1491f.etc2.ctex"]
 
 [params]
 
