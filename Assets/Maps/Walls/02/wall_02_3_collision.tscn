@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://er76rriii7mh"]
+
+[ext_resource type="PackedScene" uid="uid://bnyvoubxj1ieu" path="res://Assets/Maps/Walls/02/baranda_2_bajando(1).gltf" id="1_whaob"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s74wh"]
+size = Vector3(2.5, 0.6, 0.65)
+
+[node name="Node3D" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_whaob")]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.889496, 0.456943, 0, -0.456943, 0.889496, 0, 0, 0, 0.162, 1.00311, 1.16604, -0.0674358)
+shape = SubResource("BoxShape3D_s74wh")

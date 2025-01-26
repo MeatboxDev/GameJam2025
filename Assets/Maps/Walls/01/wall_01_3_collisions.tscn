@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://jb125ueefj8j"]
+
+[ext_resource type="PackedScene" uid="uid://bnxw4o432lu24" path="res://Assets/Maps/Walls/02/baranda_esquina.gltf" id="1_ldirx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dp66n"]
+size = Vector3(0.15, 1, 0.4)
+
+[node name="Node3D" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_ldirx")]
+transform = Transform3D(3.9375, 0, 0, 0, 1, 0, 0, 0, 3.8, 0.118749, 0, 3.9)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(3.9375, 0, 0, 0, 1, 0, 0, 0, 3.8, 0.414062, 0.5, 3.14)
+shape = SubResource("BoxShape3D_dp66n")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1.66103e-07, 0, -3.9375, 0, 1, 0, 3.8, 0, -1.72114e-07, 3.17031, 0.5, 0.48)
+shape = SubResource("BoxShape3D_dp66n")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(-0.326972, 0, 1.64254, 0, 1, 0, -0.466964, 0, -1.15012, 1.98906, 0.5, 0.67)
+shape = SubResource("BoxShape3D_dp66n")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(-1.64254, 0, 0.326973, 0, 1, 0, -1.15012, 0, -0.466965, 0.807812, 0.5, 1.81)
+shape = SubResource("BoxShape3D_dp66n")
