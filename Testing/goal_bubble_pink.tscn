@@ -46,7 +46,8 @@ radius = 5.0
 
 [node name="BossBubblePink" type="StaticBody3D" groups=["BossBubble", "Bubble"]]
 script = ExtResource("1_4qoyr")
-is_good = null
+
+[node name="ExplosionPlayer" type="AudioStreamPlayer3D" parent="."]
 
 [node name="BubbleMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_r8a6g")

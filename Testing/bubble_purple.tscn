@@ -89,11 +89,6 @@ collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_x8xid")
 is_good = true
-direction = null
-speed = null
-decel_speed = null
-decel_start_time = null
-magnitude = null
 
 [node name="PopParticles" type="CPUParticles3D" parent="."]
 emitting = false

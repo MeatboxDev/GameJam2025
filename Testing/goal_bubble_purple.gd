@@ -1,10 +1,11 @@
 extends StaticBody3D
 
-const MAX_SIZE: float = 5.0
+const MAX_SIZE: float = 1.2
 
 @export var is_good: bool = false
 
 @onready var explosion_area: ShapeCast3D = $Explosion
+@onready var explosion_stream: AudioStreamPlayer3D = $ExplosionPlayer
 @onready var area: Area3D = $Area
 
 
@@ -23,26 +24,29 @@ func _trigger_boss_burst() -> void:
 		SignalBus.burst_good_boss.emit()
 	else:
 		SignalBus.burst_bad_boss.emit()
+
+	var stream := explosion_stream
+	stream.stream = preload("res://Assets/SoundEffects/shooting_bubble.wav")
+	stream.play(0.13)
+	stream.pitch_scale = 1
+	remove_child(stream)
+	get_tree().get_current_scene().add_child(stream)
+	get_tree().create_timer(stream.stream.get_length()).timeout.connect(stream.queue_free)
+
 	self.queue_free()
 
 
-func _boss_grow() -> void:
+@rpc("any_peer", "call_local", "reliable")
+func _net_boss_grow() -> void:
 	self.scale += Vector3.ONE * 0.1
 	position.y += 0.025 * self.scale.y
 	if self.scale.x > MAX_SIZE:
 		_trigger_boss_burst()
 
 
-@rpc("any_peer", "reliable")
-func _net_boss_grow() -> void:
-	_boss_grow()
-
-
 func _handle_enter(_area: Node3D) -> void:
-	# only allow bubbles
 	if not _area.is_in_group("Bubble"):
 		return
-
 	var par: Node3D = _area.get_parent()
 	if par == null:
 		return
@@ -50,11 +54,7 @@ func _handle_enter(_area: Node3D) -> void:
 		par.rpc("burst")
 		return
 	par.rpc("burst")
-	self.scale += Vector3.ONE * 0.05
-	position.y += 0.025 * self.scale.y
 	rpc("_net_boss_grow")
-	if self.scale.x > MAX_SIZE:
-		_trigger_boss_burst()
 
 
 func _ready() -> void:
