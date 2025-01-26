@@ -56,15 +56,17 @@ var _right: bool = Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D
 var _left: bool = Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A)
 var _movement: Vector3 = Vector3.ZERO
 
+@onready var skelly: Skeleton3D = $rig/Skeleton3D
+
 @onready var voice_pitch := randf_range(0.92, 1.03)
 @onready var audio_player: AudioStreamPlayer3D = $Head/AudioStreamPlayer3D
 @onready var bubble_blowing_player: AudioStreamPlayer3D = $Head/BubbleBlowingAudioPlayer
-@onready var body_mesh: Node = $Body
+@onready var body_mesh: Node = $rig
 @onready var head_node: Node = $Head
-@onready var head_mesh: Node = $Head/HeadMesh
 @onready var spring_arm: SpringArm3D = $Head/SpringArm3D
 @onready var p_cam: Camera3D = $Head/SpringArm3D/PlayerCamera
 @onready var bubble_cast: ShapeCast3D = $BubbleCast
+@onready var _animation_player: AnimationPlayer = $AnimationPlayer
 
 @rpc("any_peer", "call_local", "reliable")
 func trigger_respawn() -> void:
@@ -114,11 +116,25 @@ func _trigger_defeat() -> void:
 func get_all_children(in_node: Node3D, arr: Array[Node3D]) -> Array[Node3D]:
 	arr.push_back(in_node)
 	for child in in_node.get_children():
+		if child is AnimationPlayer:
+			continue
 		arr = get_all_children(child, arr)
 	return arr
 
 
 func _ready() -> void:
+	_animation_player.animation_finished.connect(
+		func(_x: StringName) -> void:
+			if (_x == "run-animation" or _x == "run-loop-animation" or _x == "jump-animation2" or _x == "attack-animation") and XZ.xz_length(velocity):
+				_animation_player.play("run-loop-animation")
+				_animation_player.speed_scale = 1
+			elif (
+				(_x == "run-animation" or _x == "jump-animation2" or _x == "idle-animation2")
+				and velocity == Vector3.ZERO
+			):
+				_animation_player.play("idle-animation2")
+	)
+
 	name = str(get_multiplayer_authority())
 	p_cam.current = is_multiplayer_authority()
 
@@ -244,6 +260,10 @@ func _check_for_bubbles() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func _net_jump() -> void:
+	if _animation_player.current_animation != "attack-player":
+		_animation_player.play("jump-animation2")
+		_animation_player.speed_scale = 2.0
+
 	if not JUMP_SOUNDS.has(audio_player.stream) and audio_player.playing:
 		return
 	audio_player.stream = JUMP_SOUNDS.pick_random()
@@ -265,8 +285,33 @@ func _attempt_shoot() -> void:
 	rpc("_net_shoot_bubble")
 
 
-func _physics_process(_delta: float) -> void:
+var prev_vel := Vector3.ZERO
 
+func _process(_delta: float) -> void:
+	if _animation_player.current_animation == "attack-player":
+		return
+
+	if XZ.xz_length(velocity):
+		if (
+			prev_vel == Vector3.ZERO
+			and _animation_player.current_animation != "attack-animation"
+			and _animation_player.current_animation != "jump-animation2"
+		):
+			_animation_player.play("run-animation")
+			_animation_player.speed_scale = 1.0
+	else:
+		if (
+			prev_vel != Vector3.ZERO
+			and _animation_player.current_animation != "attack-animation"
+			and _animation_player.current_animation != "jump-animation2"
+		):
+			_animation_player.speed_scale = 1.0
+			_animation_player.play_backwards("run-animation")
+			_animation_player.seek(0.5)
+
+
+
+func _physics_process(_delta: float) -> void:
 	if not is_multiplayer_authority() or not is_alive:
 		return
 
@@ -296,11 +341,11 @@ func _physics_process(_delta: float) -> void:
 	rpc("remote_set_position", global_position)
 	rpc(
 		"_remote_set_head_rotation",
-		head_mesh.rotation,
+		Vector3.ZERO,
 		head_node.rotation,
 		spring_arm.rotation,
 		velocity,
-		body_mesh.rotation
+		body_mesh.rotation,
 	)
 
 
@@ -311,6 +356,8 @@ func remote_set_position(real_pos: Vector3) -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func _net_shoot_bubble() -> void:
+	_animation_player.play("attack-animation")
+	_animation_player.speed_scale = 2.0
 	bubble_blowing_player.stream = preload("res://Assets/SoundEffects/shooting_bubble.wav")
 	bubble_blowing_player.play(0.14)
 	bubble_blowing_player.pitch_scale = randf_range(0.95, 1.05)
@@ -319,14 +366,13 @@ func _net_shoot_bubble() -> void:
 
 @rpc("any_peer", "unreliable")
 func _remote_set_head_rotation(
-	real_head_rotation: Vector3,
+	_real_head_rotation: Vector3,
 	real_head_node_rotation: Vector3,
 	real_spring_rotation: Vector3,
 	real_velocity: Vector3,
 	real_body_rotation: Vector3
 ) -> void:
 	velocity = real_velocity
-	head_mesh.rotation = real_head_rotation
 	head_node.rotation = real_head_node_rotation
 	spring_arm.rotation = real_spring_rotation
 	body_mesh.rotation = real_body_rotation
@@ -363,7 +409,6 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 	head_node.rotate_y(-move_x * p_cam_sensitivity)
 	spring_arm.rotate_x(-move_y * p_cam_sensitivity)
 	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -0.8, 1.3)
-	head_mesh.rotation.x = spring_arm.rotation.x
 
 	head_body_diff = angle_difference(head_node.rotation.y, body_mesh.rotation.y)
 	if abs(head_body_diff) > .7:
