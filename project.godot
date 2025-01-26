@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="AxoBubble"
-run/main_scene="res://Networking/Network.tscn"
+run/main_scene="res://Assets/Maps/Mall.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -87,7 +87,7 @@ func _end_game() -> void:
 		b.queue_free()
 	good_ball_list.clear()
 
-	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.mp3")
+	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.wav")
 	$MusicPlayer.play()
 
 
@@ -136,7 +136,7 @@ func start_game() -> void:
 		boss.global_position = st.global_position + Vector3.UP * 2
 		add_child(boss)
 
-	$MusicPlayer.stream = preload("res://Assets/Music/Splattack ! - Splatoon OST.mp3")
+	$MusicPlayer.stream = preload("res://Assets/Music/battle_theme.wav")
 	$MusicPlayer.play()
 	for c in instantiated_characters:
 		_respawn_player(c)
@@ -219,7 +219,7 @@ func get_all_children(in_node: Node, arr: Array[Node]) -> Array[Node]:
 
 
 func _ready() -> void:
-	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.mp3")
+	$MusicPlayer.stream = preload("res://Assets/Music/menu_music.wav")
 	$MusicPlayer.play()
 	var arr: Array[Node] = get_all_children(self, [])
 	for n in arr:
