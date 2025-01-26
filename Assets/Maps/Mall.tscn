@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://bg4e1fd6q8l1f"]
+[gd_scene load_steps=42 format=3 uid="uid://bg4e1fd6q8l1f"]
 
 [ext_resource type="Script" path="res://Networking/network.gd" id="1_wc5cs"]
 [ext_resource type="AudioStream" uid="uid://cxb38c3qgy33t" path="res://Assets/Music/Splattack ! - Splatoon OST.mp3" id="2_jvcn7"]
@@ -27,8 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://bebr0x3koynac" path="res://Assets/Maps/Shipping_Container/02/Shipping_container_02_collisions.tscn" id="18_hcqtt"]
 [ext_resource type="PackedScene" uid="uid://b32xuagu3efos" path="res://Assets/Maps/Walls/02/wall_02_1_collision.tscn" id="21_00oiq"]
 [ext_resource type="PackedScene" uid="uid://b6xxkv1gnykih" path="res://Assets/Maps/Walls/03/wall_03_collisions.tscn" id="26_epli4"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51wxc"]
+[ext_resource type="Texture2D" uid="uid://c1q8l57la4rla" path="res://Assets/Testing/skybox/skybox_10.png" id="28_gqtao"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f71fo"]
 transparency = 1
@@ -72,6 +71,7 @@ size = Vector2(1.275, 1.275)
 size = Vector3(0.15, 1.5, 9)
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mpfqb"]
+panorama = ExtResource("28_gqtao")
 
 [sub_resource type="Sky" id="Sky_jmtg8"]
 sky_material = SubResource("PanoramaSkyMaterial_mpfqb")
