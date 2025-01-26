@@ -224,7 +224,7 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_u1j6p")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_daxym"]
-height = 3.2
+height = 2.89632
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_2330t"]
 radius = 1.5
@@ -278,7 +278,7 @@ mesh = SubResource("ArrayMesh_oapb5")
 skeleton = NodePath("")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5813, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.45162, 0)
 shape = SubResource("CapsuleShape3D_daxym")
 
 [node name="BubbleCast" type="ShapeCast3D" parent="."]

@@ -21,7 +21,6 @@
 [ext_resource type="PackedScene" uid="uid://bebr0x3koynac" path="res://Assets/Maps/Shipping_Container/02/Shipping_container_02_collisions.tscn" id="18_hcqtt"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51wxc"]
-load_path = "res://.godot/imported/quartercircle_ul.png-c833301639d9afea396f5da348f64dd8.ctex"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f71fo"]
 transparency = 1
