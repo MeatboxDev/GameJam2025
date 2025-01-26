@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+const NW := preload("res://Networking/network.gd")
+
 const BUBBLE_GOOD: PackedScene = preload("res://Testing/bubble_purple.tscn")
 const BUBBLE_BAD: PackedScene = preload("res://Testing/bubble_pink.tscn")
 const DEG_45: float = PI / 4.0
@@ -19,19 +21,19 @@ const XZ = preload("res://Networking/xyz_to_xz.gd")
 var is_good: bool = true
 var is_alive: bool = true
 
+var health: float = 100:
+	get():
+		return health
+	set(val):
+		if val < 0:
+			rpc("_trigger_defeat")
+		health = val
+
 var _up: bool = Input.is_key_pressed(KEY_UP) or Input.is_key_pressed(KEY_W)
 var _down: bool = Input.is_key_pressed(KEY_DOWN) or Input.is_key_pressed(KEY_S)
 var _right: bool = Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_D)
 var _left: bool = Input.is_key_pressed(KEY_LEFT) or Input.is_key_pressed(KEY_A)
 var _movement: Vector3 = Vector3.ZERO
-
-var _health: float = 100:
-	get():
-		return _health
-	set(val):
-		if val < 0:
-			rpc("_trigger_defeat")
-		_health = val
 
 @onready var body_mesh: Node = $Body
 @onready var head_node: Node = $Head
@@ -142,13 +144,15 @@ func pushback_pos(pos: Vector3) -> void:
 	velocity.z = -(pos.z - move_toward(position.z, pos.z, 1)) * max_speed
 
 
+@rpc("any_peer", "reliable", "call_local")
 func pushback(node: Node3D) -> void:
 	velocity.x = -(node.position.x - move_toward(position.x, node.position.x, 1)) * max_speed
 	velocity.z = -(node.position.z - move_toward(position.z, node.position.z, 1)) * max_speed
 	if node.is_good != is_good:
-		_health -= 33.33
+		health -= 33.33
 
 
+@rpc("any_peer", "reliable", "call_local")
 func stomp() -> void:
 	# If not pressing anything, halt and bounce up
 	if not (_up or _down or _left or _right):
@@ -191,7 +195,7 @@ func _process(_delta: float) -> void:
 		velocity.y += jump_force
 
 	_calculate_horizontal_movement()
-	_check_for_bubbles()
+	# _check_for_bubbles()
 	move_and_slide()
 	if XZ.xz_length(velocity):
 		p_cam.fov = clamp(p_cam.fov + _delta * 100, 75, 100)
@@ -207,7 +211,7 @@ func remote_set_position(real_pos: Vector3) -> void:
 	global_position = real_pos
 
 
-@rpc("unreliable")
+@rpc("any_peer", "reliable")
 func _net_shoot_bubble() -> void:
 	_shoot_bubble()
 
@@ -232,6 +236,10 @@ func _process_keyboard(ev: InputEventKey) -> void:
 			_down = ev.pressed
 		KEY_D, KEY_RIGHT:
 			_right = ev.pressed
+		KEY_C:
+			if ev.is_released(): return
+			SignalBus.player_change_team.emit(multiplayer.get_unique_id())
+
 
 
 func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
@@ -271,7 +279,7 @@ func _shoot_bubble() -> void:
 	if velocity.y != 0:
 		bubble.speed *= 1 + abs(velocity.normalized().y)
 	bubble.set_multiplayer_authority(1)
-	get_tree().get_root().add_child(bubble)
+	get_tree().get_current_scene().add_child(bubble)
 
 
 func _process_mouse_button(ev: InputEventMouseButton) -> void:
