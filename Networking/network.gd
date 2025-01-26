@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 const PORT: int = 12354
 const IPADDR: String = "localhost"
@@ -204,7 +204,22 @@ func _handle_start_button() -> void:
 	rpc("start_game")
 
 
+func get_all_children(in_node: Node, arr: Array[Node]) -> Array[Node]:
+	arr.push_back(in_node)
+	for child in in_node.get_children():
+		if child is AnimationPlayer:
+			continue
+		arr = get_all_children(child, arr)
+	return arr
+
+
 func _ready() -> void:
+	var arr: Array[Node] = get_all_children(self, [])
+	for n in arr:
+		if n is StaticBody3D:
+			print(n)
+			n.add_to_group("Terrain")
+
 	$MusicPlayer.play()
 	multiplayer.allow_object_decoding = true
 	join_btn.connect("pressed", _on_join_pressed)

@@ -219,7 +219,7 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -16, 5
 [node name="Special_Tiles2" type="Node3D" parent="Center"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, -5.5, -16)
 
-[node name="Quarter_circle_UR" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="Quarter_circle_UR" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -19.95, 5.505, 15.025)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Center/Special_Tiles2/Quarter_circle_UR"]
@@ -235,7 +235,7 @@ shape = SubResource("CylinderShape3D_d87im")
 transform = Transform3D(2.535, -2.49143e-08, 1.13687e-13, 3.69482e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.622207, 12.4761, -1.10509)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="StaticBody3D3" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="StaticBody3D3" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -19.95, 5.505, 15.025)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Center/Special_Tiles2/StaticBody3D3"]
@@ -247,7 +247,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.535, -2.49143e-08, 1.13687e-13, 3.69482e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.654115, 15.3478, -1.10509)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(3.134, 2.73983e-07, -4.73221e-07, -2.73983e-07, 3.134, -5.25802e-13, 4.73221e-07, 5.68434e-13, 3.134, -6.05, 9.50502, -34.9751)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Center/Special_Tiles2/StaticBody3D"]
@@ -259,7 +259,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(-2.535, 3.93391e-08, -1.42109e-13, -6.04391e-07, -0.165, 2.21616e-07, -3.41061e-13, 1.44248e-08, 2.535, -0.622208, -0.171244, 0.606299)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR2" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="Quarter_circle_UR2" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -5.95, 5.505, 15.025)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Center/Special_Tiles2/Quarter_circle_UR2"]
@@ -271,7 +271,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.535, -2.49143e-08, 1.13687e-13, 3.69482e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.622206, 12.4761, -1.10509)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR3" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="Quarter_circle_UR3" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -5.95, 9.505, 1.025)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Center/Special_Tiles2/Quarter_circle_UR3"]
@@ -283,7 +283,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.535, -2.49143e-08, 8.52651e-14, 3.97904e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.67007, 0.638164, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR5" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="Quarter_circle_UR5" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -1.95, 9.505, -7.975)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Center/Special_Tiles2/Quarter_circle_UR5"]
@@ -295,7 +295,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.535, -2.49143e-08, 1.13687e-13, 3.69482e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, 0.654116, 0.62221, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR4" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="Quarter_circle_UR4" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -19.9, 9.505, 1.025)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Center/Special_Tiles2/Quarter_circle_UR4"]
@@ -307,7 +307,7 @@ skeleton = NodePath("../..")
 transform = Transform3D(2.535, -2.49143e-08, 1.13687e-13, 3.97904e-13, -7.21238e-09, -2.535, 3.82774e-07, 0.165, -1.10808e-07, -0.462668, 0.622211, 0.171238)
 shape = SubResource("CylinderShape3D_d87im")
 
-[node name="Quarter_circle_UR6" type="StaticBody3D" parent="Center/Special_Tiles2"]
+[node name="Quarter_circle_UR6" type="StaticBody3D" parent="Center/Special_Tiles2" groups=["Terrain"]]
 transform = Transform3D(-3.134, 4.73221e-07, -2.06851e-14, 0, -1.36991e-07, -3.134, -4.73221e-07, -3.134, 1.36991e-07, -23.9, 9.505, -7.475)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Center/Special_Tiles2/Quarter_circle_UR6"]
@@ -321,96 +321,96 @@ shape = SubResource("CylinderShape3D_d87im")
 
 [node name="Props" type="Node3D" parent="Center"]
 
-[node name="Shipping_container_02_collisions" parent="Center/Props" instance=ExtResource("18_hcqtt")]
+[node name="Shipping_container_02_collisions" parent="Center/Props" groups=["Terrain"] instance=ExtResource("18_hcqtt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1.1, 0, -1, 0, -4.37114e-08, -15.5, 4, -9)
 
-[node name="Shipping_container_02_collisions4" parent="Center/Props" instance=ExtResource("18_hcqtt")]
+[node name="Shipping_container_02_collisions4" parent="Center/Props" groups=["Terrain"] instance=ExtResource("18_hcqtt")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1.1, 0, -1, 0, -4.37114e-08, -42.5, 4, -9)
 
-[node name="Checkpoint_stairs" parent="Center/Props" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint_stairs" parent="Center/Props" groups=["Terrain"] instance=ExtResource("8_abb0o")]
 
-[node name="Checkpoint_stairs2" parent="Center/Props" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint_stairs2" parent="Center/Props" groups=["Terrain"] instance=ExtResource("8_abb0o")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
-[node name="Checkpoint_stairs3" parent="Center/Props" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint_stairs3" parent="Center/Props" groups=["Terrain"] instance=ExtResource("8_abb0o")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -54, 0, -6)
 
-[node name="Checkpoint_stairs4" parent="Center/Props" instance=ExtResource("8_abb0o")]
+[node name="Checkpoint_stairs4" parent="Center/Props" groups=["Terrain"] instance=ExtResource("8_abb0o")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -54, 0, -0.999998)
 
-[node name="Aquarium_04_collisions" parent="Center/Props" instance=ExtResource("11_k8vsq")]
+[node name="Aquarium_04_collisions" parent="Center/Props" groups=["Terrain"] instance=ExtResource("11_k8vsq")]
 transform = Transform3D(1.2, 0, -6.39488e-14, 0, 1, 0, -1.77636e-14, 0, 1.33, -33, 1, -11)
 
-[node name="Aquarium_04_collisions2" parent="Center/Props" instance=ExtResource("11_k8vsq")]
+[node name="Aquarium_04_collisions2" parent="Center/Props" groups=["Terrain"] instance=ExtResource("11_k8vsq")]
 transform = Transform3D(1.2, 0, -1.42109e-14, 0, 1, 0, 1.42109e-14, 0, 1.33, -33, 1, 9.00001)
 
-[node name="Coral_Display" parent="Center/Props" instance=ExtResource("9_nerx3")]
+[node name="Coral_Display" parent="Center/Props" groups=["Terrain"] instance=ExtResource("9_nerx3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 4, 1.5)
 
-[node name="Coral_Display2" parent="Center/Props" instance=ExtResource("9_nerx3")]
+[node name="Coral_Display2" parent="Center/Props" groups=["Terrain"] instance=ExtResource("9_nerx3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 4, -6)
 
-[node name="Coral_Display3" parent="Center/Props" instance=ExtResource("9_nerx3")]
+[node name="Coral_Display3" parent="Center/Props" groups=["Terrain"] instance=ExtResource("9_nerx3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -32.5, 4, 1.5)
 
-[node name="Coral_Display4" parent="Center/Props" instance=ExtResource("9_nerx3")]
+[node name="Coral_Display4" parent="Center/Props" groups=["Terrain"] instance=ExtResource("9_nerx3")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -32.5, 4, -6)
 
 [node name="Node3D10" type="Node3D" parent="Center/Props"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -54, 0, -6)
 
-[node name="Node3D" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -20, 4, 10.15)
 
-[node name="Node3D3" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D3" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -22, 4, 10.15)
 
-[node name="Node3D4" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D4" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -30, 4, 10.15)
 
-[node name="Node3D5" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D5" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -32, 4, 10.15)
 
-[node name="Node3D6" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D6" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -27, 4, 10.15)
 
-[node name="Node3D7" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D7" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -25, 4, 10.15)
 
-[node name="Node3D2" parent="Center/Props/Node3D10" instance=ExtResource("9_htixq")]
+[node name="Node3D2" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_htixq")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -24, 4, 10)
 
-[node name="Node3D8" parent="Center/Props/Node3D10" instance=ExtResource("9_htixq")]
+[node name="Node3D8" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_htixq")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -29, 4, 10)
 
-[node name="Node3D15" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D15" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -11.1667, 4, 6.15)
 
-[node name="Node3D16" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D16" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -14.1667, 4, 6.15)
 
-[node name="Node3D17" parent="Center/Props/Node3D10" instance=ExtResource("9_htixq")]
+[node name="Node3D17" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_htixq")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -13.1667, 4, 6)
 
-[node name="Node3D18" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D18" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -38.1667, 4, 6.15)
 
-[node name="Node3D19" parent="Center/Props/Node3D10" instance=ExtResource("9_yoem3")]
+[node name="Node3D19" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_yoem3")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -41.1667, 4, 6.15001)
 
-[node name="Node3D20" parent="Center/Props/Node3D10" instance=ExtResource("9_htixq")]
+[node name="Node3D20" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("9_htixq")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -40.1667, 4, 6.00001)
 
-[node name="Node3D9" parent="Center/Props/Node3D10" instance=ExtResource("11_jnej6")]
+[node name="Node3D9" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("11_jnej6")]
 transform = Transform3D(-0.76, 0, -8.74228e-08, 0, 1, 0, 6.64413e-08, 0, -1, -47.25, 4, 2.00001)
 
-[node name="Node3D10" parent="Center/Props/Node3D10" instance=ExtResource("11_jnej6")]
+[node name="Node3D10" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("11_jnej6")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -48, 4, 2.00001)
 
-[node name="Node3D11" parent="Center/Props/Node3D10" instance=ExtResource("11_jnej6")]
+[node name="Node3D11" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("11_jnej6")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -5, 4, 2)
 
-[node name="Node3D12" parent="Center/Props/Node3D10" instance=ExtResource("11_jnej6")]
+[node name="Node3D12" parent="Center/Props/Node3D10" groups=["Terrain"] instance=ExtResource("11_jnej6")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6, 4, 2)
 
 [node name="bottom3" type="Node3D" parent="Center"]
