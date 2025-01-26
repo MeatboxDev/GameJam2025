@@ -196,7 +196,7 @@ func pushback(node: Node3D) -> void:
 	velocity.x = -(node.position.x - move_toward(position.x, node.position.x, 1)) * max_speed
 	velocity.z = -(node.position.z - move_toward(position.z, node.position.z, 1)) * max_speed
 
-	if not _invincible and node.is_good == is_good:
+	if not _invincible and node.is_good != is_good:
 		var to_play: AudioStream = _last_player_hurt_sound
 		while to_play == _last_player_hurt_sound:
 			to_play = HURT_SOUNDS.pick_random()
@@ -300,7 +300,14 @@ func _process(_delta: float) -> void:
 		return
 
 	rpc("remote_set_position", global_position)
-	rpc("remote_set_head_rotation", head_node.rotation, spring_arm.rotation, velocity)
+	rpc(
+		"_remote_set_head_rotation",
+		head_mesh.rotation,
+		head_node.rotation,
+		spring_arm.rotation,
+		velocity,
+		body_mesh.rotation
+	)
 
 
 @rpc("any_peer", "unreliable")
@@ -317,16 +324,23 @@ func _net_shoot_bubble() -> void:
 
 
 @rpc("any_peer", "unreliable")
-func remote_set_head_rotation(
-	real_rotation: Vector3, real_spring_rotation: Vector3, real_velocity: Vector3
+func _remote_set_head_rotation(
+	real_head_rotation: Vector3,
+	real_head_node_rotation: Vector3,
+	real_spring_rotation: Vector3,
+	real_velocity: Vector3,
+	real_body_rotation: Vector3
 ) -> void:
 	velocity = real_velocity
-	head_node.rotation = real_rotation
-	head_mesh.rotation = real_rotation
+	head_mesh.rotation = real_head_rotation
+	head_node.rotation = real_head_node_rotation
 	spring_arm.rotation = real_spring_rotation
+	body_mesh.rotation = real_body_rotation
 
 
 func _process_keyboard(ev: InputEventKey) -> void:
+	if not is_alive:
+		return
 	match ev.keycode:
 		KEY_W, KEY_UP:
 			_up = ev.pressed
@@ -354,7 +368,7 @@ func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
 
 	head_node.rotate_y(-move_x * p_cam_sensitivity)
 	spring_arm.rotate_x(-move_y * p_cam_sensitivity)
-	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -1, 1.5)
+	spring_arm.rotation.x = clamp(spring_arm.rotation.x, -0.8, 1.3)
 	head_mesh.rotation.x = spring_arm.rotation.x
 
 	head_body_diff = angle_difference(head_node.rotation.y, body_mesh.rotation.y)
@@ -398,7 +412,7 @@ func _process_mouse_button(ev: InputEventMouseButton) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if not is_multiplayer_authority() or not is_alive:
+	if not is_multiplayer_authority():
 		return
 	if event is InputEventKey:
 		_process_keyboard(event)
@@ -406,7 +420,6 @@ func _input(event: InputEvent) -> void:
 		_process_mouse_motion(event)
 	if event is InputEventMouseButton:
 		_process_mouse_button(event)
-
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		toggle_mouse_capture()
 
