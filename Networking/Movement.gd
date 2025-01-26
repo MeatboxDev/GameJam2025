@@ -237,9 +237,9 @@ func _process_keyboard(ev: InputEventKey) -> void:
 		KEY_D, KEY_RIGHT:
 			_right = ev.pressed
 		KEY_C:
-			if ev.is_released(): return
+			if ev.is_released():
+				return
 			SignalBus.player_change_team.emit(multiplayer.get_unique_id())
-
 
 
 func _process_mouse_motion(ev: InputEventMouseMotion) -> void:
@@ -299,3 +299,13 @@ func _input(event: InputEvent) -> void:
 		_process_mouse_motion(event)
 	if event is InputEventMouseButton:
 		_process_mouse_button(event)
+
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		toggle_mouse_capture()
+
+
+func toggle_mouse_capture() -> void:
+	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	else:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
