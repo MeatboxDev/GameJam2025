@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvbjsxgx7tbhb"
-path.s3tc="res://.godot/imported/coral_pink_coral.png-4edc506200252b5da3ba0fb050d8bd7a.s3tc.ctex"
+uid="uid://c0c1k0iv17x5q"
+path.s3tc="res://.godot/imported/baranda_2_bajando_0.png-e818c835689565bee0a3a0cdc14ceb8b.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "47276d7aea0b8fd60b944889ed258da3"
+"md5": "569a5290177f914e86efbd02a0103784"
 }
 
 [deps]
 
-source_file="res://Assets/Maps/Coral/Coral_01/coral_pink_coral.png"
-dest_files=["res://.godot/imported/coral_pink_coral.png-4edc506200252b5da3ba0fb050d8bd7a.s3tc.ctex"]
+source_file="res://Assets/Maps/Walls/02/baranda_2_bajando_0.png"
+dest_files=["res://.godot/imported/baranda_2_bajando_0.png-e818c835689565bee0a3a0cdc14ceb8b.s3tc.ctex"]
 
 [params]
 
