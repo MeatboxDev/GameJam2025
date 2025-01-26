@@ -7,4 +7,5 @@ signal place_bad_boss
 signal burst_bad_boss
 
 signal player_defeat(player: CharacterBody3D)
+signal player_change_team(player: int)
 
