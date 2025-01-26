@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://4dw1i068ujog"]
+
+[ext_resource type="PackedScene" uid="uid://d1vwswg5bflma" path="res://Assets/Maps/Walls/01/wall_01_model.tscn" id="1_bmxbj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4qblg"]
+size = Vector3(2, 1, 0.15)
+
+[node name="Node3D" type="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, 0.125)
+shape = SubResource("BoxShape3D_4qblg")
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_bmxbj")]
+transform = Transform3D(2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2)
