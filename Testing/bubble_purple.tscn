@@ -73,7 +73,7 @@ collision_mask = 0
 script = ExtResource("1_x8xid")
 is_good = true
 
-[node name="BubbleMeshPurple" type="MeshInstance3D" parent="."]
+[node name="BubbleGood" type="MeshInstance3D" parent="."]
 mesh = SubResource("ArrayMesh_6p658")
 skeleton = NodePath("")
 
