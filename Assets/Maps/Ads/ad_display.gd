@@ -6,6 +6,8 @@ var _ads : Array [Sprite3D] = []
 func _ready() -> void:
 	_ads.append($Ad_mount_collisions/Sprite_01)
 	_ads.append($Ad_mount_collisions/Sprite_02)
+	_ads.append($Ad_mount_collisions/Sprite_03)
+	_ads.append($Ad_mount_collisions/Sprite_04)
 	
 	_ads.pick_random().show()
 	pass # Replace with function body.

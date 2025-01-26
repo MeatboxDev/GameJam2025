@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://ca73wsuj58xu0"]
+[gd_scene load_steps=7 format=3 uid="uid://ca73wsuj58xu0"]
 
 [ext_resource type="Script" path="res://Assets/Maps/Ads/ad_display.gd" id="1_li5cj"]
 [ext_resource type="PackedScene" uid="uid://bmredmcdyvqiv" path="res://Assets/Maps/Ads/ad_mount_collisions.tscn" id="2_wpfpn"]
 [ext_resource type="Texture2D" uid="uid://cfke0occfbupa" path="res://Assets/Maps/Ads/Ad_01.svg" id="3_qpf6i"]
 [ext_resource type="Texture2D" uid="uid://cctxod84xspiw" path="res://Assets/Maps/Ads/Ad_02.svg" id="4_u5oer"]
+[ext_resource type="Texture2D" uid="uid://b0l51utav1xft" path="res://Assets/Maps/Ads/shrimp ad.svg" id="5_hpvfh"]
+[ext_resource type="Texture2D" uid="uid://dqlxm48jlxyxu" path="res://Assets/Maps/Ads/poster paris.svg" id="6_67wt6"]
 
 [node name="AdDisplay" type="Node3D"]
 script = ExtResource("1_li5cj")
@@ -20,3 +22,13 @@ texture = ExtResource("3_qpf6i")
 transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.05, 3.6, 0)
 visible = false
 texture = ExtResource("4_u5oer")
+
+[node name="Sprite_03" type="Sprite3D" parent="Ad_mount_collisions"]
+transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.05, 3.6, 0)
+visible = false
+texture = ExtResource("5_hpvfh")
+
+[node name="Sprite_04" type="Sprite3D" parent="Ad_mount_collisions"]
+transform = Transform3D(-4.37114e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.37114e-09, 0.05, 3.6, 0)
+visible = false
+texture = ExtResource("6_67wt6")
