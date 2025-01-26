@@ -203,6 +203,9 @@ func _process(_delta: float) -> void:
 	else:
 		p_cam.fov = clamp(p_cam.fov - _delta * 100, 75, 100)
 
+	if global_position.y < -10:
+		rpc("_trigger_defeat")
+
 	rpc("remote_set_position", global_position)
 	rpc("remote_set_head_rotation", head_node.rotation, spring_arm.rotation, velocity)
 
