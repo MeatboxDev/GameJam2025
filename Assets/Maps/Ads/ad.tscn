@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8wnjgvld1g8w"]
+[gd_scene load_steps=6 format=3 uid="uid://c8wnjgvld1g8w"]
 
 [ext_resource type="Texture2D" uid="uid://cfke0occfbupa" path="res://Assets/Maps/Ads/Ad_01.svg" id="1_jfu0r"]
 [ext_resource type="Texture2D" uid="uid://cctxod84xspiw" path="res://Assets/Maps/Ads/Ad_02.svg" id="2_dp08l"]
+[ext_resource type="Texture2D" uid="uid://b0l51utav1xft" path="res://Assets/Maps/Ads/shrimp ad.svg" id="3_agqwj"]
+[ext_resource type="Texture2D" uid="uid://dqlxm48jlxyxu" path="res://Assets/Maps/Ads/poster paris.svg" id="4_qgswh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1fyah"]
 size = Vector3(12.8, 16, 0.5)
@@ -9,11 +11,23 @@ size = Vector3(12.8, 16, 0.5)
 [node name="Ad_01" type="StaticBody3D"]
 
 [node name="sprite1" type="Sprite3D" parent="."]
+visible = false
 texture = ExtResource("1_jfu0r")
 
 [node name="sprite2" type="Sprite3D" parent="."]
 transform = Transform3D(0.191, 0, 0, 0, 0.191, 0, 0, 0, 0.191, 0, 0, 0)
+visible = false
 texture = ExtResource("2_dp08l")
+
+[node name="sprite3" type="Sprite3D" parent="."]
+transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.02, 0.0200002, 0, 0.04)
+visible = false
+texture = ExtResource("3_agqwj")
+
+[node name="sprite4" type="Sprite3D" parent="."]
+transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.019, 0.0200002, 0, 0.04)
+visible = false
+texture = ExtResource("4_qgswh")
 
 [node name="a" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.08, 0.0200002, 0, 0.04)
