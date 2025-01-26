@@ -136,7 +136,7 @@ func _ready() -> void:
 				_animation_player.play("run-loop-animation")
 				_animation_player.speed_scale = 1
 			elif (
-				(_x == "run-animation" or _x == "jump-animation2" or _x == "idle-animation2")
+				(_x == "run-animation" or _x == "run-loop-animation" or _x == "jump-animation2" or _x == "idle-animation2")
 				and velocity == Vector3.ZERO
 			):
 				_animation_player.play("idle-animation2")
@@ -308,18 +308,10 @@ func _process(_delta: float) -> void:
 			prev_vel == Vector3.ZERO
 			and _animation_player.current_animation != "attack-animation"
 			and _animation_player.current_animation != "jump-animation2"
+			and _animation_player.current_animation != "run-loop-animation"
 		):
 			_animation_player.play("run-animation")
 			_animation_player.speed_scale = 1.0
-	else:
-		if (
-			prev_vel != Vector3.ZERO
-			and _animation_player.current_animation != "attack-animation"
-			and _animation_player.current_animation != "jump-animation2"
-		):
-			_animation_player.speed_scale = 1.0
-			_animation_player.play_backwards("run-animation")
-			_animation_player.seek(0.5)
 
 
 
