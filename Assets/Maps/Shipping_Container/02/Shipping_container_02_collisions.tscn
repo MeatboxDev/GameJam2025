@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bebr0x3koynac"]
+
+[ext_resource type="PackedScene" uid="uid://b6uc0jpsbembj" path="res://Assets/Maps/Shipping_Container/02/Shipping_Container_02.gltf" id="1_nlbit"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8n176"]
+size = Vector3(12, 4, 4)
+
+[node name="Shipping_container_02_collisions" type="StaticBody3D"]
+
+[node name="blockbench_export" parent="." instance=ExtResource("1_nlbit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.9, -1, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2, 2)
+shape = SubResource("BoxShape3D_8n176")
