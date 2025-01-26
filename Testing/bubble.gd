@@ -37,6 +37,10 @@ func _handle_area_collision(_area: Area3D) -> void:
 		return
 
 	if par.is_in_group("Bubble") and not par.is_in_group("BossBubble"):
+		if par.is_good != is_good:
+			par.rpc("burst")
+			rpc("burst")
+			return
 		var new_speed: float = (par.speed + speed) / 2
 		direction = (position - par.position.move_toward(position, 1))
 		speed = new_speed
