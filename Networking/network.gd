@@ -205,6 +205,7 @@ func _handle_start_button() -> void:
 
 
 func _ready() -> void:
+	$MusicPlayer.play()
 	multiplayer.allow_object_decoding = true
 	join_btn.connect("pressed", _on_join_pressed)
 	host_btn.connect("pressed", _on_host_pressed)
