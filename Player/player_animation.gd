@@ -29,15 +29,19 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	$Playerid/IdViewport/IdLabel.text = name
 	$Debug/Information/CurrentSpeed.text = (
-		"SPEED: " + str(velocity) + " | LENGTH: " + str(Vector2(velocity.x, velocity.z).length())
+		"SPEED: " + str(velocity.x) + " | LENGTH: " + str(Vector2(velocity.x, velocity.z).length())
 	)
 
 	rpc("_net_update_position", global_position)
 
 
 func _input(event: InputEvent) -> void:
+	if not is_multiplayer_authority():
+		return
 	if (
 		event is InputEventKey
 		and event.keycode == KEY_E
@@ -45,7 +49,7 @@ func _input(event: InputEvent) -> void:
 		and _currently_focused_interactable
 	):
 		_currently_focused_interactable.interact()
-	if event is InputEventMouseMotion:
+	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		$CameraStick.rotation.y -= event.relative.x * CAMERA_SENSITIVITY
 
 
