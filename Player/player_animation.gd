@@ -16,7 +16,7 @@ var _currently_focused_interactable: Node3D:
 
 @onready var _anim_tree: AnimationTree = $AnimationTree
 @onready var _interaction_area: Area3D = $InteractionArea
-
+@onready var _cam: Camera3D = $Camera
 
 func _handle_area_entered(area: Node3D) -> void:
 	if area.is_in_group("Interactable"):
@@ -29,9 +29,13 @@ func _handle_area_exited(area: Node3D) -> void:
 
 
 func _ready() -> void:
+	if not is_multiplayer_authority():
+		return
 	state_machine = _anim_tree["parameters/playback"]
 	_interaction_area.area_entered.connect(_handle_area_entered)
 	_interaction_area.area_exited.connect(_handle_area_exited)
+	_cam.make_current()
+
 
 func _process(delta: float) -> void:
 	$Playerid/IdViewport/IdLabel.text = name

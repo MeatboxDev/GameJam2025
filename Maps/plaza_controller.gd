@@ -62,9 +62,8 @@ func join_server() -> void:
 	var res: bool = await _bubbly_server.connection_result
 	
 	if res:
-		print("Connection successful")
+		print("Connection successful " + str(multiplayer.get_unique_id()))
 		remove_player(1)
-		_player_instance = null
 		_player_spawn(multiplayer.get_unique_id())
 	else:
 		print("Connection unsuccessful")
