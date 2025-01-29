@@ -142,6 +142,9 @@ func _on_peer_connected(id: int) -> void:
 
 
 func _on_peer_disconnected(id: int) -> void:
+	if id == 1:
+		print("Host disconnected, letting _c_on_server_disconnected handle it")
+		return
 	rpc("_remove_player", id)
 	if multiplayer.is_server():
 		_s_on_peer_disconnected(id)

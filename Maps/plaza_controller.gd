@@ -19,16 +19,13 @@ func create_server() -> void:
 	var _err := _bubbly_server.create_server()
 
 
+
 func close_server() -> void:
-	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
-		print("You're already offline what are you on")
-		return
-	if not is_multiplayer_authority():
-		print("You're not the Top G, can't close")
-		return
-		
 	print("Closing server...")
 	var _err := _bubbly_server.disconnect_from_server()
+	for id: int in _player_instance_list.duplicate():
+		remove_player(id)
+	_player_spawn(1)
 
 
 func join_server() -> void:
@@ -64,15 +61,10 @@ func join_server() -> void:
 
 
 func leave_server() -> void:
-	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
-		print("You're already offline what are you on")
-		return
-	if is_multiplayer_authority():
-		print("You're the top G, use the close button")
-		return
-		
-	_bubbly_server.disconnect_from_server()
-
+	var _err := _bubbly_server.disconnect_from_server()
+	for id: int in _player_instance_list.duplicate():
+		remove_player(id)
+	_player_spawn(1)
 
 @rpc("reliable", "any_peer", "call_remote")
 func _player_spawn(id: int) -> void:
@@ -120,17 +112,12 @@ func _ready() -> void:
 	
 	_bubbly_server.multiplayer.server_disconnected.connect(
 		func() -> void:
-			remove_player(1) # For some reason the 4 loop doesnt remove 1
-			for p: int in _player_instance_list:
-				remove_player(p) # Remove everyone else
-			_player_instance_list.clear()
-			multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
-			_player_spawn(1) # Respawn player as host
+			leave_server()
 	)
 	
 	_player_spawn(1)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_P:
-		print(_bubbly_server.multiplayer.multiplayer_peer)
+		print(_player_instance_list)
 		
