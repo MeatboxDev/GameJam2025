@@ -95,6 +95,9 @@ func _is_valid_ip(str: String) -> bool:
 	if split.size() != 4:
 		return false
 	for s in split:
+		if str(s.to_int()) != s:
+			return false
+	for s in split:
 		if clamp(s.to_int(), 0, 255) != s.to_int():
 			return false
 	return true
