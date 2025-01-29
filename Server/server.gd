@@ -16,6 +16,8 @@ var _peer: ENetMultiplayerPeer = null:
 		if _peer != null and val != null:
 			assert(false)
 		_peer = val
+		if _peer == null:
+			multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 
 @onready var _join_timeout: Timer = Timer.new()
 
@@ -59,7 +61,13 @@ func create_server(
 	if _peer != null or _join_timeout.timeout.is_connected(_connection_timeout):
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
-
+	if _is_valid_ip(ip):
+		_print_error_message("This shit ain't a valit IP")
+		return ERR_CANT_CREATE
+	if clamp(port, 0, 65535) != port:
+		_print_error_message("This shit ain't a valit PORT")
+		return ERR_CANT_CREATE
+	
 	_peer = ENetMultiplayerPeer.new()
 	_peer.set_bind_ip(ip)
 
@@ -68,9 +76,11 @@ func create_server(
 		OK:
 			pass
 		ERR_ALREADY_IN_USE:
+			_peer = null
 			_print_error(err)
 			return err
 		ERR_CANT_CREATE:
+			_peer = null
 			_print_error(err)
 			return err
 
@@ -80,6 +90,15 @@ func create_server(
 	_print_success("Created server with ip " + ip + ":" + str(port))
 	return OK
 
+func _is_valid_ip(str: String) -> bool:
+	var split := str.split(".")
+	if split.size() != 4:
+		return false
+	for s in split:
+		if clamp(s.to_int(), 0, 255) != s.to_int():
+			return false
+	return true
+
 
 func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 	if _join_timeout.timeout.is_connected(_connection_timeout):
@@ -88,6 +107,13 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 	if _peer != null:
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
+	if not _is_valid_ip(ip):
+		print(ip)
+		_print_error_message("This shit ain't a valit IP")
+		return ERR_CANT_CREATE
+	if clamp(port, 0, 65535) != port:
+		_print_error_message("This shit ain't a valit PORT")
+		return ERR_CANT_CREATE
 
 	_peer = ENetMultiplayerPeer.new()
 	var err := _peer.create_client(ip, port)
@@ -95,9 +121,11 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 		OK:
 			pass
 		ERR_ALREADY_IN_USE:
+			_peer = null
 			_print_error(err)
 			return err
 		ERR_CANT_CREATE:
+			_peer = null
 			_print_error(err)
 			return err
 
@@ -118,7 +146,6 @@ func disconnect_from_server() -> Error:
 		return ERR_CANT_CREATE
 
 	_peer = null
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	multiplayer.server_disconnected.emit()
 	_clear_players()
 
@@ -129,7 +156,6 @@ func disconnect_from_server() -> Error:
 func _connection_timeout() -> void:
 	_join_timeout.timeout.disconnect(_connection_timeout)
 	_peer = null
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	multiplayer.connection_failed.emit()
 
 
@@ -178,14 +204,12 @@ func _c_on_connected_to_server() -> void:
 
 func _c_on_server_disconnected() -> void:
 	_peer = null
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	_clear_players()
 	_print_error_message("Disconnected from server")
 
 
 func _c_connection_failed() -> void:
 	_peer = null
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	_print_error_message("Couldn't connect to server")
 	connection_result.emit(false)
 
