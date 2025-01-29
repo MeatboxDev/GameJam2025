@@ -61,7 +61,7 @@ func create_server(
 	if _peer != null or _join_timeout.timeout.is_connected(_connection_timeout):
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
-	if _is_valid_ip(ip):
+	if not _is_valid_ip(ip):
 		_print_error_message("This shit ain't a valit IP")
 		return ERR_CANT_CREATE
 	if clamp(port, 0, 65535) != port:
