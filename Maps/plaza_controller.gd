@@ -49,7 +49,11 @@ func join_server() -> void:
 	print("Join pressed")
 	_join_interface.visible = false
 	
-	close_server()
+	if is_multiplayer_authority():
+		close_server()
+	else:
+		leave_server()
+	
 	_bubbly_server.connect_to_server(
 		_bubbly_server.IP_ADDRESS if ip_input.text == "" else ip_input.text,
 		_bubbly_server.PORT if port_input.text == "" else (port_input.text).to_int()

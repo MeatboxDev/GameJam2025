@@ -1,6 +1,6 @@
 class_name Bubbly extends Node
 
-const IP_ADDRESS := "127.0.0.1"
+const IP_ADDRESS := "*"
 const PORT := 2100
 const MAX_CLIENTS := 8
 const TIMEOUT_DURATION := 5.0
@@ -92,6 +92,8 @@ func create_server(
 
 func _is_valid_ip(str: String) -> bool:
 	var split := str.split(".")
+	if str == "*":
+		return true
 	if split.size() != 4:
 		return false
 	for s in split:
