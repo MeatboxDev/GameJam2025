@@ -29,8 +29,7 @@ func close_server() -> void:
 	
 	print("Closing server...")
 	var _err := _bubbly_server.disconnect_from_server()
-	for id: int in _player_instance_list.duplicate():
-		remove_player(id)
+	clear_players()
 	_player_spawn(1)
 
 
@@ -63,7 +62,7 @@ func join_server() -> void:
 	
 	if res:
 		print("Connection successful " + str(multiplayer.get_unique_id()))
-		remove_player(1)
+		clear_players()
 		_player_spawn(multiplayer.get_unique_id())
 	else:
 		print("Connection unsuccessful")
@@ -73,10 +72,11 @@ func leave_server() -> void:
 	if is_multiplayer_authority():
 		print("You're the host, use the close option")
 		return
-		
+	
+	print("LEAVE NOW")
+	
 	var _err := _bubbly_server.disconnect_from_server()
-	for id: int in _player_instance_list.duplicate():
-		remove_player(id)
+	clear_players()
 	_player_spawn(1)
 
 @rpc("reliable", "any_peer", "call_remote")
@@ -96,10 +96,17 @@ func _player_spawn(id: int) -> void:
 	if id == multiplayer.get_unique_id():
 		_player_instance = player_instance
 
+
+func clear_players() -> void:
+	for id: int in _player_instance_list.duplicate():
+		remove_player(id)
+
+
 func remove_player(id: int) -> void:
 	if not _player_instance_list.has(id):
 		print_debug("Player instance " + str(id) + " not found")
 		return
+		
 	var player_instance: CharacterBody3D = _player_instance_list[id]
 	player_instance.free()
 	_player_instance_list.erase(id)
@@ -118,7 +125,10 @@ func _ready() -> void:
 	)
 	
 	_bubbly_server.multiplayer.peer_disconnected.connect(remove_player)
-	_bubbly_server.multiplayer.server_disconnected.connect(leave_server)
+	_bubbly_server.multiplayer.server_disconnected.connect(func() -> void:
+		clear_players()
+		_player_spawn(1)
+	)
 	
 	_player_spawn(1)
 
