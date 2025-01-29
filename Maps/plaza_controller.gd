@@ -19,8 +19,14 @@ func create_server() -> void:
 	var _err := _bubbly_server.create_server()
 
 
-
 func close_server() -> void:
+	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
+		print("You're not online what are you on")
+		return
+	if not is_multiplayer_authority():
+		print("You're not host, get rekt")
+		return
+	
 	print("Closing server...")
 	var _err := _bubbly_server.disconnect_from_server()
 	for id: int in _player_instance_list.duplicate():
@@ -61,6 +67,10 @@ func join_server() -> void:
 
 
 func leave_server() -> void:
+	if is_multiplayer_authority():
+		print("You're the host, use the close option")
+		return
+		
 	var _err := _bubbly_server.disconnect_from_server()
 	for id: int in _player_instance_list.duplicate():
 		remove_player(id)
@@ -73,7 +83,6 @@ func _player_spawn(id: int) -> void:
 	spawn_points.push_back(spawn_points.pop_front())
 
 	player_instance.set_multiplayer_authority(id)
-	# player_instance.multiplayer.multiplayer_peer = _bubbly_server.multiplayer.multiplayer_peer
 	
 	player_instance.position = spawn_point.position
 	player_instance.position.y = spawn_point.position.y + 2
@@ -105,15 +114,8 @@ func _ready() -> void:
 				rpc_id(id, "_player_spawn", multiplayer.get_unique_id())
 	)
 	
-	_bubbly_server.multiplayer.peer_disconnected.connect(
-		func(id: int) -> void:
-			remove_player(id)
-	)
-	
-	_bubbly_server.multiplayer.server_disconnected.connect(
-		func() -> void:
-			leave_server()
-	)
+	_bubbly_server.multiplayer.peer_disconnected.connect(remove_player)
+	_bubbly_server.multiplayer.server_disconnected.connect(leave_server)
 	
 	_player_spawn(1)
 
