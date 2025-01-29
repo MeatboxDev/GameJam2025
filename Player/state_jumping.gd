@@ -71,6 +71,8 @@ func physics_update() -> void:
 		body.velocity.y -= GRAVITY
 
 	body.move_and_slide()
+	if body.velocity.x and body.velocity.z:
+		body.find_child("gj-player").look_at(body.position + Vector3(body.velocity.x, 0, body.velocity.z), Vector3.UP, true)
 
 
 func input(_event: InputEvent) -> void:
