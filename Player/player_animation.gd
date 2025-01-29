@@ -4,15 +4,42 @@ const SPEED = 25.0
 const JUMP_VELOCITY = 30
 
 var state_machine: AnimationNodeStateMachinePlayback
+var _currently_focused_interactable: Node3D:
+	get():
+		return _currently_focused_interactable
+	set(val):
+		if _currently_focused_interactable:
+			_currently_focused_interactable.is_focused = false
+		if val:
+			val.is_focused = true
+		_currently_focused_interactable = val
 
 @onready var _anim_tree: AnimationTree = $AnimationTree
+@onready var _interaction_area: Area3D = $InteractionArea
+
+
+func _handle_area_entered(area: Node3D) -> void:
+	if area.is_in_group("Interactable"):
+		_currently_focused_interactable = area.get_parent()
+
+
+func _handle_area_exited(area: Node3D) -> void:
+	if area.is_in_group("Interactable"):
+		_currently_focused_interactable = null
 
 
 func _ready() -> void:
 	state_machine = _anim_tree["parameters/playback"]
+	_interaction_area.area_entered.connect(_handle_area_entered)
+	_interaction_area.area_exited.connect(_handle_area_exited)
+
+func _process(delta: float) -> void:
+	$Playerid/IdViewport/IdLabel.text = name
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += Vector3.DOWN * 1
@@ -38,3 +65,13 @@ func _physics_process(delta: float) -> void:
 			state_machine.travel("idle")
 
 	move_and_slide()
+	rpc("_net_update_transform", transform)
+
+@rpc("unreliable", "any_peer", "call_remote")
+func _net_update_transform(real_transform: Transform3D) -> void:
+	transform = real_transform
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		if event.keycode == KEY_E and event.pressed and _currently_focused_interactable:
+			_currently_focused_interactable.interact()

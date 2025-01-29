@@ -1,21 +1,13 @@
-## AxoBubble Server
-
 class_name Bubbly extends Node
 
 const IP_ADDRESS := "127.0.0.1"
-const PORT := 12398
+const PORT := 2100
 const MAX_CLIENTS := 8
 const TIMEOUT_DURATION := 5.0
 
+signal connection_result(result: bool)
 
-class Player:
-	var id := -1
-
-	func is_host() -> bool:
-		return id == 0
-
-
-var connected_peers: Dictionary = {}
+var connected_peers: Array[int] = []
 
 var _peer: ENetMultiplayerPeer = null:
 	get():
@@ -25,20 +17,13 @@ var _peer: ENetMultiplayerPeer = null:
 			assert(false)
 		_peer = val
 
-@onready var _join_timeout: SceneTreeTimer = get_tree().create_timer(TIMEOUT_DURATION)
-@onready var _create_server_button: Button = $MainContainer/CreateServer
-@onready var _join_server_button: Button = $MainContainer/JoinServer
-@onready var _disconnect_client_button: Button = $MainContainer/DisconnectClient
-@onready var _error_display: Label = $MainContainer/ErrorBox/ErrorDisplay
-@onready var _success_display: Label = $MainContainer/SuccessBox/SuccessDisplay
-@onready var _info_display: Label = $MainContainer/InfoBox/InfoDisplay
-@onready var _connections: HBoxContainer = $MainContainer/Connections
+@onready var _join_timeout: Timer = Timer.new()
 
 
 func _ready() -> void:
-	_create_server_button.pressed.connect(create_server)
-	_join_server_button.pressed.connect(connect_to_server)
-	_disconnect_client_button.pressed.connect(disconnect_from_server)
+	add_child(_join_timeout)
+	_join_timeout.autostart = false
+	_join_timeout.one_shot = true
 
 	multiplayer.peer_connected.connect(_on_peer_connected)
 	multiplayer.peer_disconnected.connect(_on_peer_disconnected)
@@ -48,38 +33,30 @@ func _ready() -> void:
 
 
 func _print_error_message(msg: String) -> void:
+	print("ERROR: " + msg)
 	print_stack()
-	if _error_display:
-		_error_display.text = msg
-	print()
 
 
 func _print_error(err: Error) -> void:
 	printerr(error_string(err))
 	print_stack()
-	if _error_display:
-		_error_display.text = error_string(err)
-	print()
 
 
 func _print_success(msg: String) -> void:
-	print(msg)
-	if _success_display:
-		_success_display.text = msg
-	print()
+	print("SUCCESS: " + msg)
 
 
 func _print_info(msg: String) -> void:
-	print(msg)
-	if _info_display:
-		_info_display.text = msg
-	print()
+	print("INFO: " + msg)
 
-
+## Creates a server for players
 func create_server(
 	ip: String = IP_ADDRESS, port: int = PORT, max_clients: int = MAX_CLIENTS
 ) -> Error:
-	if _peer != null:
+	if _join_timeout.timeout.is_connected(_connection_timeout):
+		_print_error_message("Can't create a server while attempting a connection")
+		return ERR_CANT_CREATE
+	if _peer != null or _join_timeout.timeout.is_connected(_connection_timeout):
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
 
@@ -105,6 +82,9 @@ func create_server(
 
 
 func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
+	if _join_timeout.timeout.is_connected(_connection_timeout):
+		_print_error_message("Can't connect while attempting a connection")
+		return ERR_CANT_CREATE
 	if _peer != null:
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
@@ -120,6 +100,8 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 		ERR_CANT_CREATE:
 			_print_error(err)
 			return err
+
+	_join_timeout.start(TIMEOUT_DURATION)
 	_join_timeout.timeout.connect(_connection_timeout)
 
 	multiplayer.multiplayer_peer = _peer
@@ -136,7 +118,7 @@ func disconnect_from_server() -> Error:
 		return ERR_CANT_CREATE
 
 	_peer = null
-	multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	_clear_players()
 
 	_print_info("Disconnected from server")
@@ -187,6 +169,7 @@ func _c_on_peer_disconnected(id: int) -> void:
 func _c_on_connected_to_server() -> void:
 	_add_player(multiplayer.get_unique_id())
 	_print_success("Successfully connected to the server")
+	connection_result.emit(true)
 
 
 func _c_on_server_disconnected() -> void:
@@ -200,31 +183,19 @@ func _c_connection_failed() -> void:
 	_peer = null
 	multiplayer.multiplayer_peer = null
 	_print_error_message("Couldn't connect to server")
-
+	connection_result.emit(false)
 
 @rpc("any_peer", "reliable", "call_local")
 func _add_player(id: int) -> void:
-	var connection := Label.new()
-	connection.text = str(id)
-	connection.name = str(id)
-	_connections.add_child(connection)
-
-	var player: Player = connected_peers.get_or_add(id, Player.new())
-	player.id = id
+	connected_peers.append(id)
 
 
 @rpc("any_peer", "reliable", "call_local")
 func _remove_player(id: int) -> void:
-	var connection: Node = _connections.find_child(str(id), false, false)
-	if connection:
-		connection.queue_free()
-	else:
+	if not connected_peers.has(id):
 		_print_error_message("Cant' disconnect " + str(id) + ", not found")
-
 	connected_peers.erase(id)
 
 
 func _clear_players() -> void:
-	for c: Node in _connections.get_children():
-		c.queue_free()
 	connected_peers.clear()

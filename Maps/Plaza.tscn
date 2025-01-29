@@ -1,0 +1,252 @@
+[gd_scene load_steps=16 format=3 uid="uid://y777m7ml0pha"]
+
+[ext_resource type="Script" path="res://Server/server.gd" id="1_1rcb8"]
+[ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="1_ls6gq"]
+[ext_resource type="Script" path="res://Maps/interactable.gd" id="2_1ricq"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sgwbx"]
+size = Vector2(200, 200)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dxt8b"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3gbqw"]
+noise = SubResource("FastNoiseLite_dxt8b")
+
+[sub_resource type="ORMMaterial3D" id="ORMMaterial3D_eogc5"]
+albedo_texture = SubResource("NoiseTexture2D_3gbqw")
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mr0ro"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hcx2l"]
+albedo_color = Color(1, 0, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jktpq"]
+size = Vector3(2, 2, 0.25)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7e1is"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_q76if"]
+radius = 3.0
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_ihnj7"]
+viewport_path = NodePath("InteractableOpen/InteractableInformation/Viewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_l42x3"]
+viewport_path = NodePath("InteractableClose/InteractableInformation/Viewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_yi207"]
+viewport_path = NodePath("InteractableJoin/InteractableInformation/Viewport")
+
+[node name="GameLobby" type="Node3D"]
+
+[node name="Server" type="Node" parent="."]
+script = ExtResource("1_1rcb8")
+
+[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points")]
+script = ExtResource("1_ls6gq")
+_bubbly_server = NodePath("../Server")
+spawn_points = [NodePath("../World/SpawnPoint"), NodePath("../World/SpawnPoint2"), NodePath("../World/SpawnPoint3"), NodePath("../World/SpawnPoint4"), NodePath("../World/SpawnPoint5"), NodePath("../World/SpawnPoint6")]
+
+[node name="LobbyInterface" type="Control" parent="LobbyController"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 3
+
+[node name="JoinInterface" type="Control" parent="LobbyController"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoinContainer" type="HBoxContainer" parent="LobbyController/JoinInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -50.0
+offset_right = 250.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoinButton" type="Button" parent="LobbyController/JoinInterface/JoinContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "JOIN JOIN JOIN"
+
+[node name="InputContainer" type="VBoxContainer" parent="LobbyController/JoinInterface/JoinContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="JoinIp" type="TextEdit" parent="LobbyController/JoinInterface/JoinContainer/InputContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "localhost"
+
+[node name="JoinPort" type="TextEdit" parent="LobbyController/JoinInterface/JoinContainer/InputContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+placeholder_text = "12398"
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGMesh3D" parent="World"]
+use_collision = true
+mesh = SubResource("PlaneMesh_sgwbx")
+material = SubResource("ORMMaterial3D_eogc5")
+
+[node name="SpawnPoint" type="CSGMesh3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.745985, -9.62233)
+mesh = SubResource("CylinderMesh_mr0ro")
+material = SubResource("StandardMaterial3D_hcx2l")
+
+[node name="SpawnPoint2" type="CSGMesh3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.26302, -0.745985, -9.62233)
+mesh = SubResource("CylinderMesh_mr0ro")
+material = SubResource("StandardMaterial3D_hcx2l")
+
+[node name="SpawnPoint3" type="CSGMesh3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.93943, -0.745985, -9.62233)
+mesh = SubResource("CylinderMesh_mr0ro")
+material = SubResource("StandardMaterial3D_hcx2l")
+
+[node name="SpawnPoint4" type="CSGMesh3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.93943, -0.745985, -4.31267)
+mesh = SubResource("CylinderMesh_mr0ro")
+material = SubResource("StandardMaterial3D_hcx2l")
+
+[node name="SpawnPoint5" type="CSGMesh3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00510311, -0.745985, -4.31267)
+mesh = SubResource("CylinderMesh_mr0ro")
+material = SubResource("StandardMaterial3D_hcx2l")
+
+[node name="SpawnPoint6" type="CSGMesh3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.07055, -0.745985, -4.31267)
+mesh = SubResource("CylinderMesh_mr0ro")
+material = SubResource("StandardMaterial3D_hcx2l")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 54, 0)
+
+[node name="InteractableOpen" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, -8, 2, -16)
+script = ExtResource("2_1ricq")
+_interaction = 1
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableOpen"]
+mesh = SubResource("BoxMesh_jktpq")
+material = SubResource("StandardMaterial3D_7e1is")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableOpen"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableOpen/InteractableArea"]
+shape = SubResource("SphereShape3D_q76if")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableOpen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_ihnj7")
+
+[node name="Viewport" type="SubViewport" parent="InteractableOpen/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableOpen/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Open Server!"
+
+[node name="InteractableClose" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, -2, 2, -16)
+script = ExtResource("2_1ricq")
+_interaction = 2
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableClose"]
+mesh = SubResource("BoxMesh_jktpq")
+material = SubResource("StandardMaterial3D_7e1is")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableClose"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableClose/InteractableArea"]
+shape = SubResource("SphereShape3D_q76if")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableClose"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_l42x3")
+
+[node name="Viewport" type="SubViewport" parent="InteractableClose/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableClose/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Close Server :("
+
+[node name="InteractableJoin" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, 4, 2, -16)
+script = ExtResource("2_1ricq")
+_interaction = 3
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableJoin"]
+mesh = SubResource("BoxMesh_jktpq")
+material = SubResource("StandardMaterial3D_7e1is")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableJoin"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableJoin/InteractableArea"]
+shape = SubResource("SphereShape3D_q76if")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableJoin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_yi207")
+
+[node name="Viewport" type="SubViewport" parent="InteractableJoin/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableJoin/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Join a friend :0"
