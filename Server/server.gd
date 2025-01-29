@@ -1,11 +1,11 @@
 class_name Bubbly extends Node
 
+signal connection_result(result: bool)
+
 const IP_ADDRESS := "*"
 const PORT := 2100
 const MAX_CLIENTS := 8
 const TIMEOUT_DURATION := 5.0
-
-signal connection_result(result: bool)
 
 var connected_peers: Array[int] = []
 
@@ -51,6 +51,7 @@ func _print_success(msg: String) -> void:
 func _print_info(msg: String) -> void:
 	print("INFO: " + msg)
 
+
 ## Creates a server for players
 func create_server(
 	ip: String = IP_ADDRESS, port: int = PORT, max_clients: int = MAX_CLIENTS
@@ -61,13 +62,10 @@ func create_server(
 	if _peer != null or _join_timeout.timeout.is_connected(_connection_timeout):
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
-	if not _is_valid_ip(ip):
-		_print_error_message("This shit ain't a valit IP")
+	if not _is_valid_ip(ip) or clamp(port, 1, 65535) != port:
+		_print_error_message("Invalid IP / PORT " + ip + " / " + str(port))
 		return ERR_CANT_CREATE
-	if clamp(port, 1, 65535) != port:
-		_print_error_message("This shit ain't a valit PORT")
-		return ERR_CANT_CREATE
-	
+
 	_peer = ENetMultiplayerPeer.new()
 	_peer.set_bind_ip(ip)
 
@@ -90,14 +88,15 @@ func create_server(
 	_print_success("Created server with ip " + ip + ":" + str(port))
 	return OK
 
-func _is_valid_ip(str: String) -> bool:
-	var split := str.split(".")
-	if str == "*":
+
+func _is_valid_ip(ip: String) -> bool:
+	var split := ip.split(".")
+	if ip == "*":
 		return true
 	if split.size() != 4:
 		return false
 	for s in split:
-		if str(s.to_int()) != s:
+		if str(s.to_int()) != str(s):
 			return false
 	for s in split:
 		if clamp(s.to_int(), 0, 255) != s.to_int():
@@ -112,13 +111,7 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 	if _peer != null:
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
-	if ip == "*":
-		_print_error_message("This shit ain't a valit IP")
-		return ERR_CANT_CREATE
-	if not _is_valid_ip(ip):
-		_print_error_message("This shit ain't a valit IP")
-		return ERR_CANT_CREATE
-	if clamp(port, 1, 65535) != port:
+	if ip == "*" or not _is_valid_ip(ip) or clamp(port, 1, 65535) != port:
 		_print_error_message("This shit ain't a valit PORT")
 		return ERR_CANT_CREATE
 
@@ -219,6 +212,7 @@ func _c_connection_failed() -> void:
 	_peer = null
 	_print_error_message("Couldn't connect to server")
 	connection_result.emit(false)
+
 
 @rpc("any_peer", "reliable", "call_local")
 func _add_player(id: int) -> void:
