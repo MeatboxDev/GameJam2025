@@ -16,12 +16,16 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	if not _current_state:
 		return
 	_current_state.update()
 
 
 func _physics_process(_delta: float) -> void:
+	if not is_multiplayer_authority():
+		return
 	if not _current_state:
 		return
 	_current_state.physics_update()

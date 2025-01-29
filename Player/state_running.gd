@@ -44,14 +44,10 @@ func physics_update() -> void:
 		body.velocity += Vector3(
 			(
 				movement.x * ACCELERATION
-				if sign(movement.x) == sign(body.velocity.x)
-				else sign(movement.x) * DECELERATION
 			),
 			0,
 			(
 				movement.y * ACCELERATION
-				if sign(movement.y) == sign(body.velocity.z)
-				else sign(movement.y) * DECELERATION
 			),
 		)
 
@@ -66,7 +62,8 @@ func physics_update() -> void:
 	else:
 		transition.emit(self, "idle")
 	body.move_and_slide()
-
+	if body.velocity.x and body.velocity.z:
+		body.find_child("gj-player").look_at(body.position + Vector3(body.velocity.x, 0, body.velocity.z), Vector3.UP, true)
 
 func input(_event: InputEvent) -> void:
 	pass
