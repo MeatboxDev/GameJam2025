@@ -26,11 +26,6 @@ func close_server() -> void:
 		
 	print("Closing server...")
 	var _err := _bubbly_server.disconnect_from_server()
-	remove_player(1)
-	for p: int in _player_instance_list:
-		remove_player(p) # Remove everyone else
-	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
-	_player_spawn(1) # Respawn player as host
 
 
 func join_server() -> void:
@@ -63,6 +58,18 @@ func join_server() -> void:
 	else:
 		print("Connection unsuccessful")
 
+
+func leave_server() -> void:
+	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
+		print("You're already offline what are you on")
+		return
+	if is_multiplayer_authority():
+		print("You're the top G, use the close button")
+		return
+		
+	_bubbly_server.disconnect_from_server()
+
+
 @rpc("reliable", "any_peer", "call_remote")
 func _player_spawn(id: int) -> void:
 	var player_instance := PLAYER_SCENE.instantiate()
@@ -82,10 +89,10 @@ func _player_spawn(id: int) -> void:
 		_player_instance = player_instance
 
 func remove_player(id: int) -> void:
-	var player_instance: CharacterBody3D = _player_instance_list[id]
-	if not player_instance:
+	if not _player_instance_list.has(id):
 		print_debug("Player instance " + str(id) + " not found")
 		return
+	var player_instance: CharacterBody3D = _player_instance_list[id]
 	player_instance.free()
 	_player_instance_list.erase(id)
 
@@ -104,22 +111,22 @@ func _ready() -> void:
 	
 	_bubbly_server.multiplayer.peer_disconnected.connect(
 		func(id: int) -> void:
-			print("INFO: Player Left: " + str(id))
+			remove_player(id)
 	)
 	
 	_bubbly_server.multiplayer.server_disconnected.connect(
 		func() -> void:
-			remove_player(1) # Remove host, traitor
+			remove_player(1) # For some reason the 4 loop doesnt remove 1
 			for p: int in _player_instance_list:
 				remove_player(p) # Remove everyone else
 			_player_instance_list.clear()
 			multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 			_player_spawn(1) # Respawn player as host
 	)
+	
 	_player_spawn(1)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_P:
-		print(multiplayer.multiplayer_peer)
-		print(_player_instance_list[1].multiplayer.multiplayer_peer)
+		print(_player_instance_list)
 		
