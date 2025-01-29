@@ -119,6 +119,7 @@ func disconnect_from_server() -> Error:
 
 	_peer = null
 	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+	multiplayer.server_disconnected.emit()
 	_clear_players()
 
 	_print_info("Disconnected from server")
