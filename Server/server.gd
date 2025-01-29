@@ -129,7 +129,7 @@ func disconnect_from_server() -> Error:
 func _connection_timeout() -> void:
 	_join_timeout.timeout.disconnect(_connection_timeout)
 	_peer = null
-	multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	multiplayer.connection_failed.emit()
 
 
@@ -175,14 +175,14 @@ func _c_on_connected_to_server() -> void:
 
 func _c_on_server_disconnected() -> void:
 	_peer = null
-	multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	_clear_players()
 	_print_error_message("Disconnected from server")
 
 
 func _c_connection_failed() -> void:
 	_peer = null
-	multiplayer.multiplayer_peer = null
+	multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 	_print_error_message("Couldn't connect to server")
 	connection_result.emit(false)
 

@@ -12,6 +12,9 @@ var _player_instance_list: Dictionary = {}
 @onready var _join_interface: Control = $JoinInterface
 
 func create_server() -> void:
+	if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
+		print("You already have a connection open slow down ")
+		return
 	print("Creating server for player...")
 	var _err := _bubbly_server.create_server()
 
@@ -43,6 +46,7 @@ func join_server() -> void:
 	print("Join pressed")
 	_join_interface.visible = false
 	
+	close_server()
 	_bubbly_server.connect_to_server(
 		_bubbly_server.IP_ADDRESS if ip_input.text == "" else ip_input.text,
 		_bubbly_server.PORT if port_input.text == "" else (port_input.text).to_int()
@@ -128,5 +132,5 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_P:
-		print(_player_instance_list)
+		print(_bubbly_server.multiplayer.multiplayer_peer)
 		
