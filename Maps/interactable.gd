@@ -4,7 +4,8 @@ enum INTERACTIONS {
 	NULL = 0,
 	CREATE_SERVER = 1,
 	CLOSE_SERVER = 2,
-	JOIN_SERVER = 3
+	JOIN_SERVER = 3,
+	LEAVE_SERVER = 4,
 }
 
 var is_focused: bool = false:
@@ -22,7 +23,8 @@ var is_focused: bool = false:
 	func() -> void: print("Empty interaction!"),
 	_lobby_controller.create_server,
 	_lobby_controller.close_server,
-	_lobby_controller.join_server
+	_lobby_controller.join_server,
+	_lobby_controller.leave_server,
 ]
 
 @onready var _interaction_info_tween: Tween = null
