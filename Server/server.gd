@@ -64,7 +64,7 @@ func create_server(
 	if not _is_valid_ip(ip):
 		_print_error_message("This shit ain't a valit IP")
 		return ERR_CANT_CREATE
-	if clamp(port, 0, 65535) != port:
+	if clamp(port, 1, 65535) != port:
 		_print_error_message("This shit ain't a valit PORT")
 		return ERR_CANT_CREATE
 	
