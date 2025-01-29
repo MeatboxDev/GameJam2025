@@ -112,8 +112,10 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 	if _peer != null:
 		_print_error_message("You already have a connection open")
 		return ERR_CANT_CREATE
+	if ip == "*":
+		_print_error_message("This shit ain't a valit IP")
+		return ERR_CANT_CREATE
 	if not _is_valid_ip(ip):
-		print(ip)
 		_print_error_message("This shit ain't a valit IP")
 		return ERR_CANT_CREATE
 	if clamp(port, 1, 65535) != port:
