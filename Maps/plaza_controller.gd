@@ -8,7 +8,7 @@ const PLAYER_SCENE := preload("res://Player/PlayerCharacter.tscn")
 var _player_instance: CharacterBody3D = null
 var _player_instance_list: Dictionary = {}
 
-@onready var _lobby_interface: Control = $LobbyInterface
+# @onready var _lobby_interface: Control = $LobbyInterface
 @onready var _join_interface: Control = $JoinInterface
 
 
@@ -37,12 +37,15 @@ func close_server() -> void:
 func join_server() -> void:
 	print("Showing join server prompt...")
 	_join_interface.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 	var join_container: HBoxContainer = _join_interface.get_child(0)
 	var join_button: Button = join_container.get_child(0)
 	var input_container: VBoxContainer = join_container.get_child(1)
 	var ip_input: TextEdit = input_container.get_child(0)
 	var port_input: TextEdit = input_container.get_child(1)
+	
+	ip_input.grab_focus()
 
 	await join_button.pressed
 
@@ -60,6 +63,7 @@ func join_server() -> void:
 	)
 
 	var res: bool = await _bubbly_server.connection_result
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 	if res:
 		print("Connection successful " + str(multiplayer.get_unique_id()))
@@ -116,7 +120,7 @@ func remove_player(id: int) -> void:
 
 func _ready() -> void:
 	assert(spawn_points.size() > 0, "You need to specify at least one spawn point")
-	assert(_lobby_interface, "Lobby interface is missing")
+	# assert(_lobby_interface, "Lobby interface is missing")
 	assert(_bubbly_server, "Server not set!")
 
 	_bubbly_server.multiplayer.peer_connected.connect(
