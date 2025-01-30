@@ -30,6 +30,7 @@ display_server/driver.linuxbsd="wayland"
 [file_customization]
 
 folder_colors={
+"res://Interfaces/": "green",
 "res://Maps/": "orange",
 "res://Player/": "pink",
 "res://Server/": "red"
