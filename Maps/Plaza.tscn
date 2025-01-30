@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://y777m7ml0pha"]
+[gd_scene load_steps=19 format=3 uid="uid://y777m7ml0pha"]
 
 [ext_resource type="Script" path="res://Server/server.gd" id="1_1rcb8"]
 [ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="1_ls6gq"]
@@ -41,6 +41,9 @@ viewport_path = NodePath("InteractableLeave/InteractableInformation/Viewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yi207"]
 viewport_path = NodePath("InteractableJoin/InteractableInformation/Viewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xiq7l"]
+viewport_path = NodePath("InteractableName/InteractableInformation/Viewport")
 
 [node name="GameLobby" type="Node3D"]
 
@@ -99,6 +102,40 @@ placeholder_text = "IP"
 layout_mode = 2
 size_flags_vertical = 3
 placeholder_text = "PORT"
+
+[node name="NameInterface" type="Control" parent="LobbyController"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NameContainer" type="HBoxContainer" parent="LobbyController/NameInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -238.0
+offset_top = -20.0
+offset_right = 238.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Confirm" type="Button" parent="LobbyController/NameInterface/NameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.2
+text = "Change"
+
+[node name="UserInput" type="TextEdit" parent="LobbyController/NameInterface/NameContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "New username"
 
 [node name="ChatController" type="Node" parent="."]
 script = ExtResource("3_t1xre")
@@ -309,3 +346,40 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Join a friend :0"
+
+[node name="InteractableName" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, -8, 2, 3)
+script = ExtResource("2_1ricq")
+_interaction = 5
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableName"]
+mesh = SubResource("BoxMesh_jktpq")
+material = SubResource("StandardMaterial3D_7e1is")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableName"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableName/InteractableArea"]
+shape = SubResource("SphereShape3D_q76if")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableName"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_xiq7l")
+
+[node name="Viewport" type="SubViewport" parent="InteractableName/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableName/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Change Username"
