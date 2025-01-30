@@ -10,6 +10,7 @@ var _player_instance_list: Dictionary = {}
 
 # @onready var _lobby_interface: Control = $LobbyInterface
 @onready var _join_interface: Control = $JoinInterface
+@onready var _name_interface: Control = $NameInterface
 
 
 func create_server() -> void:
@@ -84,6 +85,29 @@ func leave_server() -> void:
 	clear_players()
 	_player_spawn(1)
 
+func change_name() -> void:
+	if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
+		print("Go to your own crib to change your name >:(")
+		return
+	print("Changing username...")
+	_name_interface.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	var _name_container: HBoxContainer = _name_interface.get_child(0)
+	var _confirm_button: Button = _name_container.get_child(0)
+	var _username_input: TextEdit = _name_container.get_child(1)
+	
+	await _confirm_button.pressed
+	
+	var config := ConfigFile.new()
+	var username := _username_input.text
+	config.set_value("Userdata", "username", username)
+	config.save("user://userdata.cfg")
+	
+	_player_instance.username = username
+	_name_interface.visible = false
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	
 
 @rpc("reliable", "any_peer", "call_remote")
 func _player_spawn(id: int) -> void:
@@ -128,6 +152,7 @@ func _ready() -> void:
 			print("INFO: Player Joined: " + str(id))
 			if id != multiplayer.get_unique_id():
 				rpc_id(id, "_player_spawn", multiplayer.get_unique_id())
+				
 	)
 
 	_bubbly_server.multiplayer.peer_disconnected.connect(remove_player)
@@ -147,4 +172,5 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_ESCAPE:
 		_join_interface.visible = false
+		_name_interface.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
