@@ -46,7 +46,6 @@ func _on_state_transition(
 	if _current_state:
 		_current_state.on_leave()
 
-	print("Transitioned to " + new_state.name)
 	_current_state = new_state
 	new_state.on_set()
 
