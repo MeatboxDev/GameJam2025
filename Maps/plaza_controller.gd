@@ -85,6 +85,7 @@ func leave_server() -> void:
 	clear_players()
 	_player_spawn(1)
 
+
 func change_name() -> void:
 	if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
 		print("Go to your own crib to change your name >:(")
@@ -107,24 +108,6 @@ func change_name() -> void:
 	_player_instance.username = username
 	_name_interface.visible = false
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-
-@rpc("reliable", "any_peer", "call_remote")
-func _player_spawn(id: int) -> void:
-	var player_instance := PLAYER_SCENE.instantiate()
-	var spawn_point: Node3D = spawn_points.front()
-	spawn_points.push_back(spawn_points.pop_front())
-
-	player_instance.set_multiplayer_authority(id)
-
-	player_instance.position = spawn_point.position
-	player_instance.position.y = spawn_point.position.y + 2
-	player_instance.name = str(id)
-
-	_player_instance_list[id] = player_instance
-	add_child(player_instance)
-	if id == multiplayer.get_unique_id():
-		_player_instance = player_instance
 
 
 func clear_players() -> void:
@@ -174,3 +157,20 @@ func _input(event: InputEvent) -> void:
 		_join_interface.visible = false
 		_name_interface.visible = false
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
+
+@rpc("reliable", "any_peer", "call_remote")
+func _player_spawn(id: int) -> void:
+	var player_instance := PLAYER_SCENE.instantiate()
+	var spawn_point: Node3D = spawn_points.front()
+	spawn_points.push_back(spawn_points.pop_front())
+
+	player_instance.set_multiplayer_authority(id)
+
+	player_instance.position = spawn_point.position
+	player_instance.position.y = spawn_point.position.y + 2
+	player_instance.name = str(id)
+
+	_player_instance_list[id] = player_instance
+	add_child(player_instance)
+	if id == multiplayer.get_unique_id():
+		_player_instance = player_instance
