@@ -141,5 +141,10 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_P:
-		print(_player_instance_list)
+	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_E and _join_interface.visible:
+		get_viewport().set_input_as_handled()
+		# TODO: Find a better way to not let the E go through when interacting
+		return
+	if event is InputEventKey and event.is_pressed() and event.keycode == KEY_ESCAPE:
+		_join_interface.visible = false
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED 
