@@ -146,7 +146,7 @@ func disconnect_from_server() -> Error:
 		return ERR_CANT_CREATE
 
 	_peer = null
-	multiplayer.server_disconnected.emit()
+	# multiplayer.server_disconnected.emit()
 	_clear_players()
 
 	_print_info("Disconnected from server")
