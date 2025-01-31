@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" path="res://Interfaces/interface_join_lobby.gd" id="1_7d6nb"]
 
-[node name="JoinLobby" type="Node" node_paths=PackedStringArray("_bubbly_server", "_lobby_controller")]
+[node name="JoinLobby" type="Node"]
 script = ExtResource("1_7d6nb")
-_bubbly_server = NodePath("")
-_lobby_controller = NodePath("")
 
 [node name="JoinInterface" type="Control" parent="."]
 visible = false
