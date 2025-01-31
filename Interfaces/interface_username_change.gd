@@ -27,7 +27,7 @@ func _ready() -> void:
 		
 		kill.emit(self)
 		
-		# TODO: Username change signal possibly
+		SignalBus.username_change.emit(username)
 	)
 	
 	_close_button.pressed.connect(func() -> void: kill.emit(self))

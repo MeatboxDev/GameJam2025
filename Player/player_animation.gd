@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal username_change(new_username: String)
+
 const DEBUG := true
 
 const CAMERA_SENSITIVITY := 0.003
@@ -8,29 +10,32 @@ var username: String = "":
 	get(): return username
 	set(val):
 		username = val
-		$Playerid/IdViewport/IdLabel.text = name if username == "" else username
+		username_change.emit(username)
 
 
 var anim_state_machine: AnimationNodeStateMachinePlayback
 
-@onready var _interface_manager: InterfaceManager = get_tree().current_scene.find_child("InterfaceManager")
-@onready var _interaction_area: Area3D = $InteractionArea
 @onready var state_machine: StateMachine = $StateMachine
-@onready var _anim_tree: AnimationTree = $AnimationTree
+@onready var _interaction_area: Area3D = $InteractionArea
+@onready var _anim_tree: AnimationTree = $Model/AnimationTree
 @onready var _cam: Camera3D = $CameraStick/Camera
+
+func _on_username_change(new_name: String) -> void:
+	username = new_name
+
 
 func _ready() -> void:
 	if not is_multiplayer_authority():
 		return
 	
+	SignalBus.username_change.connect(_on_username_change)
+	
 	assert(state_machine, "State Machine not set for player")
 	assert(_interaction_area, "InteractionArea not set for player")
-	assert(_interface_manager, "InterfaceManager not found in scene")
 	
 	
 	anim_state_machine = _anim_tree["parameters/playback"]
 	_cam.make_current()
-	$Debug.visible = DEBUG
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
@@ -40,9 +45,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	$Debug/Information/CurrentSpeed.text = (
-		"SPEED: " + str(velocity.x) + " | LENGTH: " + str(Vector2(velocity.x, velocity.z).length())
-	)
 	rpc("_net_update_position", global_position)
 
 

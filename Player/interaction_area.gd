@@ -19,7 +19,7 @@ func _ready() -> void:
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	interactables.sort_custom(func(a: Node3D, b: Node3D) -> bool:
 		return a.position.distance_to(position) < b.position.distance_to(position)
 	)
