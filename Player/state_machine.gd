@@ -2,7 +2,7 @@ class_name StateMachine extends Node
 
 @export var _initial_state: State
 
-var _current_state: State
+var current_state: State
 var _states := {}
 
 
@@ -12,30 +12,30 @@ func _ready() -> void:
 		state.transition.connect(_on_state_transition)
 
 	if _initial_state:
-		_current_state = _initial_state
+		current_state = _initial_state
 
 
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	if not _current_state:
+	if not current_state:
 		return
-	_current_state.update()
+	current_state.update()
 
 
 func _physics_process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	if not _current_state:
+	if not current_state:
 		return
-	_current_state.physics_update()
+	current_state.physics_update()
 
 
 func _on_state_transition(
 	old_state: State,
 	new_state_name: String,
 ) -> void:
-	if old_state != _current_state:
+	if old_state != current_state:
 		return
 
 	var new_state: State = _states[new_state_name.to_lower()]
@@ -43,13 +43,13 @@ func _on_state_transition(
 		breakpoint
 		return
 
-	if _current_state:
-		_current_state.on_leave()
+	if current_state:
+		current_state.on_leave()
 
-	_current_state = new_state
+	current_state = new_state
 	new_state.on_set()
 
 
 func _input(event: InputEvent) -> void:
-	if _current_state:
-		_current_state.input(event)
+	if current_state:
+		current_state.input(event)

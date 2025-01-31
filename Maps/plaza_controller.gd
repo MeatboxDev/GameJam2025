@@ -57,9 +57,8 @@ func remove_player(id: int) -> void:
 	if not _player_instance_list.has(id):
 		print_debug("Player instance " + str(id) + " not found")
 		return
-
 	var player_instance: CharacterBody3D = _player_instance_list[id]
-	player_instance.free()
+	player_instance.queue_free()
 	_player_instance_list.erase(id)
 
 
@@ -93,7 +92,7 @@ func player_spawn(id: int) -> void:
 	spawn_points.push_back(spawn_points.pop_front())
 
 	player_instance.set_multiplayer_authority(id)
-
+	
 	player_instance.position = spawn_point.position
 	player_instance.position.y = spawn_point.position.y + 2
 	player_instance.name = str(id)
@@ -102,3 +101,4 @@ func player_spawn(id: int) -> void:
 	add_child(player_instance)
 	if id == multiplayer.get_unique_id():
 		_player_instance = player_instance
+		_interface_manager.focused_player = player_instance

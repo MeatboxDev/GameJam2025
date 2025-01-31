@@ -10,16 +10,24 @@ var username: String = "":
 		username = val
 		$Playerid/IdViewport/IdLabel.text = name if username == "" else username
 
+
 var anim_state_machine: AnimationNodeStateMachinePlayback
 
+@onready var _interface_manager: InterfaceManager = get_tree().current_scene.find_child("InterfaceManager")
+@onready var _interaction_area: Area3D = $InteractionArea
+@onready var state_machine: StateMachine = $StateMachine
 @onready var _anim_tree: AnimationTree = $AnimationTree
 @onready var _cam: Camera3D = $CameraStick/Camera
-
 
 func _ready() -> void:
 	if not is_multiplayer_authority():
 		return
 		
+	assert(state_machine, "State Machine not set for player")
+	assert(_interaction_area, "InteractionArea not set for player")
+	assert(_interface_manager, "InterfaceManager not found in scene")
+	
+	
 	anim_state_machine = _anim_tree["parameters/playback"]
 	_cam.make_current()
 	$Debug.visible = DEBUG
@@ -44,6 +52,8 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
 		return
+	if event is InputEventKey and event.keycode == KEY_E and event.pressed and state_machine.current_state.name != "Interface":
+		_interaction_area.interact()
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		$CameraStick.rotation.y -= event.relative.x * CAMERA_SENSITIVITY
 
