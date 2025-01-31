@@ -93,6 +93,9 @@ func _ready() -> void:
 
 @rpc("reliable", "any_peer", "call_remote")
 func player_spawn(id: int) -> void:
+	var found := find_child(str(id), false, false)
+	if found:
+		found.name = "old-" + str(id)
 	var player_instance := PLAYER_SCENE.instantiate()
 	var spawn_point: Node3D = spawn_points.front()
 	spawn_points.push_back(spawn_points.pop_front())
