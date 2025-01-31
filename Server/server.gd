@@ -212,7 +212,7 @@ func _c_on_server_disconnected() -> void:
 
 func _c_connection_failed() -> void:
 	_peer = null
-	KLog.info("Couldn't connect to server")
+	KLog.warning("Couldn't connect to server")
 	connection_result.emit(false)
 
 
