@@ -1,7 +1,6 @@
 class_name InterfaceManager extends Node
 
 var _interfaces := {}
-var focused_player: CharacterBody3D
 var open_interfaces: Array[Interface]
 
 func _ready() -> void:
@@ -18,9 +17,7 @@ func _on_interface_close(interface: Interface) -> void:
 		open_interfaces.back().open()
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		if focused_player:
-			var player_state: State = focused_player.state_machine.current_state
-			player_state.transition.emit(player_state, "Idle")
+		SignalBus.interface_closed.emit()
 
 
 func _on_interface_transition(old: Interface, new_name: String) -> void:
@@ -41,6 +38,4 @@ func open(name: String) -> void:
 	open_interfaces.push_back(new_interface)
 	new_interface.open()
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	if focused_player:
-		var player_state: State = focused_player.state_machine.current_state
-		player_state.transition.emit(player_state, "Interface")
+	SignalBus.interface_open.emit()

@@ -5,8 +5,18 @@ class_name StateMachine extends Node
 var current_state: State
 var _states := {}
 
+func _on_interface_open() -> void:
+	current_state.transition.emit(current_state, "Interface")
+
+
+func _on_interface_close() -> void:
+	current_state.transition.emit(current_state, "Idle")
+
 
 func _ready() -> void:
+	SignalBus.interface_open.connect(_on_interface_open)
+	SignalBus.interface_closed.connect(_on_interface_close)
+	
 	for state: State in get_children().filter(func(c: Node) -> bool: return c is State):
 		_states[state.name.to_lower()] = state
 		state.transition.connect(_on_state_transition)
