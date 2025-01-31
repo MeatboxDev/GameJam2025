@@ -13,3 +13,13 @@ signal interface_open()
 signal interface_closed()
 
 signal username_change(new_name: String)
+
+func _test_connectionless(s: Signal) -> void:
+	if s.get_connections().size() == 1: 
+		KLog.warning(s.get_name() + " was emited but has no connections!")
+
+
+func _ready() -> void:
+	for s: Dictionary in get_signal_list().filter(func(s: Dictionary) -> bool: return s.name != "ready"):
+		var sig: Signal = get(s.name)
+		sig.connect(func() -> void: _test_connectionless(sig))
