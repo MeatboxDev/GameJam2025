@@ -95,6 +95,7 @@ _lobby_controller = NodePath("../../LobbyController")
 
 [node name="Floor" type="CSGMesh3D" parent="World"]
 use_collision = true
+collision_layer = 5
 mesh = SubResource("PlaneMesh_sgwbx")
 material = SubResource("ORMMaterial3D_eogc5")
 
