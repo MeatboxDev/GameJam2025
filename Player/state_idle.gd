@@ -20,7 +20,7 @@ func update() -> void:
 
 func physics_update() -> void:
 	if not body.is_on_floor():
-		transition.emit(self, "jumping")  # TODO: Create and change to a falling state
+		transition.emit(self, "falling")
 
 	body.velocity = Vector3(
 		move_toward(body.velocity.x, 0, DECELERATION),
