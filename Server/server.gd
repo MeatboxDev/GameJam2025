@@ -34,36 +34,18 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(_c_connection_failed)
 
 
-func _print_error_message(msg: String) -> void:
-	print("ERROR: " + msg)
-	print_stack()
-
-
-func _print_error(err: Error) -> void:
-	printerr(error_string(err))
-	print_stack()
-
-
-func _print_success(msg: String) -> void:
-	print("SUCCESS: " + msg)
-
-
-func _print_info(msg: String) -> void:
-	print("INFO: " + msg)
-
-
 ## Creates a server for players
 func create_server(
 	ip: String = IP_ADDRESS, port: int = PORT, max_clients: int = MAX_CLIENTS
 ) -> Error:
 	if _join_timeout.timeout.is_connected(_connection_timeout):
-		_print_error_message("Can't create a server while attempting a connection")
+		KLog.error("Can't create server while attempting a connection")
 		return ERR_CANT_CREATE
 	if _peer != null or _join_timeout.timeout.is_connected(_connection_timeout):
-		_print_error_message("You already have a connection open")
+		KLog.error("You already have a connection open")
 		return ERR_CANT_CREATE
 	if not _is_valid_ip(ip) or clamp(port, 1, 65535) != port:
-		_print_error_message("Invalid IP / PORT " + ip + " / " + str(port))
+		KLog.error("Invalid IP / PORT " + ip + ":" + str(port))
 		return ERR_CANT_CREATE
 
 	_peer = ENetMultiplayerPeer.new()
@@ -75,17 +57,16 @@ func create_server(
 			pass
 		ERR_ALREADY_IN_USE:
 			_peer = null
-			_print_error(err)
+			KLog.error("Address " + ip + ":" + str(port) + " already in use!")
 			return err
 		ERR_CANT_CREATE:
 			_peer = null
-			_print_error(err)
+			KLog.error("Couldn't create server! (Reason Unknown)")
 			return err
 
 	multiplayer.multiplayer_peer = _peer
-	multiplayer.peer_connected.emit(multiplayer.get_unique_id())
 
-	_print_success("Created server with ip " + ip + ":" + str(port))
+	KLog.info("Created server with ip " + ip + ":" + str(port))
 	return OK
 
 
@@ -106,15 +87,15 @@ func _is_valid_ip(ip: String) -> bool:
 
 func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 	if _join_timeout.timeout.is_connected(_connection_timeout):
-		_print_error_message("Can't connect while attempting a connection")
+		KLog.error("Can't connect while attempting a connection")
 		return ERR_CANT_CREATE
 	if ip == "*" or not _is_valid_ip(ip) or clamp(port, 1, 65535) != port:
-		_print_error_message("This shit ain't a valit PORT")
+		KLog.error("This shit ain't a valit PORT")
 		return ERR_CANT_CREATE
 
 	_peer = null
 	multiplayer.multiplayer_peer = null
-	
+
 	_peer = ENetMultiplayerPeer.new()
 	var err := _peer.create_client(ip, port)
 	match err:
@@ -122,11 +103,11 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 			pass
 		ERR_ALREADY_IN_USE:
 			_peer = null
-			_print_error(err)
+			KLog.error("Address " + ip + ":" + str(port) + " already in use!")
 			return err
 		ERR_CANT_CREATE:
 			_peer = null
-			_print_error(err)
+			KLog.error("Couldn't create server! (Reason Unknown)")
 			return err
 
 	_join_timeout.start(TIMEOUT_DURATION)
@@ -134,22 +115,43 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 
 	multiplayer.multiplayer_peer = _peer
 
+	KLog.info("Joined server " + ip + ":" + str(port))
 	return OK
 
 
 func disconnect_from_server() -> Error:
-	if _join_timeout.timeout.is_connected(_connection_timeout):
-		_print_error_message("Can't disconnect while attempting a connection")
-		return ERR_CANT_CREATE
 	if _peer == null:
-		_print_error_message("You're not connected to a server")
+		KLog.error("You're not connected to a server")
+		return ERR_CANT_CREATE
+	if _join_timeout.timeout.is_connected(_connection_timeout):
+		KLog.error("Can't close server while attempting a connection")
+		return ERR_CANT_CREATE
+	if is_multiplayer_authority():
+		KLog.error("Don't use this if you're host, close instead")
 		return ERR_CANT_CREATE
 
 	_peer = null
-	# multiplayer.server_disconnected.emit()
 	_clear_players()
 
-	_print_info("Disconnected from server")
+	KLog.info("Disconnected from server")
+	return OK
+
+
+func close_server() -> Error:
+	if _peer == null:
+		KLog.error("You're not connected to a server")
+		return ERR_CANT_CREATE
+	if _join_timeout.timeout.is_connected(_connection_timeout):
+		KLog.error("Can't close server while attempting a connection")
+		return ERR_CANT_CREATE
+	if not is_multiplayer_authority():
+		KLog.error("Can't close a server you aren't host of")
+		return ERR_CANT_CREATE
+	
+	_peer = null
+	_clear_players()
+	
+	KLog.info("Closed server")
 	return OK
 
 
@@ -169,7 +171,7 @@ func _on_peer_connected(id: int) -> void:
 
 func _on_peer_disconnected(id: int) -> void:
 	if id == 1:
-		print("Host disconnected, letting _c_on_server_disconnected handle it")
+		KLog.info("Host disconnected, letting _c_on_server_disconnected handle it")
 		return
 	rpc("_remove_player", id)
 	if multiplayer.is_server():
@@ -179,38 +181,38 @@ func _on_peer_disconnected(id: int) -> void:
 
 
 func _s_on_peer_connected(id: int) -> void:
-	_print_success("Peer connected " + str(id))
+	KLog.info("Peer connected " + str(id))
 
 
 func _s_on_peer_disconnected(id: int) -> void:
-	_print_info("Peer disconnected " + str(id))
+	KLog.info("Peer disconnected " + str(id))
 
 
 func _c_on_peer_connected(id: int) -> void:
 	if id == 1:
 		_join_timeout.timeout.disconnect(_connection_timeout)
-	_print_success("Peer connected " + str(id))
+	KLog.info("Peer connected " + str(id))
 
 
 func _c_on_peer_disconnected(id: int) -> void:
-	_print_info("Peer disconnected " + str(id))
+	KLog.info("Peer disconnected " + str(id))
 
 
 func _c_on_connected_to_server() -> void:
 	_add_player(multiplayer.get_unique_id())
-	_print_success("Successfully connected to the server")
+	KLog.info("Successfully connected to the server")
 	connection_result.emit(true)
 
 
 func _c_on_server_disconnected() -> void:
 	_peer = null
 	_clear_players()
-	_print_error_message("Disconnected from server")
+	KLog.info("Disconnected from server")
 
 
 func _c_connection_failed() -> void:
 	_peer = null
-	_print_error_message("Couldn't connect to server")
+	KLog.info("Couldn't connect to server")
 	connection_result.emit(false)
 
 
@@ -222,7 +224,7 @@ func _add_player(id: int) -> void:
 @rpc("any_peer", "reliable", "call_local")
 func _remove_player(id: int) -> void:
 	if not connected_peers.has(id):
-		_print_error_message("Cant' disconnect " + str(id) + ", not found")
+		KLog.warning("Cant' disconnect " + str(id) + ", not found")
 	connected_peers.erase(id)
 
 
