@@ -2,7 +2,7 @@ class_name KLog extends Node
 
 enum LEVEL { CRITICAL, ERROR, WARN, INFO, DEBUG }
 static var log_level := LEVEL.DEBUG
-
+static var debug_signals := false
 
 ## Prints a message in red starting with CRIT: and stops the program
 static func critical(msg: String) -> void:
