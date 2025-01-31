@@ -1,4 +1,4 @@
-[gd_scene load_steps=88 format=4 uid="uid://bi0j2wmww54ji"]
+[gd_scene load_steps=89 format=4 uid="uid://bi0j2wmww54ji"]
 
 [ext_resource type="Script" path="res://Player/player_animation.gd" id="1_nns8n"]
 [ext_resource type="Script" path="res://Player/state_machine.gd" id="3_5xpim"]
@@ -12382,6 +12382,10 @@ _data = {
 "run-loop-animation": SubResource("Animation_1unir")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_otpf5"]
+distance_fade_mode = 2
+distance_fade_max_distance = 4.0
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xmj7q"]
 resource_name = "none"
 cull_mode = 2
@@ -15817,114 +15821,142 @@ bones/248/rotation = Quaternion(0.0125186, 1.18076e-10, -0.166665, 0.985934)
 bones/248/scale = Vector3(1, 1, 1)
 
 [node name="h_bone1" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_6bget")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_bone2" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_05uru")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_bone3" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_4xa2l")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_bone4" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_3hc66")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_bone5" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_2r2a6")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_bone6" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_2q4o7")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_membrane1" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_1uj2s")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_membrane2" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_a3eo0")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_membrane3" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_5whdq")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_membrane4" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_eebsk")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_membrane5" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_ehxax")
 skin = SubResource("Skin_2oqll")
 
 [node name="h_membrane6" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_mq67r")
 skin = SubResource("Skin_2oqll")
 
 [node name="head" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_xkqrc")
 skin = SubResource("Skin_2oqll")
 
 [node name="hip" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_qomfm")
 skin = SubResource("Skin_2oqll")
 
 [node name="l_arm" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_ubpyt")
 skin = SubResource("Skin_2oqll")
 
 [node name="l_hand" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_xfp01")
 skin = SubResource("Skin_2oqll")
 
 [node name="l_leg" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_un6us")
 skin = SubResource("Skin_2oqll")
 
 [node name="l_shoe" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_5ki4w")
 skin = SubResource("Skin_2oqll")
 
 [node name="l_shoulder" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_i800t")
 skin = SubResource("Skin_2oqll")
 
 [node name="neck" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_emtqi")
 skin = SubResource("Skin_2oqll")
 
 [node name="r_arm" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_1i2s5")
 skin = SubResource("Skin_2oqll")
 
 [node name="r_hand" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_hb5vb")
 skin = SubResource("Skin_2oqll")
 
 [node name="r_leg" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_yibxv")
 skin = SubResource("Skin_2oqll")
 
 [node name="r_shoe" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_ecy3y")
 skin = SubResource("Skin_2oqll")
 
 [node name="r_shoulder" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_la24j")
 skin = SubResource("Skin_2oqll")
 
 [node name="t_membrane" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_38ygw")
 skin = SubResource("Skin_2oqll")
 
 [node name="tail" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_61pe5")
 skin = SubResource("Skin_2oqll")
 
 [node name="torso" type="MeshInstance3D" parent="Model/rig/Skeleton3D"]
+material_override = SubResource("StandardMaterial3D_otpf5")
 mesh = SubResource("ArrayMesh_eqmsn")
 skin = SubResource("Skin_2oqll")
 
