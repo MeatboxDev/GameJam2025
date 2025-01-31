@@ -1,6 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://y777m7ml0pha"]
+[gd_scene load_steps=23 format=3 uid="uid://y777m7ml0pha"]
 
 [ext_resource type="Script" path="res://Server/server.gd" id="1_1rcb8"]
+[ext_resource type="Script" path="res://Maps/respawner.gd" id="1_k8tvr"]
 [ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="1_ls6gq"]
 [ext_resource type="Script" path="res://Maps/interactable.gd" id="2_1ricq"]
 [ext_resource type="Script" path="res://Maps/chat_controller.gd" id="3_t1xre"]
@@ -50,13 +51,17 @@ viewport_path = NodePath("World/Interactables/InteractableName/InteractableInfor
 
 [node name="GameLobby" type="Node3D"]
 
+[node name="Respawner" type="Node" parent="." node_paths=PackedStringArray("_spawn_points")]
+script = ExtResource("1_k8tvr")
+_spawn_points = [NodePath("../World/RespawnPoint")]
+
 [node name="Server" type="Node" parent="."]
 script = ExtResource("1_1rcb8")
 
 [node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points", "_interface_manager")]
 script = ExtResource("1_ls6gq")
 _bubbly_server = NodePath("../Server")
-spawn_points = [NodePath("../World/SpawnPoint"), NodePath("../World/SpawnPoint2"), NodePath("../World/SpawnPoint3"), NodePath("../World/SpawnPoint4"), NodePath("../World/SpawnPoint5"), NodePath("../World/SpawnPoint6")]
+spawn_points = [NodePath("../World/RespawnPoint/Mesh"), NodePath("../World/SpawnPoint2"), NodePath("../World/SpawnPoint3"), NodePath("../World/SpawnPoint4"), NodePath("../World/SpawnPoint5"), NodePath("../World/SpawnPoint6")]
 _interface_manager = NodePath("../InterfaceManager")
 
 [node name="ChatController" type="Node" parent="."]
@@ -99,8 +104,10 @@ collision_layer = 5
 mesh = SubResource("PlaneMesh_sgwbx")
 material = SubResource("ORMMaterial3D_eogc5")
 
-[node name="SpawnPoint" type="CSGMesh3D" parent="World"]
+[node name="RespawnPoint" type="Node3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.745985, -9.62233)
+
+[node name="Mesh" type="CSGMesh3D" parent="World/RespawnPoint"]
 mesh = SubResource("CylinderMesh_mr0ro")
 material = SubResource("StandardMaterial3D_hcx2l")
 
