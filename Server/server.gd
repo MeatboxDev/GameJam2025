@@ -108,13 +108,13 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 	if _join_timeout.timeout.is_connected(_connection_timeout):
 		_print_error_message("Can't connect while attempting a connection")
 		return ERR_CANT_CREATE
-	if _peer != null:
-		_print_error_message("You already have a connection open")
-		return ERR_CANT_CREATE
 	if ip == "*" or not _is_valid_ip(ip) or clamp(port, 1, 65535) != port:
 		_print_error_message("This shit ain't a valit PORT")
 		return ERR_CANT_CREATE
 
+	_peer = null
+	multiplayer.multiplayer_peer = null
+	
 	_peer = ENetMultiplayerPeer.new()
 	var err := _peer.create_client(ip, port)
 	match err:
