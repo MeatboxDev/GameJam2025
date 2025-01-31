@@ -29,15 +29,13 @@ func _ready() -> void:
 		return
 	
 	SignalBus.username_change.connect(_on_username_change)
+	username = Userdata.config.get_value("Userdata", "username")
 	
 	assert(state_machine, "State Machine not set for player")
 	assert(_interaction_area, "InteractionArea not set for player")
 	
 	_cam.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
-	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
-		load_username()
 
 
 func _process(_delta: float) -> void:
@@ -57,17 +55,10 @@ func _input(event: InputEvent) -> void:
 		$CameraStick.rotation.x = clamp($CameraStick.rotation.x, CAM_MAX_DOWN, CAM_MAX_UP)
 
 
-func load_username() -> void:
-	var config := ConfigFile.new()
-	var err := config.load("user://userdata.cfg")
-	if err == OK:
-		username = config.get_value("Userdata", "username")
-		rpc("_sync_username", username)
-
-
 @rpc("any_peer", "unreliable", "call_remote")
 func _net_update_position(real_position: Vector3) -> void:
 	global_position = real_position
+
 
 @rpc("any_peer", "reliable",  "call_remote")
 func _sync_username(real_username: String) -> void:
