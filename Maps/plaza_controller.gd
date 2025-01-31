@@ -98,4 +98,3 @@ func player_spawn(multiplayer_id: int) -> void:
 	add_child(player_instance)
 	if multiplayer_id == multiplayer.get_unique_id():
 		_player_instance = player_instance
-		_interface_manager.focused_player = player_instance
