@@ -18,7 +18,7 @@ func close_server() -> void:
 	var err := _bubbly_server.close_server()
 	if err == OK:
 		clear_players()
-		player_spawn(1)
+		_player_spawn(1)
 
 
 func join_server() -> void:
@@ -33,7 +33,7 @@ func leave_server() -> void:
 	var err := _bubbly_server.disconnect_from_server()
 	if err == OK:
 		clear_players()
-		player_spawn(1)
+		_player_spawn(1)
 
 
 func clear_players() -> void:
@@ -59,28 +59,28 @@ func _ready() -> void:
 		func(id: int) -> void:
 			KLog.info("Player Joined: " + str(id))
 			if id != multiplayer.get_unique_id():
-				rpc_id(id, "player_spawn", multiplayer.get_unique_id())
-				_player_instance.load_username()
+				rpc_id(id, "_player_spawn", multiplayer.get_unique_id())
+				rpc_id(id, "_player_set_name", multiplayer.get_unique_id(), _player_instance.username)
 	)
 
 	_bubbly_server.multiplayer.peer_disconnected.connect(remove_player)
 	
 	_bubbly_server.multiplayer.connected_to_server.connect(
 		func() -> void:
-			player_spawn(multiplayer.get_unique_id())
+			_player_spawn(multiplayer.get_unique_id())
 	)
 	
 	_bubbly_server.multiplayer.server_disconnected.connect(
 		func() -> void:
 			clear_players()
-			player_spawn(1)
+			_player_spawn(1)
 	)
 
-	player_spawn(1)
+	_player_spawn(1)
 
 
 @rpc("reliable", "any_peer", "call_remote")
-func player_spawn(multiplayer_id: int) -> void:
+func _player_spawn(multiplayer_id: int) -> void:
 	var found := find_child(str(multiplayer_id), false, false)
 	if found:
 		found.name = "old-" + str(multiplayer_id)
@@ -98,3 +98,12 @@ func player_spawn(multiplayer_id: int) -> void:
 	add_child(player_instance)
 	if multiplayer_id == multiplayer.get_unique_id():
 		_player_instance = player_instance
+
+
+@rpc("reliable", "any_peer", "call_remote")
+func _player_set_name(multiplayer_id: int, username: String) -> void:
+	var player: CharacterBody3D = _player_instance_list[multiplayer_id]
+	if not player:
+		KLog.error("Could not find player " + username + " with id " + str(multiplayer_id))
+		return
+	player.username = username
