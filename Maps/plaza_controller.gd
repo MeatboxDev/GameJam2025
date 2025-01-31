@@ -72,10 +72,16 @@ func _ready() -> void:
 			print("INFO: Player Joined: " + str(id))
 			if id != multiplayer.get_unique_id():
 				rpc_id(id, "player_spawn", multiplayer.get_unique_id())
-				
+				_player_instance.load_username()
 	)
 
 	_bubbly_server.multiplayer.peer_disconnected.connect(remove_player)
+	
+	_bubbly_server.multiplayer.connected_to_server.connect(
+		func() -> void:
+			player_spawn(multiplayer.get_unique_id())
+	)
+	
 	_bubbly_server.multiplayer.server_disconnected.connect(
 		func() -> void:
 			clear_players()

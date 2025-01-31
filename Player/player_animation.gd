@@ -22,7 +22,7 @@ var anim_state_machine: AnimationNodeStateMachinePlayback
 func _ready() -> void:
 	if not is_multiplayer_authority():
 		return
-		
+	
 	assert(state_machine, "State Machine not set for player")
 	assert(_interaction_area, "InteractionArea not set for player")
 	assert(_interface_manager, "InterfaceManager not found in scene")
@@ -33,10 +33,8 @@ func _ready() -> void:
 	$Debug.visible = DEBUG
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	var config := ConfigFile.new()
-	var err := config.load("user://userdata.cfg")
-	if err == OK:
-		username = config.get_value("Userdata", "username")
+	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
+		load_username()
 
 
 func _process(_delta: float) -> void:
@@ -46,7 +44,6 @@ func _process(_delta: float) -> void:
 		"SPEED: " + str(velocity.x) + " | LENGTH: " + str(Vector2(velocity.x, velocity.z).length())
 	)
 	rpc("_net_update_position", global_position)
-	username = username
 
 
 func _input(event: InputEvent) -> void:
@@ -58,6 +55,14 @@ func _input(event: InputEvent) -> void:
 		$CameraStick.rotation.y -= event.relative.x * CAMERA_SENSITIVITY
 
 
+func load_username() -> void:
+	var config := ConfigFile.new()
+	var err := config.load("user://userdata.cfg")
+	if err == OK:
+		username = config.get_value("Userdata", "username")
+		rpc("_sync_username", username)
+
+
 @rpc("any_peer", "unreliable", "call_remote")
 func _net_update_position(real_position: Vector3) -> void:
 	global_position = real_position
@@ -65,4 +70,3 @@ func _net_update_position(real_position: Vector3) -> void:
 @rpc("any_peer", "reliable",  "call_remote")
 func _sync_username(real_username: String) -> void:
 	username = real_username
-	$Playerid/IdViewport/IdLabel.text = name if username == "" else username

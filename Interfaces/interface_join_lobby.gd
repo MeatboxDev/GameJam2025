@@ -50,7 +50,6 @@ func _join_button_pressed() -> void:
 	if res:
 		print("Connection successful " + str(multiplayer.get_unique_id()))
 		_lobby_controller.clear_players()
-		_lobby_controller.player_spawn(multiplayer.get_unique_id())
 		kill.emit(self) #Only close interface if successful
 	else:
 		_feedback_label.visible = true
