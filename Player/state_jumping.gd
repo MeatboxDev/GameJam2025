@@ -68,7 +68,7 @@ func physics_update() -> void:
 	if _getting_elevation:
 		body.velocity.y -= GRAVITY / 5
 	else:
-		body.velocity.y -= GRAVITY
+		transition.emit(self, "falling")
 
 	body.move_and_slide()
 	if round(body.velocity.x) or round(body.velocity.z):
