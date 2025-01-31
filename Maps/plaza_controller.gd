@@ -11,42 +11,30 @@ var _player_instance: CharacterBody3D = null
 var _player_instance_list: Dictionary = {}
 
 func create_server() -> void:
-	if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
-		print("You already have a connection open slow down ")
-		return
-	print("Creating server for player...")
 	_bubbly_server.create_server()
 
 
 func close_server() -> void:
-	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
-		print("You're not online what are you on")
-		return
-	if not is_multiplayer_authority():
-		print("You're not host, get rekt")
-		return
+	var err := _bubbly_server.close_server()
+	if err == OK:
+		clear_players()
+		player_spawn(1)
 
-	print("Closing server...")
-	_bubbly_server.disconnect_from_server()
-	clear_players()
-	player_spawn(1)
 
 func join_server() -> void:
 	_interface_manager.open("JoinLobby")
 
-func leave_server() -> void:
-	if is_multiplayer_authority():
-		print("You're the host, use the close option")
-		return
-
-	print("LEAVE NOW")
-
-	_bubbly_server.disconnect_from_server()
-	clear_players()
-	player_spawn(1)
 
 func change_name() -> void:
 	_interface_manager.open("UsernameChange")
+
+
+func leave_server() -> void:
+	var err := _bubbly_server.disconnect_from_server()
+	if err == OK:
+		clear_players()
+		player_spawn(1)
+
 
 func clear_players() -> void:
 	for id: int in _player_instance_list.duplicate():
@@ -55,7 +43,7 @@ func clear_players() -> void:
 
 func remove_player(id: int) -> void:
 	if not _player_instance_list.has(id):
-		print_debug("Player instance " + str(id) + " not found")
+		KLog.warning("Player instance " + str(id) + " not found")
 		return
 	var player_instance: CharacterBody3D = _player_instance_list[id]
 	player_instance.queue_free()
@@ -69,7 +57,7 @@ func _ready() -> void:
 
 	_bubbly_server.multiplayer.peer_connected.connect(
 		func(id: int) -> void:
-			print("INFO: Player Joined: " + str(id))
+			KLog.info("Player Joined: " + str(id))
 			if id != multiplayer.get_unique_id():
 				rpc_id(id, "player_spawn", multiplayer.get_unique_id())
 				_player_instance.load_username()

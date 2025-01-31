@@ -11,7 +11,6 @@ extends Interface
 @onready var _feedback_label: Label = $JoinInterface/MenuLabelContainer/Feedback
 
 func open() -> void:
-	print("Showing join server prompt...")
 	_control_node.visible = true
 	_feedback_label.visible = false
 	_join_ip_edit.grab_focus()
@@ -51,9 +50,8 @@ func _join_button_pressed() -> void:
 	_join_button.pressed.connect(_join_button_pressed)
 	
 	if res:
-		print("Connection successful " + str(multiplayer.get_unique_id()))
 		_lobby_controller.clear_players()
-		kill.emit(self) #Only close interface if successful
+		kill.emit(self)
 	else:
 		_feedback_label.visible = true
 		_feedback_label.text = "Connection failed!"
