@@ -1,6 +1,6 @@
 extends Interface
 
-@export var _bubbly_server: Node
+@export var _bubbly_server: Bubbly
 @export var _lobby_controller: Node
 
 @onready var _control_node: Control = $JoinInterface
@@ -18,6 +18,8 @@ func open() -> void:
 
 func close() -> void:
 	_control_node.visible = false
+	_join_ip_edit.clear()
+	_join_port_edit.clear()
 
 func show() -> void:
 	pass
@@ -33,7 +35,14 @@ func _join_button_pressed() -> void:
 	var port: int = _bubbly_server.PORT if _join_port_edit.text == "" else (_join_port_edit.text).to_int()
 	_feedback_label.visible = true
 	_feedback_label.text = "Connecting to " + ip + ":" + str(port)
-	_bubbly_server.connect_to_server(ip, port)
+	var err := _bubbly_server.connect_to_server(ip, port)
+	if err != OK:
+		_feedback_label.visible = true
+		_feedback_label.text = "Insert a valid IP address!"
+		get_tree().create_timer(3.0).timeout.connect(func() -> void:
+			_feedback_label.visible = false
+		)
+		return
 	
 	_join_button.pressed.disconnect(_join_button_pressed)
 	_close_button.pressed.disconnect(_on_close_pressed)
