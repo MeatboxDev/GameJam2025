@@ -23,11 +23,11 @@ func _on_interface_close(interface: Interface) -> void:
 func _on_interface_transition(old: Interface, new_name: String) -> void:
 	if open_interfaces.size() != 0 and old != open_interfaces.back():
 		return
-	open(name)
+	open(new_name)
 
 
-func open(name: String) -> void:
-	var new_interface: Interface = _interfaces[name.to_lower()]
+func open(interface_name: String) -> void:
+	var new_interface: Interface = _interfaces[interface_name.to_lower()]
 	if !new_interface:
 		breakpoint
 		return
