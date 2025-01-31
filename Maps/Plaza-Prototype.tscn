@@ -1,0 +1,82 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctfw3536cuwrp"]
+
+[ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_qbtt5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ggg1"]
+transparency = 1
+albedo_color = Color(0.210936, 0.380873, 0.402399, 0.627451)
+albedo_texture = SubResource("CanvasTexture_qbtt5")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jdkl"]
+
+[node name="Plaza-prototype" type="Node3D"]
+
+[node name="floor1" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="actualfloor" type="Node3D" parent="floor1"]
+
+[node name="floor" type="CSGBox3D" parent="floor1/actualfloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.75, -1, 0.751)
+size = Vector3(12.5, 9, 0.5)
+
+[node name="floor2" type="CSGBox3D" parent="floor1/actualfloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.25, -6.5, 0.751)
+size = Vector3(4.5, 2, 0.5)
+
+[node name="floor3" type="CSGBox3D" parent="floor1/actualfloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.75, -6.5, 0.751)
+size = Vector3(2.5, 2, 0.5)
+
+[node name="floor5" type="CSGBox3D" parent="floor1/actualfloor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.75, -7.4995, 0.751)
+size = Vector3(5.5, 0.001, 0.5)
+
+[node name="floor4" type="CSGBox3D" parent="floor1/actualfloor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.75, -7.5, 1.5005)
+size = Vector3(12.5, 1, 0.001)
+material = SubResource("StandardMaterial3D_6ggg1")
+
+[node name="floor6" type="CSGBox3D" parent="floor1/actualfloor"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -4.4995, -7.5, 1.5005)
+size = Vector3(0.001, 1, 0.001)
+material = SubResource("StandardMaterial3D_6ggg1")
+
+[node name="shop1" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 2.25)
+size = Vector3(4, 2, 2.5)
+
+[node name="shop2" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.5, 2.25)
+size = Vector3(4, 2, 2.5)
+
+[node name="wall" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.75, 1.95, 2.25)
+size = Vector3(2.5, 0.5, 2.5)
+
+[node name="wall2" type="CSGBox3D" parent="floor1/wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0249996, -0.3505, 0.225)
+size = Vector3(2.25, 0.001, 1.55)
+material = SubResource("StandardMaterial3D_4jdkl")
+
+[node name="shop3" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 2.5, 2.25)
+size = Vector3(2, 2, 2.5)
+
+[node name="shop4" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, 1, 2.25)
+size = Vector3(0.5, 1, 2.5)
+
+[node name="shop5" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, -3, 2.25)
+size = Vector3(0.5, 1, 2.5)
+
+[node name="shop6" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.75, -1, 4)
+size = Vector3(0.5, 5, 1)
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+texture = ExtResource("1_glsal")
