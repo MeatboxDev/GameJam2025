@@ -85,13 +85,8 @@ func _player_spawn(multiplayer_id: int) -> void:
 	if found:
 		found.name = "old-" + str(multiplayer_id)
 	var player_instance := PLAYER_SCENE.instantiate()
-	var spawn_point: Node3D = spawn_points.front()
-	spawn_points.push_back(spawn_points.pop_front())
 
 	player_instance.set_multiplayer_authority(multiplayer_id)
-	
-	player_instance.position = spawn_point.position
-	player_instance.position.y = spawn_point.position.y + 2
 	player_instance.name = str(multiplayer_id)
 
 	_player_instance_list[multiplayer_id] = player_instance
