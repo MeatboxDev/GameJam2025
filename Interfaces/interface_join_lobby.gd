@@ -29,12 +29,6 @@ func _on_close_pressed() -> void:
 	kill.emit(self)
 
 func _join_button_pressed() -> void:
-	if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
-		if is_multiplayer_authority():
-			_lobby_controller.close_server()
-		else:
-			_lobby_controller.leave_server()
-		
 	var ip: String = (_bubbly_server.IP_ADDRESS if _join_ip_edit.text == "" else _join_ip_edit.text)
 	var port: int = _bubbly_server.PORT if _join_port_edit.text == "" else (_join_port_edit.text).to_int()
 	_feedback_label.visible = true
