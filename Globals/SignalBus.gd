@@ -9,8 +9,8 @@ signal burst_bad_boss
 signal player_defeat(player: CharacterBody3D)
 signal player_change_team(player: int)
 
-signal interface_open()
-signal interface_closed()
+signal interface_open
+signal interface_closed
 
 signal username_change(new_name: String)
 signal respawn_player(player: CharacterBody3D)
@@ -21,6 +21,7 @@ func _test_connectionless(s: Signal) -> void:
 
 
 func _ready() -> void:
-	for s: Dictionary in get_signal_list().filter(func(s: Dictionary) -> bool: return s.name != "ready"):
-		var sig: Signal = get(s.name)
-		sig.connect((func() -> void: _test_connectionless(sig)).unbind(1))
+	if KLog.debug_signals:
+		for s: Dictionary in get_signal_list().filter(func(s: Dictionary) -> bool: return s.name != "ready"):
+			var sig: Signal = get(s.name)
+			sig.connect(func() -> void: _test_connectionless(sig))
