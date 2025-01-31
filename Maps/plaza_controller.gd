@@ -92,22 +92,22 @@ func _ready() -> void:
 
 
 @rpc("reliable", "any_peer", "call_remote")
-func player_spawn(id: int) -> void:
-	var found := find_child(str(id), false, false)
+func player_spawn(multiplayer_id: int) -> void:
+	var found := find_child(str(multiplayer_id), false, false)
 	if found:
-		found.name = "old-" + str(id)
+		found.name = "old-" + str(multiplayer_id)
 	var player_instance := PLAYER_SCENE.instantiate()
 	var spawn_point: Node3D = spawn_points.front()
 	spawn_points.push_back(spawn_points.pop_front())
 
-	player_instance.set_multiplayer_authority(id)
+	player_instance.set_multiplayer_authority(multiplayer_id)
 	
 	player_instance.position = spawn_point.position
 	player_instance.position.y = spawn_point.position.y + 2
-	player_instance.name = str(id)
+	player_instance.name = str(multiplayer_id)
 
-	_player_instance_list[id] = player_instance
+	_player_instance_list[multiplayer_id] = player_instance
 	add_child(player_instance)
-	if id == multiplayer.get_unique_id():
+	if multiplayer_id == multiplayer.get_unique_id():
 		_player_instance = player_instance
 		_interface_manager.focused_player = player_instance
