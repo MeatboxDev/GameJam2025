@@ -36,12 +36,15 @@ func _ready() -> void:
 	
 	_cam.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	SignalBus.respawn_player.emit(self)
 
 
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 	rpc("_net_update_position", global_position)
+	if position.y < -1:
+		SignalBus.respawn_player.emit(self)
 
 
 func _input(event: InputEvent) -> void:
