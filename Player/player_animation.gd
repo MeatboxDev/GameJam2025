@@ -3,6 +3,8 @@ extends CharacterBody3D
 signal username_change(new_username: String)
 
 const DEBUG := true
+const CAM_MAX_UP := 1.3
+const CAM_MAX_DOWN := -1.3
 
 const CAMERA_SENSITIVITY := 0.003
 
@@ -17,12 +19,10 @@ var anim_state_machine: AnimationNodeStateMachinePlayback
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var _interaction_area: Area3D = $InteractionArea
-@onready var _anim_tree: AnimationTree = $Model/AnimationTree
 @onready var _cam: Camera3D = $CameraStick/Camera
 
 func _on_username_change(new_name: String) -> void:
 	username = new_name
-
 
 func _ready() -> void:
 	if not is_multiplayer_authority():
@@ -33,8 +33,6 @@ func _ready() -> void:
 	assert(state_machine, "State Machine not set for player")
 	assert(_interaction_area, "InteractionArea not set for player")
 	
-	
-	anim_state_machine = _anim_tree["parameters/playback"]
 	_cam.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
@@ -55,6 +53,8 @@ func _input(event: InputEvent) -> void:
 		_interaction_area.interact()
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		$CameraStick.rotation.y -= event.relative.x * CAMERA_SENSITIVITY
+		$CameraStick.rotation.x -= event.relative.y * CAMERA_SENSITIVITY
+		$CameraStick.rotation.x = clamp($CameraStick.rotation.x, CAM_MAX_DOWN, CAM_MAX_UP)
 
 
 func load_username() -> void:
