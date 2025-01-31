@@ -25,6 +25,9 @@ func show() -> void:
 func hide() -> void:
 	pass
 
+func _on_close_pressed() -> void:
+	kill.emit(self)
+
 func _join_button_pressed() -> void:
 	if multiplayer.multiplayer_peer is ENetMultiplayerPeer:
 		if is_multiplayer_authority():
@@ -38,7 +41,12 @@ func _join_button_pressed() -> void:
 	_feedback_label.text = "Connecting to " + ip + ":" + str(port)
 	_bubbly_server.connect_to_server(ip, port)
 	
+	_join_button.pressed.disconnect(_join_button_pressed)
+	_close_button.pressed.disconnect(_on_close_pressed)
 	var res: bool = await _bubbly_server.connection_result
+	_close_button.pressed.connect(_on_close_pressed)
+	_join_button.pressed.connect(_join_button_pressed)
+	
 	if res:
 		print("Connection successful " + str(multiplayer.get_unique_id()))
 		_lobby_controller.clear_players()
@@ -56,4 +64,4 @@ func _ready() -> void:
 	assert(_lobby_controller, "Lobby controller not found!")
 	
 	_join_button.pressed.connect(_join_button_pressed)
-	_close_button.pressed.connect(func() -> void: kill.emit(self))
+	_close_button.pressed.connect(_on_close_pressed)
