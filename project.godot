@@ -36,6 +36,7 @@ folder_colors={
 "res://Globals/": "purple",
 "res://Interfaces/": "green",
 "res://Maps/": "orange",
+"res://Objects/": "yellow",
 "res://Player/": "pink",
 "res://Server/": "red"
 }
