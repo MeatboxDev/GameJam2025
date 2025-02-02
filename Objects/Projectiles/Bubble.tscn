@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://duhicp2kli703"]
+
+[ext_resource type="Shader" path="res://Objects/Projectiles/bubble_shader.gdshader" id="1_5efrs"]
+[ext_resource type="Script" path="res://Objects/Projectiles/bubble_behaviour.gd" id="1_7rvd2"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uwk4r"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ca68e"]
+seamless = true
+noise = SubResource("FastNoiseLite_uwk4r")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xocbd"]
+render_priority = 0
+shader = ExtResource("1_5efrs")
+shader_parameter/bubble_color = Color(0, 0.866667, 1, 1)
+shader_parameter/height_multiplier = 0.1
+shader_parameter/noise_sample_multiplier = 0.1
+shader_parameter/animation_speed = 0.01
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ca68e")
+
+[sub_resource type="SphereMesh" id="SphereMesh_l6cno"]
+material = SubResource("ShaderMaterial_xocbd")
+radius = 1.0
+height = 2.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8mwg3"]
+margin = 0.08
+radius = 1.0
+
+[node name="Bubble" type="StaticBody3D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_7rvd2")
+
+[node name="BubbleMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_l6cno")
+
+[node name="CollisionShape" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_8mwg3")
