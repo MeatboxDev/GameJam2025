@@ -14,11 +14,11 @@ func on_set() -> void:
 	assert(body)
 	assert(cam_stick)
 	_getting_elevation = true
-	get_tree().create_timer(body.JUMP_DURATION).timeout.connect(
+	get_tree().create_timer(body.jump_duration).timeout.connect(
 		func() -> void: _getting_elevation = false
 	)
 
-	body.velocity.y = body.JUMP_FORCE
+	body.velocity.y = body.jump_force
 
 
 func on_leave() -> void:
@@ -51,15 +51,15 @@ func physics_update() -> void:
 	body.velocity.x += movement.x * 3
 	body.velocity.z += movement.y * 3
 	var xz_velocity := Vector2(body.velocity.x, body.velocity.z)
-	if xz_velocity.length() > body.MAX_SPEED:
+	if xz_velocity.length() > body.max_speed:
 		body.velocity = Vector3(
-			xz_velocity.normalized().x * body.MAX_SPEED,
+			xz_velocity.normalized().x * body.max_speed,
 			body.velocity.y,
-			xz_velocity.normalized().y * body.MAX_SPEED
+			xz_velocity.normalized().y * body.max_speed
 		)
 
 	if _getting_elevation:
-		body.velocity.y -= body.GRAVITY / 5
+		body.velocity.y -= body.gravity / 5
 	else:
 		transition.emit(self, "falling")
 
