@@ -67,6 +67,30 @@ func physics_update() -> void:
 	body.move_and_slide()
 	if round(body.velocity.x) or round(body.velocity.z):
 		body.find_child("Model").look_at(body.position + Vector3(body.velocity.x, 0, body.velocity.z), Vector3.UP, true)
+	
+	var col := body.get_last_slide_collision()
+	if col:
+		_handle_collisions(col)
+
+
+func _handle_collisions(col: KinematicCollision3D) -> void:
+	for i: int in col.get_collision_count():
+		var collider := col.get_collider(i)
+		if collider.is_in_group("Bubble"):
+			_handle_bubble_collision(collider, col.get_normal(i))
+
+
+func _handle_bubble_collision(collider: Node3D, _normal: Vector3) -> void:
+	var dir := Vector2(
+	collider.global_position.x, collider.global_position.z
+	) - Vector2(
+	collider.global_position.x, collider.global_position.z
+	).move_toward(Vector2(
+	body.global_position.x, body.global_position.z
+	), 1.0)
+	body.velocity = -Vector3(dir.x * 30.0, body.velocity.y, dir.y * 30.0)
+	transition.emit(self, "pushback")
+
 
 func input(_event: InputEvent) -> void:
 	pass
