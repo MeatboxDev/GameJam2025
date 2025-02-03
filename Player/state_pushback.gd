@@ -10,7 +10,7 @@ func _on_push_timeout() -> void:
 
 func on_set() -> void:
 	assert(body)
-	_push_timer = get_tree().create_timer(0.35)
+	_push_timer = get_tree().create_timer(body.pushback_time)
 	_push_timer.timeout.connect(_on_push_timeout)
 
 

@@ -9,6 +9,10 @@ signal username_change(new_username: String)
 @export var jump_force := 40.0
 @export var max_speed := 30.0
 
+const pushback_time_min := 0.0
+@export var pushback_time := 0.35
+const pushback_time_max := 1.0
+
 @onready var _debug_characteristics: VBoxContainer = $Debug/Characteristics
 
 const DEBUG := true
@@ -62,6 +66,13 @@ func _initiate_debug() -> void:
 		var v: String = child.name.to_lower()
 		label.text = v + " " + str(self.get(v))
 		slider.value = self.get(v)
+		if self.get(v + "_max") != null:
+			slider.max_value = self.get(v + "_max")
+		if self.get(v + "_min") != null:
+			slider.min_value = self.get(v + "_min")
+		if self.get(v + "_min") != null and self.get(v + "_max") != null:
+			slider.rounded = false
+			slider.step = (self.get(v + "_max") - self.get(v + "_min")) / 1000
 		slider.value_changed.connect(
 			func(value: float) -> void:
 				label.text = v + " " + str(self.get(v))
