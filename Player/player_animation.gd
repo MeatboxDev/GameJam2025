@@ -25,6 +25,7 @@ func _on_username_change(new_name: String) -> void:
 	username = new_name
 
 func _ready() -> void:
+	safe_margin = 0.1
 	if not is_multiplayer_authority():
 		return
 	

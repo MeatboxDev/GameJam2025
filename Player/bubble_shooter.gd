@@ -7,7 +7,7 @@ const _bubble_scene: PackedScene = preload("uid://duhicp2kli703")
 func _shoot_bubble() -> void:
 	var bubble_instance := _bubble_scene.instantiate()
 	bubble_instance.position = self.global_position
-	bubble_instance.speed = 0.3
+	bubble_instance.speed = 0.5
 	var dir: Vector3 = -player_model.find_child("CameraStick").basis.z
 	var mod := dir.dot(player_model.velocity.normalized())
 	mod = abs(mod)
