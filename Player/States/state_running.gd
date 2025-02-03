@@ -42,20 +42,20 @@ func physics_update() -> void:
 	if movement:
 		body.velocity += Vector3(
 			(
-				movement.x * body.ACCELERATION
+				movement.x * body.acceleration
 			),
 			0,
 			(
-				movement.y * body.ACCELERATION
+				movement.y * body.acceleration
 			),
 		)
 
 		var xz_velocity := Vector2(body.velocity.x, body.velocity.z)
-		if xz_velocity.length() > body.MAX_SPEED:
+		if xz_velocity.length() > body.max_speed:
 			body.velocity = Vector3(
-				xz_velocity.normalized().x * body.MAX_SPEED,
+				xz_velocity.normalized().x * body.max_speed,
 				body.velocity.y,
-				xz_velocity.normalized().y * body.MAX_SPEED
+				xz_velocity.normalized().y * body.max_speed
 			)
 
 	else:

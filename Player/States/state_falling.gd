@@ -13,7 +13,7 @@ var _right := false
 func on_set() -> void:
 	assert(body)
 	assert(cam_stick)
-	get_tree().create_timer(body.JUMP_DURATION).timeout.connect(
+	get_tree().create_timer(body.jump_duration).timeout.connect(
 		func() -> void: _getting_elevation = false
 	)
 
@@ -48,14 +48,14 @@ func physics_update() -> void:
 	body.velocity.x += movement.x * 3
 	body.velocity.z += movement.y * 3
 	var xz_velocity := Vector2(body.velocity.x, body.velocity.z)
-	if xz_velocity.length() > body.MAX_SPEED:
+	if xz_velocity.length() > body.max_speed:
 		body.velocity = Vector3(
-			xz_velocity.normalized().x * body.MAX_SPEED,
+			xz_velocity.normalized().x * body.max_speed,
 			body.velocity.y,
-			xz_velocity.normalized().y * body.MAX_SPEED
+			xz_velocity.normalized().y * body.max_speed
 		)
 
-	body.velocity.y -= body.GRAVITY
+	body.velocity.y -= body.gravity
 
 	body.move_and_slide()
 	body.handle_collisions()

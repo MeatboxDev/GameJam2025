@@ -1,10 +1,10 @@
 extends State
 
 func on_set() -> void:
-	pass
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 func on_leave() -> void:
-	pass
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func update() -> void:
 	pass
@@ -12,5 +12,6 @@ func update() -> void:
 func physics_update() -> void:
 	pass
 
-func input(_event: InputEvent) -> void:
-	pass
+func input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F1:
+		transition.emit(self, "Idle")

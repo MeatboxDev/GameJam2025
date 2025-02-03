@@ -2,12 +2,14 @@ extends CharacterBody3D
 
 signal username_change(new_username: String)
 
-const ACCELERATION := 3.0
-const DECELERATION := 4.0
-const GRAVITY := 3.0
-const JUMP_DURATION := 0.2
-const JUMP_FORCE := 40.0
-const MAX_SPEED := 30.0
+@export var acceleration := 3.0
+@export var deceleration := 4.0
+@export var gravity := 3.0
+@export var jump_duration := 0.2
+@export var jump_force := 40.0
+@export var max_speed := 30.0
+
+@onready var _debug_characteristics: VBoxContainer = $Debug/Characteristics
 
 const DEBUG := true
 const CAM_MAX_UP := 1.3
@@ -45,6 +47,26 @@ func _ready() -> void:
 	_cam.make_current()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	SignalBus.respawn_player.emit(self)
+	
+	if DEBUG:
+		_initiate_debug()
+
+
+func _initiate_debug() -> void:
+	$Debug.visible = true
+	for child: Control in _debug_characteristics.get_children():
+		if not child is HBoxContainer:
+			continue
+		var label: Label = child.get_child(0)
+		var slider: HSlider = child.get_child(1)
+		var v: String = child.name.to_lower()
+		label.text = v + " " + str(self.get(v))
+		slider.value = self.get(v)
+		slider.value_changed.connect(
+			func(value: float) -> void:
+				label.text = v + " " + str(self.get(v))
+				self.set(v, value)
+		)
 
 
 func _process(_delta: float) -> void:
