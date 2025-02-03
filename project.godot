@@ -17,10 +17,13 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SignalBus="*res://Helper/SignalBus.gd"
+Userdata="*res://Globals/Userdata.gd"
+SignalBus="*res://Globals/SignalBus.gd"
+Klog="*res://Globals/KLog.gd"
 
 [debug]
 
+gdscript/warnings/unused_signal=0
 gdscript/warnings/untyped_declaration=2
 
 [display]
@@ -30,7 +33,10 @@ display_server/driver.linuxbsd="wayland"
 [file_customization]
 
 folder_colors={
+"res://Globals/": "purple",
+"res://Interfaces/": "green",
 "res://Maps/": "orange",
+"res://Objects/": "yellow",
 "res://Player/": "pink",
 "res://Server/": "red"
 }
@@ -46,6 +52,7 @@ Interactable=""
 [layer_names]
 
 3d_physics/layer_2="Spring Arm"
+3d_physics/layer_3="Player - Bubble"
 
 [rendering]
 

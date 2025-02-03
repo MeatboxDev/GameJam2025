@@ -1,12 +1,5 @@
 extends State
 
-const ACCELERATION := 3.0
-const DECELERATION := 4.0
-const GRAVITY := 3.0
-const JUMP_DURATION := 0.2
-const JUMP_FORCE := 40.0
-const MAX_SPEED := 30.0
-
 @export var body: CharacterBody3D
 @export var cam_stick: SpringArm3D
 
@@ -21,11 +14,11 @@ func on_set() -> void:
 	assert(body)
 	assert(cam_stick)
 	_getting_elevation = true
-	get_tree().create_timer(JUMP_DURATION).timeout.connect(
+	get_tree().create_timer(body.jump_duration).timeout.connect(
 		func() -> void: _getting_elevation = false
 	)
 
-	body.velocity.y = JUMP_FORCE
+	body.velocity.y = body.jump_force
 
 
 func on_leave() -> void:
@@ -58,21 +51,23 @@ func physics_update() -> void:
 	body.velocity.x += movement.x * 3
 	body.velocity.z += movement.y * 3
 	var xz_velocity := Vector2(body.velocity.x, body.velocity.z)
-	if xz_velocity.length() > MAX_SPEED:
+	if xz_velocity.length() > body.max_speed:
 		body.velocity = Vector3(
-			xz_velocity.normalized().x * MAX_SPEED,
+			xz_velocity.normalized().x * body.max_speed,
 			body.velocity.y,
-			xz_velocity.normalized().y * MAX_SPEED
+			xz_velocity.normalized().y * body.max_speed
 		)
 
 	if _getting_elevation:
-		body.velocity.y -= GRAVITY / 5
+		body.velocity.y -= body.gravity / 5
 	else:
-		body.velocity.y -= GRAVITY
+		transition.emit(self, "falling")
 
 	body.move_and_slide()
-	if body.velocity.x and body.velocity.z:
-		body.find_child("gj-player").look_at(body.position + Vector3(body.velocity.x, 0, body.velocity.z), Vector3.UP, true)
+	body.handle_collisions()
+	if round(body.velocity.x) or round(body.velocity.z):
+		body.find_child("Model").look_at(body.position + Vector3(body.velocity.x, 0, body.velocity.z), Vector3.UP, true)
+	
 
 
 func input(_event: InputEvent) -> void:

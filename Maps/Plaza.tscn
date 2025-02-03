@@ -1,9 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://y777m7ml0pha"]
+[gd_scene load_steps=23 format=3 uid="uid://y777m7ml0pha"]
 
 [ext_resource type="Script" path="res://Server/server.gd" id="1_1rcb8"]
+[ext_resource type="Script" path="res://Maps/respawner.gd" id="1_k8tvr"]
 [ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="1_ls6gq"]
 [ext_resource type="Script" path="res://Maps/interactable.gd" id="2_1ricq"]
 [ext_resource type="Script" path="res://Maps/chat_controller.gd" id="3_t1xre"]
+[ext_resource type="PackedScene" uid="uid://rlrt7sl0d1xr" path="res://Interfaces/Scenes/username_change.tscn" id="5_kc37f"]
+[ext_resource type="PackedScene" uid="uid://djd0d7cywxn8l" path="res://Interfaces/Scenes/join_lobby.tscn" id="6_4fh5i"]
+[ext_resource type="Script" path="res://Interfaces/Base/interface_manager.gd" id="6_vggvg"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sgwbx"]
 size = Vector2(200, 200)
@@ -31,79 +35,40 @@ albedo_color = Color(1, 0, 0, 1)
 radius = 3.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_ihnj7"]
-viewport_path = NodePath("InteractableOpen/InteractableInformation/Viewport")
+viewport_path = NodePath("World/Interactables/InteractableOpen/InteractableInformation/Viewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_l42x3"]
-viewport_path = NodePath("InteractableClose/InteractableInformation/Viewport")
+viewport_path = NodePath("World/Interactables/InteractableClose/InteractableInformation/Viewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_xwjnh"]
-viewport_path = NodePath("InteractableLeave/InteractableInformation/Viewport")
+viewport_path = NodePath("World/Interactables/InteractableLeave/InteractableInformation/Viewport")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_yi207"]
-viewport_path = NodePath("InteractableJoin/InteractableInformation/Viewport")
+viewport_path = NodePath("World/Interactables/InteractableJoin/InteractableInformation/Viewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xiq7l"]
+viewport_path = NodePath("World/Interactables/InteractableName/InteractableInformation/Viewport")
 
 [node name="GameLobby" type="Node3D"]
+
+[node name="Respawner" type="Node" parent="." node_paths=PackedStringArray("_spawn_points")]
+script = ExtResource("1_k8tvr")
+_spawn_points = [NodePath("../World/RespawnPoint")]
 
 [node name="Server" type="Node" parent="."]
 script = ExtResource("1_1rcb8")
 
-[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points")]
+[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points", "_interface_manager")]
 script = ExtResource("1_ls6gq")
 _bubbly_server = NodePath("../Server")
-spawn_points = [NodePath("../World/SpawnPoint"), NodePath("../World/SpawnPoint2"), NodePath("../World/SpawnPoint3"), NodePath("../World/SpawnPoint4"), NodePath("../World/SpawnPoint5"), NodePath("../World/SpawnPoint6")]
-
-[node name="JoinInterface" type="Control" parent="LobbyController"]
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-focus_mode = 2
-mouse_filter = 1
-
-[node name="JoinContainer" type="HBoxContainer" parent="LobbyController/JoinInterface"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -239.5
-offset_top = -39.0
-offset_right = 239.5
-offset_bottom = 39.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 2
-
-[node name="JoinButton" type="Button" parent="LobbyController/JoinInterface/JoinContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Join Game"
-
-[node name="InputContainer" type="VBoxContainer" parent="LobbyController/JoinInterface/JoinContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 2
-
-[node name="JoinIp" type="TextEdit" parent="LobbyController/JoinInterface/JoinContainer/InputContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-placeholder_text = "IP"
-
-[node name="JoinPort" type="TextEdit" parent="LobbyController/JoinInterface/JoinContainer/InputContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-placeholder_text = "PORT"
+spawn_points = [NodePath("../World/RespawnPoint/Mesh"), NodePath("../World/SpawnPoint2"), NodePath("../World/SpawnPoint3"), NodePath("../World/SpawnPoint4"), NodePath("../World/SpawnPoint5"), NodePath("../World/SpawnPoint6")]
+_interface_manager = NodePath("../InterfaceManager")
 
 [node name="ChatController" type="Node" parent="."]
 script = ExtResource("3_t1xre")
 
 [node name="ChatBox" type="VBoxContainer" parent="ChatController"]
+visible = false
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 273.0
@@ -122,15 +87,27 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 0.08
 placeholder_text = "Chat here"
 
+[node name="InterfaceManager" type="Node" parent="."]
+script = ExtResource("6_vggvg")
+
+[node name="UsernameChange" parent="InterfaceManager" instance=ExtResource("5_kc37f")]
+
+[node name="JoinLobby" parent="InterfaceManager" node_paths=PackedStringArray("_bubbly_server", "_lobby_controller") instance=ExtResource("6_4fh5i")]
+_bubbly_server = NodePath("../../Server")
+_lobby_controller = NodePath("../../LobbyController")
+
 [node name="World" type="Node3D" parent="."]
 
 [node name="Floor" type="CSGMesh3D" parent="World"]
 use_collision = true
+collision_layer = 3
 mesh = SubResource("PlaneMesh_sgwbx")
 material = SubResource("ORMMaterial3D_eogc5")
 
-[node name="SpawnPoint" type="CSGMesh3D" parent="World"]
+[node name="RespawnPoint" type="Node3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.745985, -9.62233)
+
+[node name="Mesh" type="CSGMesh3D" parent="World/RespawnPoint"]
 mesh = SubResource("CylinderMesh_mr0ro")
 material = SubResource("StandardMaterial3D_hcx2l")
 
@@ -159,33 +136,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.07055, -0.745985, -4.31267)
 mesh = SubResource("CylinderMesh_mr0ro")
 material = SubResource("StandardMaterial3D_hcx2l")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="World"]
 transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 54, 0)
 
-[node name="InteractableOpen" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+[node name="Interactables" type="Node" parent="World"]
+
+[node name="InteractableOpen" type="Node3D" parent="World/Interactables" node_paths=PackedStringArray("_lobby_controller")]
 transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, -8, 2, -16)
 script = ExtResource("2_1ricq")
 _interaction = 1
-_lobby_controller = NodePath("../LobbyController")
+_lobby_controller = NodePath("../../../LobbyController")
 
-[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableOpen"]
+[node name="InteractableMesh" type="CSGMesh3D" parent="World/Interactables/InteractableOpen"]
 mesh = SubResource("BoxMesh_jktpq")
 material = SubResource("StandardMaterial3D_7e1is")
 
-[node name="InteractableArea" type="Area3D" parent="InteractableOpen"]
+[node name="InteractableArea" type="Area3D" parent="World/Interactables/InteractableOpen"]
 
-[node name="InteractableShape" type="CollisionShape3D" parent="InteractableOpen/InteractableArea"]
+[node name="InteractableShape" type="CollisionShape3D" parent="World/Interactables/InteractableOpen/InteractableArea"]
 shape = SubResource("SphereShape3D_q76if")
 
-[node name="InteractableInformation" type="Sprite3D" parent="InteractableOpen"]
+[node name="InteractableInformation" type="Sprite3D" parent="World/Interactables/InteractableOpen"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_ihnj7")
 
-[node name="Viewport" type="SubViewport" parent="InteractableOpen/InteractableInformation"]
+[node name="Viewport" type="SubViewport" parent="World/Interactables/InteractableOpen/InteractableInformation"]
 size = Vector2i(162, 27)
 
-[node name="Label" type="Label" parent="InteractableOpen/InteractableInformation/Viewport"]
+[node name="Label" type="Label" parent="World/Interactables/InteractableOpen/InteractableInformation/Viewport"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -199,30 +178,30 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Open Server!"
 
-[node name="InteractableClose" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+[node name="InteractableClose" type="Node3D" parent="World/Interactables" node_paths=PackedStringArray("_lobby_controller")]
 transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, -2, 2, -16)
 script = ExtResource("2_1ricq")
 _interaction = 2
-_lobby_controller = NodePath("../LobbyController")
+_lobby_controller = NodePath("../../../LobbyController")
 
-[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableClose"]
+[node name="InteractableMesh" type="CSGMesh3D" parent="World/Interactables/InteractableClose"]
 mesh = SubResource("BoxMesh_jktpq")
 material = SubResource("StandardMaterial3D_7e1is")
 
-[node name="InteractableArea" type="Area3D" parent="InteractableClose"]
+[node name="InteractableArea" type="Area3D" parent="World/Interactables/InteractableClose"]
 
-[node name="InteractableShape" type="CollisionShape3D" parent="InteractableClose/InteractableArea"]
+[node name="InteractableShape" type="CollisionShape3D" parent="World/Interactables/InteractableClose/InteractableArea"]
 shape = SubResource("SphereShape3D_q76if")
 
-[node name="InteractableInformation" type="Sprite3D" parent="InteractableClose"]
+[node name="InteractableInformation" type="Sprite3D" parent="World/Interactables/InteractableClose"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_l42x3")
 
-[node name="Viewport" type="SubViewport" parent="InteractableClose/InteractableInformation"]
+[node name="Viewport" type="SubViewport" parent="World/Interactables/InteractableClose/InteractableInformation"]
 size = Vector2i(162, 27)
 
-[node name="Label" type="Label" parent="InteractableClose/InteractableInformation/Viewport"]
+[node name="Label" type="Label" parent="World/Interactables/InteractableClose/InteractableInformation/Viewport"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -236,30 +215,30 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Close Server :("
 
-[node name="InteractableLeave" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+[node name="InteractableLeave" type="Node3D" parent="World/Interactables" node_paths=PackedStringArray("_lobby_controller")]
 transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, 4, 2, -16)
 script = ExtResource("2_1ricq")
 _interaction = 4
-_lobby_controller = NodePath("../LobbyController")
+_lobby_controller = NodePath("../../../LobbyController")
 
-[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableLeave"]
+[node name="InteractableMesh" type="CSGMesh3D" parent="World/Interactables/InteractableLeave"]
 mesh = SubResource("BoxMesh_jktpq")
 material = SubResource("StandardMaterial3D_7e1is")
 
-[node name="InteractableArea" type="Area3D" parent="InteractableLeave"]
+[node name="InteractableArea" type="Area3D" parent="World/Interactables/InteractableLeave"]
 
-[node name="InteractableShape" type="CollisionShape3D" parent="InteractableLeave/InteractableArea"]
+[node name="InteractableShape" type="CollisionShape3D" parent="World/Interactables/InteractableLeave/InteractableArea"]
 shape = SubResource("SphereShape3D_q76if")
 
-[node name="InteractableInformation" type="Sprite3D" parent="InteractableLeave"]
+[node name="InteractableInformation" type="Sprite3D" parent="World/Interactables/InteractableLeave"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_xwjnh")
 
-[node name="Viewport" type="SubViewport" parent="InteractableLeave/InteractableInformation"]
+[node name="Viewport" type="SubViewport" parent="World/Interactables/InteractableLeave/InteractableInformation"]
 size = Vector2i(162, 27)
 
-[node name="Label" type="Label" parent="InteractableLeave/InteractableInformation/Viewport"]
+[node name="Label" type="Label" parent="World/Interactables/InteractableLeave/InteractableInformation/Viewport"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -273,30 +252,30 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Leave Server ;("
 
-[node name="InteractableJoin" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+[node name="InteractableJoin" type="Node3D" parent="World/Interactables" node_paths=PackedStringArray("_lobby_controller")]
 transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, 10, 2, -16)
 script = ExtResource("2_1ricq")
 _interaction = 3
-_lobby_controller = NodePath("../LobbyController")
+_lobby_controller = NodePath("../../../LobbyController")
 
-[node name="InteractableMesh" type="CSGMesh3D" parent="InteractableJoin"]
+[node name="InteractableMesh" type="CSGMesh3D" parent="World/Interactables/InteractableJoin"]
 mesh = SubResource("BoxMesh_jktpq")
 material = SubResource("StandardMaterial3D_7e1is")
 
-[node name="InteractableArea" type="Area3D" parent="InteractableJoin"]
+[node name="InteractableArea" type="Area3D" parent="World/Interactables/InteractableJoin"]
 
-[node name="InteractableShape" type="CollisionShape3D" parent="InteractableJoin/InteractableArea"]
+[node name="InteractableShape" type="CollisionShape3D" parent="World/Interactables/InteractableJoin/InteractableArea"]
 shape = SubResource("SphereShape3D_q76if")
 
-[node name="InteractableInformation" type="Sprite3D" parent="InteractableJoin"]
+[node name="InteractableInformation" type="Sprite3D" parent="World/Interactables/InteractableJoin"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
 billboard = 1
 texture = SubResource("ViewportTexture_yi207")
 
-[node name="Viewport" type="SubViewport" parent="InteractableJoin/InteractableInformation"]
+[node name="Viewport" type="SubViewport" parent="World/Interactables/InteractableJoin/InteractableInformation"]
 size = Vector2i(162, 27)
 
-[node name="Label" type="Label" parent="InteractableJoin/InteractableInformation/Viewport"]
+[node name="Label" type="Label" parent="World/Interactables/InteractableJoin/InteractableInformation/Viewport"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -309,3 +288,45 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Join a friend :0"
+
+[node name="InteractableName" type="Node3D" parent="World/Interactables" node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, -8, 2, 3)
+script = ExtResource("2_1ricq")
+_interaction = 5
+_lobby_controller = NodePath("../../../LobbyController")
+
+[node name="InteractableMesh" type="CSGMesh3D" parent="World/Interactables/InteractableName"]
+mesh = SubResource("BoxMesh_jktpq")
+material = SubResource("StandardMaterial3D_7e1is")
+
+[node name="InteractableArea" type="Area3D" parent="World/Interactables/InteractableName"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="World/Interactables/InteractableName/InteractableArea"]
+shape = SubResource("SphereShape3D_q76if")
+
+[node name="InteractableInformation" type="Sprite3D" parent="World/Interactables/InteractableName"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_xiq7l")
+
+[node name="Viewport" type="SubViewport" parent="World/Interactables/InteractableName/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="World/Interactables/InteractableName/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Change Username"
+
+[node name="CSGBox3D" type="CSGBox3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13, 0.780029, -6.77148)
+use_collision = true
+size = Vector3(1, 2.56006, 16.998)
