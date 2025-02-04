@@ -2,6 +2,7 @@ extends StaticBody3D
 
 var speed := 0.0
 var direction := Vector3.ZERO
+var decceleration := 0.05
 
 @onready var _escape_area: Area3D = $EscapeArea
 
@@ -22,7 +23,7 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	speed = move_toward(speed, 0, delta)
+	speed = move_toward(speed, 0, decceleration)
 	var col := move_and_collide(direction * speed, false, -32, false, 32)
 	
 	if col and speed:
