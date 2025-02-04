@@ -2,6 +2,12 @@ extends CharacterBody3D
 
 signal username_change(new_username: String)
 
+@export var bubble_speed := 0.5
+
+const bubble_decceleration_max = 0.01
+@export var bubble_decceleration := 0.005
+const bubble_decceleration_min = 0
+
 @export var acceleration := 3.0
 @export var deceleration := 4.0
 @export var gravity := 3.0

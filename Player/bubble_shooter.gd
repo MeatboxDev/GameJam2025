@@ -4,7 +4,7 @@ extends Node3D
 
 const _bubble_scene: PackedScene = preload("uid://duhicp2kli703")
 
-func _shoot_bubble() -> void:
+func _shoot_bubble_momentum() -> void:
 	var bubble_instance := _bubble_scene.instantiate()
 	bubble_instance.position = self.global_position
 	bubble_instance.speed = 0.5
@@ -17,6 +17,16 @@ func _shoot_bubble() -> void:
 	bubble_instance.direction = dir
 	get_tree().current_scene.add_child(bubble_instance)
 
+func _shoot_bubble_stable() -> void:
+	var bubble_instance := _bubble_scene.instantiate()
+	bubble_instance.position = self.global_position
+	bubble_instance.speed = player_model.bubble_speed
+	bubble_instance.decceleration = player_model.bubble_decceleration
+	var dir: Vector3 = -player_model.find_child("CameraStick").basis.z
+	bubble_instance.direction = dir
+	get_tree().current_scene.add_child(bubble_instance)
+
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		_shoot_bubble()
+		_shoot_bubble_stable()
