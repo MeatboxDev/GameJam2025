@@ -2,7 +2,7 @@ class_name LobbyController extends Node
 
 const PLAYER_SCENE := preload("res://Player/PlayerCharacter.tscn")
 
-@export var _bubbly_server: Bubbly
+var _bubbly_server: Bubbly = Server
 @export var spawn_points: Array[Node3D]
 @export var _interface_manager: InterfaceManager
 
@@ -105,3 +105,7 @@ func _player_set_name(multiplayer_id: int, username: String) -> void:
 		KLog.error("Could not find player " + username + " with id " + str(multiplayer_id))
 		return
 	player.username = username
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_P:
+		get_tree().change_scene_to_file("uid://dyn4fu87v2v8r")

@@ -1,6 +1,6 @@
 extends Interface
 
-@export var _bubbly_server: Bubbly
+var _bubbly_server: Bubbly = Server
 @export var _lobby_controller: Node
 
 @onready var _control_node: Control = $JoinInterface

@@ -1,6 +1,6 @@
 extends Node3D
 
-@export var player_model: CharacterBody3D
+@export var player_model: Player
 
 
 #func _shoot_bubble_momentum() -> void:
@@ -20,10 +20,11 @@ extends Node3D
 func _shoot_bubble_stable() -> void:
 	# Compose Bubble Information
 	var bubble_info := {}
-	bubble_info["position"] = self.global_position
+	bubble_info["global_position"] = self.global_position
 	bubble_info["speed"] = player_model.bubble_speed
 	bubble_info["decceleration"] = player_model.bubble_decceleration
 	bubble_info["direction"] = -player_model.find_child("CameraStick").basis.z
+	bubble_info["team"] = player_model.get_team_id()
 	# Spawn on all clients
 	SignalBus.spawn_bubble.emit(bubble_info)
 

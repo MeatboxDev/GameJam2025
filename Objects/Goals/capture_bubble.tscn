@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://dx1vrwujsdjan"]
+
+[ext_resource type="Script" path="res://Objects/Goals/capture_bubble.gd" id="1_a3dp3"]
+[ext_resource type="Shader" path="res://Objects/Projectiles/bubble_shader.gdshader" id="1_dfcdn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g28bg"]
+render_priority = 0
+shader = ExtResource("1_dfcdn")
+shader_parameter/bubble_color = Color(0, 0, 0, 1)
+shader_parameter/height_multiplier = 0.1
+shader_parameter/noise_sample_multiplier = 0.1
+shader_parameter/animation_speed = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_civw5"]
+material = SubResource("ShaderMaterial_g28bg")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gp4l0"]
+
+[node name="GoalBubble" type="Area3D"]
+collision_layer = 65535
+collision_mask = 65535
+script = ExtResource("1_a3dp3")
+
+[node name="BubbleMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_civw5")
+
+[node name="BubbleShape" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_gp4l0")
