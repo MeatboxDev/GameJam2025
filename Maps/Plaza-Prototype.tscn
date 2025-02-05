@@ -111,15 +111,13 @@ sky_material = SubResource("PanoramaSkyMaterial_4tvqr")
 background_mode = 2
 sky = SubResource("Sky_4sh4a")
 
-[node name="Plaza-prototype" type="Node3D"]
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.997185, -0.0749786, -3.27742e-09, 0, -4.37114e-08, 1, -0.0749786, 0.997185, 4.35883e-08, 0, 0, 0)
 light_energy = 0.778
 shadow_enabled = true
-
-[node name="PlayerCharacter" parent="." instance=ExtResource("1_vqsas")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19, 1.5, 9.5)
 
 [node name="lights" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
@@ -318,21 +316,21 @@ size = Vector3(1, 6, 0.001)
 material = SubResource("StandardMaterial3D_2odnx")
 
 [node name="floor3" type="CSGBox3D" parent="floor1/actualfloor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.75, -31.85, 1.751)
+transform = Transform3D(1, 0, 0, 0, 1, 7.4607e-13, 0, -7.4607e-13, 1, 10.7479, -31.85, 1.501)
 use_collision = true
-size = Vector3(36.5, 0.3, 1.5)
+size = Vector3(35.9, 0.3, 1)
 material = SubResource("ORMMaterial3D_hb25c")
 
 [node name="floor5" type="CSGBox3D" parent="floor1/actualfloor"]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, -7.35, -26.9, 1.751)
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37124e-08, 1, -7.35, -27.05, 1.651)
 use_collision = true
-size = Vector3(9.6, 0.3, 1.5)
+size = Vector3(9.9, 0.3, 1.3)
 material = SubResource("ORMMaterial3D_hb25c")
 
 [node name="floor6" type="CSGBox3D" parent="floor1/actualfloor"]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 28.85, -26.9, 1.751)
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37118e-08, 1, 28.85, -27.05, 1.751)
 use_collision = true
-size = Vector3(9.6, 0.3, 1.5)
+size = Vector3(9.9, 0.3, 1.5)
 material = SubResource("ORMMaterial3D_hb25c")
 
 [node name="floor markings green" type="Node3D" parent="floor1/actualfloor"]
@@ -465,17 +463,17 @@ size = Vector3(1, 0.15, 4.3)
 transform = Transform3D(1, -2.11758e-22, 0, -1.05879e-22, 1, 0, 0, 0, 1, -32.8544, 0, 91.3055)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="floor1/benches/bench3"]
-transform = Transform3D(0.866025, -1.30038e-15, -0.5, 2.25233e-15, 1, 1.30038e-15, 0.5, -2.25233e-15, 0.866025, -0.168371, 0.3, 0.655894)
+transform = Transform3D(0.866025, -1.30038e-15, -0.5, 2.25233e-15, 1, 1.30038e-15, 0.5, -2.25233e-15, 0.866025, -0.168371, 0.325, 0.655893)
 use_collision = true
-size = Vector3(1, 0.6, 0.3)
+size = Vector3(1, 0.65, 0.3)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="floor1/benches/bench3"]
-transform = Transform3D(0.866025, -1.30038e-15, -0.5, 2.25233e-15, 1, 1.30038e-15, 0.5, -2.25233e-15, 0.866025, 1.83163, 0.3, -2.8082)
+transform = Transform3D(0.866025, -1.30038e-15, -0.5, 2.25233e-15, 1, 1.30038e-15, 0.5, -2.25233e-15, 0.866025, 1.83163, 0.325, -2.8082)
 use_collision = true
-size = Vector3(1, 0.6, 0.3)
+size = Vector3(1, 0.65, 0.3)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="floor1/benches/bench3"]
-transform = Transform3D(0.866025, -1.30038e-15, -0.5, 2.25233e-15, 1, 1.30038e-15, 0.5, -2.25233e-15, 0.866025, 0.831629, 0.675, -1.07607)
+transform = Transform3D(0.866025, -1.30038e-15, -0.5, 2.25233e-15, 1, 1.30038e-15, 0.5, -2.25233e-15, 0.866025, 0.83163, 0.463732, -1.07607)
 use_collision = true
 size = Vector3(1, 0.15, 4.3)
 
@@ -1207,3 +1205,6 @@ texture = ExtResource("1_glsal")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8kgtj")
+
+[node name="PlayerCharacter" parent="." instance=ExtResource("1_vqsas")]
+transform = Transform3D(0.704225, 0, 0, 0, 0.704225, 0, 0, 0, 0.704225, -18.3099, 1.05634, 9.15493)
