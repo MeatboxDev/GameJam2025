@@ -10,12 +10,16 @@ var number := 0
 func _on_player_exit(body: Node3D) -> void:
 	if not body.is_in_group("Player"):
 		return
-	collision_layer = 2 | 4
-	collision_mask = 2 | 4
+	rpc("_make_solid")
 
 
 func _ready() -> void:
+	if not is_multiplayer_authority():
+		return
 	_escape_area.body_exited.connect(_on_player_exit)
+	get_tree().create_timer(0.05).timeout.connect(func() -> void: 
+		rpc("_make_solid")
+	)
 
 
 func _process(_delta: float) -> void:
@@ -33,6 +37,8 @@ func _process(_delta: float) -> void:
 				collider.speed = speed
 				collider.direction = direction
 				direction *= -1
+			elif collider.is_in_group("Player"):
+				pass # I hate this singular line of code, fuck this
 			else:
 				var norm := col.get_normal(i)
 				if norm.x: 
@@ -46,3 +52,11 @@ func _process(_delta: float) -> void:
 @rpc("any_peer", "reliable", "call_local")
 func burst() -> void:
 	SignalBus.burst_bubble.emit(number)
+
+
+@rpc("authority", "reliable", "call_local")
+func _make_solid() -> void:
+	collision_layer = 2 | 4
+	collision_mask = 2 | 4
+	$BubbleMesh.material_override = StandardMaterial3D.new()
+	$BubbleMesh.material_override.albedo_color = Color.RED
