@@ -15,6 +15,10 @@ signal interface_closed
 signal username_change(new_name: String)
 signal respawn_player(player: CharacterBody3D)
 
+signal spawn_bubble(bubble_information: Dictionary)
+signal burst_bubble(number: int)
+signal clear_bubbles
+
 func _test_connectionless(s: Signal) -> void:
 	if s.get_connections().size() == 1: 
 		KLog.warning(s.get_name() + " was emited but has no connections!")

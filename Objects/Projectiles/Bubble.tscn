@@ -28,8 +28,8 @@ margin = 0.08
 radius = 1.0
 
 [node name="Bubble" type="StaticBody3D" groups=["Bubble"]]
-collision_layer = 0
-collision_mask = 0
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_7rvd2")
 
 [node name="BubbleMesh" type="MeshInstance3D" parent="."]
