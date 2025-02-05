@@ -6,9 +6,9 @@ const PLAYER_SCENE := preload("res://Player/PlayerCharacter.tscn")
 @export var spawn_points: Array[Node3D]
 @export var _interface_manager: InterfaceManager
 
-
 var _player_instance: CharacterBody3D = null
 var _player_instance_list: Dictionary = {}
+
 
 func create_server() -> void:
 	_bubbly_server.create_server()
@@ -34,6 +34,7 @@ func leave_server() -> void:
 	if err == OK:
 		clear_players()
 		_player_spawn(1)
+	SignalBus.clear_bubbles.emit()
 
 
 func clear_players() -> void:
@@ -67,6 +68,7 @@ func _ready() -> void:
 	
 	_bubbly_server.multiplayer.connected_to_server.connect(
 		func() -> void:
+			SignalBus.clear_bubbles.emit()
 			_player_spawn(multiplayer.get_unique_id())
 	)
 	
@@ -74,6 +76,7 @@ func _ready() -> void:
 		func() -> void:
 			clear_players()
 			_player_spawn(1)
+			SignalBus.clear_bubbles.emit()
 	)
 
 	_player_spawn(1)

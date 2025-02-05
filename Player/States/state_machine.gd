@@ -58,7 +58,6 @@ func _on_state_transition(
 
 	current_state = new_state
 	new_state.on_set()
-	KLog.debug("Player transitioned state to " + new_state_name)
 
 
 func _input(event: InputEvent) -> void:
