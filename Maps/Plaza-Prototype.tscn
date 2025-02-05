@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c0mpvi7fmxm7e"]
+[gd_scene load_steps=46 format=3 uid="uid://c0mpvi7fmxm7e"]
 
 [ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
 [ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_ue8ub"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://rlrt7sl0d1xr" path="res://Interfaces/Scenes/username_change.tscn" id="6_4gcbf"]
 [ext_resource type="PackedScene" uid="uid://djd0d7cywxn8l" path="res://Interfaces/Scenes/join_lobby.tscn" id="7_8o4c3"]
 [ext_resource type="Texture2D" uid="uid://c1q8l57la4rla" path="res://Assets/Testing/skybox/skybox_10.png" id="7_ej822"]
+[ext_resource type="Script" path="res://Maps/interactable.gd" id="14_w71ye"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_6rdxx"]
 transparency = 2
@@ -122,6 +123,21 @@ sky_material = SubResource("PanoramaSkyMaterial_4tvqr")
 [sub_resource type="Environment" id="Environment_8kgtj"]
 background_mode = 2
 sky = SubResource("Sky_4sh4a")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6b382"]
+size = Vector3(8.31042, 5.12683, 4.76476)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_qbbxe"]
+viewport_path = NodePath("InteractableLeave/InteractableInformation/Viewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_5dcyg"]
+viewport_path = NodePath("InteractableJoin/InteractableInformation/Viewport")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_xr3py"]
+radius = 2.97311
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_xeohu"]
+viewport_path = NodePath("InteractableOpen/InteractableInformation/Viewport")
 
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, 0, 0, 0)
@@ -1295,3 +1311,106 @@ texture = ExtResource("1_glsal")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8kgtj")
+
+[node name="InteractableLeave" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 2.13163e-14, 0, -2.13163e-14, 0.995912, -17.2633, 1.43149, 12.8384)
+script = ExtResource("14_w71ye")
+_interaction = 4
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableLeave"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.38813e-21, 0, -3.38813e-21, 1, 0, 0, 0)
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableLeave/InteractableArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.38813e-21, 0, -3.38813e-21, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_6b382")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableLeave"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_qbbxe")
+
+[node name="Viewport" type="SubViewport" parent="InteractableLeave/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableLeave/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Leave Server :("
+
+[node name="InteractableJoin" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 2.13163e-14, 0, -2.13163e-14, 0.995912, -17.2633, 1.43149, 3.77033)
+script = ExtResource("14_w71ye")
+_interaction = 3
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableJoin"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.38813e-21, 0, -3.38813e-21, 1, 0, 0, 0)
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableJoin/InteractableArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 3.38813e-21, 0, -3.38813e-21, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_6b382")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableJoin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_5dcyg")
+
+[node name="Viewport" type="SubViewport" parent="InteractableJoin/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableJoin/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Join a Server :)"
+
+[node name="InteractableOpen" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, 44.491, 2, 1.99953)
+script = ExtResource("14_w71ye")
+_interaction = 1
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableOpen"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableOpen/InteractableArea"]
+shape = SubResource("SphereShape3D_xr3py")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableOpen"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_xeohu")
+
+[node name="Viewport" type="SubViewport" parent="InteractableOpen/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableOpen/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Open Server!"
