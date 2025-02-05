@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://ctfw3536cuwrp"]
+[gd_scene load_steps=36 format=3 uid="uid://ctfw3536cuwrp"]
 
 [ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
 [ext_resource type="PackedScene" uid="uid://bi0j2wmww54ji" path="res://Player/PlayerCharacter.tscn" id="1_vqsas"]
@@ -73,6 +73,12 @@ noise = SubResource("FastNoiseLite_2b3ie")
 transparency = 1
 albedo_color = Color(0.635942, 0.161083, 0.0405381, 0.905882)
 albedo_texture = SubResource("NoiseTexture2D_70roa")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x0akk"]
+transparency = 1
+albedo_color = Color(0.048, 0.6864, 0.96, 0.431373)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_um8nc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_345xu"]
 albedo_color = Color(0.09, 0.75, 0.222, 1)
@@ -408,6 +414,45 @@ material = SubResource("StandardMaterial3D_uo8cu")
 transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, -4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 10.5, 1.675, -1.07288e-06)
 size = Vector3(4.75, 1, 0.001)
 material = SubResource("StandardMaterial3D_uo8cu")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 63, -8.8, 0.00704069)
+use_collision = true
+radius = 16.25
+sides = 15
+material = SubResource("StandardMaterial3D_x0akk")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 63, -8.8, 3.22844)
+radius = 5.0
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 63, -8.8, -3.37324)
+use_collision = true
+radius = 5.0
+height = 9.0
+sides = 15
+material = SubResource("StandardMaterial3D_x0akk")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 6.03961e-13, 0, -6.03961e-13, 1, 57.7183, -8.80001, 1.64401)
+size = Vector3(1, 3, 1)
+material = SubResource("StandardMaterial3D_um8nc")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(1, 0, 0, 0, 1, 8.2423e-13, 0, -8.2423e-13, 1, 56.662, -8.80001, 1.39401)
+size = Vector3(1, 3, 0.5)
+material = SubResource("StandardMaterial3D_um8nc")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(0.5, 0.866026, 3.7856e-08, -0.866026, 0.5, -2.18551e-08, -3.78552e-08, -2.18568e-08, 1, 54.019, -13.5557, 1.39401)
+size = Vector3(1, 1.5, 0.5)
+material = SubResource("StandardMaterial3D_um8nc")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="floor1"]
+transform = Transform3D(0.433013, 0.866026, -0.25, -0.750001, 0.5, 0.43302, 0.5, -9.99507e-08, 0.866026, 53.9104, -13.3674, 1.8931)
+size = Vector3(1.3, 1.5, 0.15)
+material = SubResource("StandardMaterial3D_um8nc")
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="floor1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63, -8.8, 5.5)
@@ -1207,4 +1252,4 @@ texture = ExtResource("1_glsal")
 environment = SubResource("Environment_8kgtj")
 
 [node name="PlayerCharacter" parent="." instance=ExtResource("1_vqsas")]
-transform = Transform3D(0.704225, 0, 0, 0, 0.704225, 0, 0, 0, 0.704225, -18.3099, 1.05634, 9.15493)
+transform = Transform3D(0.704225, 0, 0, 0, 0.704225, 0, 0, 0, 0.704225, 52.4648, 1.05634, 9.15493)
