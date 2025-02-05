@@ -55,6 +55,12 @@ func _on_focus_lost() -> void:
 
 func interact() -> void:
 	interactions_array[_interaction].call()
+	if _interaction == INTERACTIONS.CREATE_SERVER:
+		_interaction = INTERACTIONS.CLOSE_SERVER
+		$InteractableInformation/Viewport/Label.text = "Close Server :("
+	elif _interaction == INTERACTIONS.CLOSE_SERVER:
+		_interaction = INTERACTIONS.CREATE_SERVER
+		$InteractableInformation/Viewport/Label.text = "Open Server!"
 
 
 func _ready() -> void:

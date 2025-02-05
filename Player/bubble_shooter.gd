@@ -20,7 +20,7 @@ extends Node3D
 func _shoot_bubble_stable() -> void:
 	# Compose Bubble Information
 	var bubble_info := {}
-	bubble_info["position"] = self.global_position
+	bubble_info["global_position"] = self.global_position
 	bubble_info["speed"] = player_model.bubble_speed
 	bubble_info["decceleration"] = player_model.bubble_decceleration
 	bubble_info["direction"] = -player_model.find_child("CameraStick").basis.z
