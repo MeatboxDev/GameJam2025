@@ -1,11 +1,17 @@
-[gd_scene load_steps=36 format=3 uid="uid://ctfw3536cuwrp"]
+[gd_scene load_steps=40 format=3 uid="uid://c0mpvi7fmxm7e"]
 
 [ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
-[ext_resource type="PackedScene" uid="uid://bi0j2wmww54ji" path="res://Player/PlayerCharacter.tscn" id="1_vqsas"]
+[ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_ue8ub"]
 [ext_resource type="Texture2D" uid="uid://bd0hvs57kceft" path="res://Assets/Maps/mall_floor.png" id="2_a2edh"]
+[ext_resource type="Script" path="res://Maps/respawner.gd" id="2_kdg4b"]
+[ext_resource type="Script" path="res://Server/server.gd" id="3_7wemn"]
 [ext_resource type="PackedScene" uid="uid://cnx5lasawgf0e" path="res://Player/gj-player.gltf" id="3_heoob"]
 [ext_resource type="Texture2D" uid="uid://cfke0occfbupa" path="res://Assets/Maps/Ads/Ad_01.svg" id="4_6nvfh"]
+[ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="4_38038"]
+[ext_resource type="Script" path="res://Interfaces/Base/interface_manager.gd" id="5_blbh7"]
 [ext_resource type="Texture2D" uid="uid://b0l51utav1xft" path="res://Assets/Maps/Ads/shrimp ad.svg" id="5_x75m7"]
+[ext_resource type="PackedScene" uid="uid://rlrt7sl0d1xr" path="res://Interfaces/Scenes/username_change.tscn" id="6_4gcbf"]
+[ext_resource type="PackedScene" uid="uid://djd0d7cywxn8l" path="res://Interfaces/Scenes/join_lobby.tscn" id="7_8o4c3"]
 [ext_resource type="Texture2D" uid="uid://c1q8l57la4rla" path="res://Assets/Testing/skybox/skybox_10.png" id="7_ej822"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_6rdxx"]
@@ -119,6 +125,45 @@ sky = SubResource("Sky_4sh4a")
 
 [node name="Node3D" type="Node3D"]
 transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, 0, 0, 0)
+
+[node name="ProjectileSynchronizer" type="Node" parent="."]
+script = ExtResource("1_ue8ub")
+
+[node name="Respawner" type="Node" parent="." node_paths=PackedStringArray("_spawn_points")]
+script = ExtResource("2_kdg4b")
+_spawn_points = [NodePath("RespawnPoints/Respawn"), NodePath("RespawnPoints/Respawn2"), NodePath("RespawnPoints/Respawn3"), NodePath("RespawnPoints/Respawn4")]
+
+[node name="RespawnPoints" type="Node" parent="Respawner"]
+
+[node name="Respawn" type="Node3D" parent="Respawner/RespawnPoints"]
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -30.1465, 2.62959, 5.32471)
+
+[node name="Respawn2" type="Node3D" parent="Respawner/RespawnPoints"]
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -25.2075, 1.28923, 5.32471)
+
+[node name="Respawn3" type="Node3D" parent="Respawner/RespawnPoints"]
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -20.9741, 1.28923, 5.32471)
+
+[node name="Respawn4" type="Node3D" parent="Respawner/RespawnPoints"]
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -16.7125, 1.28923, 5.32471)
+
+[node name="Server" type="Node" parent="."]
+script = ExtResource("3_7wemn")
+
+[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points", "_interface_manager")]
+script = ExtResource("4_38038")
+_bubbly_server = NodePath("../Server")
+spawn_points = [null, null, null, null, null, null]
+_interface_manager = NodePath("../InterfaceManager")
+
+[node name="InterfaceManager" type="Node" parent="."]
+script = ExtResource("5_blbh7")
+
+[node name="UsernameChange" parent="InterfaceManager" instance=ExtResource("6_4gcbf")]
+
+[node name="JoinLobby" parent="InterfaceManager" node_paths=PackedStringArray("_bubbly_server", "_lobby_controller") instance=ExtResource("7_8o4c3")]
+_bubbly_server = NodePath("../../Server")
+_lobby_controller = NodePath("../../LobbyController")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.997185, -0.0749786, -3.27742e-09, 0, -4.37114e-08, 1, -0.0749786, 0.997185, 4.35883e-08, 0, 0, 0)
@@ -1250,6 +1295,3 @@ texture = ExtResource("1_glsal")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8kgtj")
-
-[node name="PlayerCharacter" parent="." instance=ExtResource("1_vqsas")]
-transform = Transform3D(0.704225, 0, 0, 0, 0.704225, 0, 0, 0, 0.704225, 52.4648, 1.05634, 9.15493)

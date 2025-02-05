@@ -17,13 +17,15 @@ func _sync_position(index: int, pos: Vector3) -> void:
 @rpc("any_peer", "reliable", "call_local")
 func _net_spawn_bubble(bubble_info: Dictionary) -> void:
 	var bubble_instance := _bubble_scene.instantiate()
+	add_child(bubble_instance)
 	for k: String in bubble_info:
 		bubble_instance.set(k, bubble_info[k])
 	bubble_instance.number = bubble_number
 	bubble_instance.name = "bubble-" + str(bubble_number)
+	bubble_instance.top_level = true
 	_bubble_list[bubble_number] = bubble_instance
 	bubble_number += 1
-	get_tree().current_scene.add_child(bubble_instance)
+	
 
 func _burst_bubble(num: int) -> void:
 	var instance: Node3D = _bubble_list[num]
