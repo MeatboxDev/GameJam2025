@@ -38,7 +38,7 @@ mesh = SubResource("SphereMesh_l6cno")
 [node name="CollisionShape" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_8mwg3")
 
-[node name="EscapeArea" type="Area3D" parent="."]
+[node name="EscapeArea" type="Area3D" parent="." groups=["Bubble"]]
 
 [node name="CollisionShape" type="CollisionShape3D" parent="EscapeArea"]
 shape = SubResource("SphereShape3D_8mwg3")

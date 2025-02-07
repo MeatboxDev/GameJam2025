@@ -1,0 +1,182 @@
+[gd_scene load_steps=11 format=3 uid="uid://dyn4fu87v2v8r"]
+
+[ext_resource type="Script" path="res://Maps/respawner.gd" id="1_4tbl2"]
+[ext_resource type="Script" path="res://Maps/Testing/control_point_controller.gd" id="1_bvgce"]
+[ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_ubdan"]
+[ext_resource type="Script" path="res://Interfaces/Base/interface_manager.gd" id="3_6h1km"]
+[ext_resource type="Script" path="res://Interfaces/Base/hud_manager.gd" id="4_8cgxw"]
+[ext_resource type="Script" path="res://Interfaces/interface_pick_team.gd" id="4_tuesk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loa25"]
+albedo_color = Color(0.29, 0.810667, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65j06"]
+albedo_color = Color(0.117724, 0.30559, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bc80t"]
+albedo_color = Color(1, 0.4, 0.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2r3qj"]
+albedo_color = Color(0.79, 0, 0.0131665, 1)
+
+[node name="CapturePointsTest" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+
+[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("bubble_spawns", "good_spawns", "bad_spawns")]
+script = ExtResource("1_bvgce")
+bubble_spawns = [NodePath("../BubbleSpawns")]
+good_spawns = [NodePath("../GoodSide/GoodSpawn"), NodePath("../GoodSide/GoodSpawn2"), NodePath("../GoodSide/GoodSpawn3"), NodePath("../GoodSide/GoodSpawn4")]
+bad_spawns = [NodePath("../BadSide/BadSpawn"), NodePath("../BadSide/BadSpawn2"), NodePath("../BadSide/BadSpawn3"), NodePath("../BadSide/BadSpawn4")]
+
+[node name="ProjectileSynchronizer" type="Node" parent="."]
+script = ExtResource("1_ubdan")
+
+[node name="Respawner" type="Node" parent="."]
+script = ExtResource("1_4tbl2")
+
+[node name="HUDManager" type="Node" parent="."]
+script = ExtResource("4_8cgxw")
+
+[node name="PreGameHUD" type="Node" parent="HUDManager"]
+
+[node name="Control" type="Control" parent="HUDManager/PreGameHUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HUDManager/PreGameHUD/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Pre-Game"
+
+[node name="CapturePointsHUD" type="Node" parent="HUDManager"]
+
+[node name="Control" type="Control" parent="HUDManager/CapturePointsHUD"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HUDManager/CapturePointsHUD/Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Pre-Game"
+
+[node name="InterfaceManager" type="Node" parent="."]
+script = ExtResource("3_6h1km")
+
+[node name="PickTeamInterface" type="Node" parent="InterfaceManager"]
+script = ExtResource("4_tuesk")
+
+[node name="Control" type="Control" parent="InterfaceManager/PickTeamInterface"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InterfaceManager/PickTeamInterface/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoinGood" type="Button" parent="InterfaceManager/PickTeamInterface/Control/HBoxContainer"]
+layout_mode = 2
+text = "Gud"
+
+[node name="JoinBad" type="Button" parent="InterfaceManager/PickTeamInterface/Control/HBoxContainer"]
+layout_mode = 2
+text = "Bad"
+
+[node name="GoodSide" type="Node" parent="."]
+
+[node name="GoodSide" type="CSGBox3D" parent="GoodSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -62.5, 0, 0)
+calculate_tangents = false
+use_collision = true
+size = Vector3(125, 1, 250)
+material = SubResource("StandardMaterial3D_loa25")
+
+[node name="GoodSpawn" type="CSGBox3D" parent="GoodSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.739, 0.258332, 0.589167)
+use_collision = true
+material = SubResource("StandardMaterial3D_65j06")
+
+[node name="GoodSpawn2" type="CSGBox3D" parent="GoodSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.739, 0.258332, 1.78315)
+use_collision = true
+material = SubResource("StandardMaterial3D_65j06")
+
+[node name="GoodSpawn3" type="CSGBox3D" parent="GoodSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.739, 0.258332, -0.579501)
+use_collision = true
+material = SubResource("StandardMaterial3D_65j06")
+
+[node name="GoodSpawn4" type="CSGBox3D" parent="GoodSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -123.739, 0.258332, -1.75559)
+use_collision = true
+material = SubResource("StandardMaterial3D_65j06")
+
+[node name="BadSide" type="Node" parent="."]
+
+[node name="BadSide" type="CSGBox3D" parent="BadSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 62.5, 0, 0)
+calculate_tangents = false
+use_collision = true
+size = Vector3(125, 1, 250)
+material = SubResource("StandardMaterial3D_bc80t")
+
+[node name="BadSpawn" type="CSGBox3D" parent="BadSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.767, 0.258332, 0.589167)
+use_collision = true
+material = SubResource("StandardMaterial3D_2r3qj")
+
+[node name="BadSpawn2" type="CSGBox3D" parent="BadSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.767, 0.258332, 1.78315)
+use_collision = true
+material = SubResource("StandardMaterial3D_2r3qj")
+
+[node name="BadSpawn3" type="CSGBox3D" parent="BadSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.767, 0.258332, -0.579501)
+use_collision = true
+material = SubResource("StandardMaterial3D_2r3qj")
+
+[node name="BadSpawn4" type="CSGBox3D" parent="BadSide"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.767, 0.258332, -1.75559)
+use_collision = true
+material = SubResource("StandardMaterial3D_2r3qj")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.999998, 0.0017773, -1.41522e-06, 0, 0.000796274, 1, 0.0017773, -0.999998, 0.000796273, -0.000145427, 102.76, 0.0818248)
+
+[node name="BubbleSpawns" type="Node3D" parent="."]

@@ -1,5 +1,6 @@
 extends StaticBody3D
 
+var team: int = -1
 var speed := 0.0
 var direction := Vector3.ZERO
 var decceleration := 0.05

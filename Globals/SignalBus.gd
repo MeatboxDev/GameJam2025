@@ -14,10 +14,15 @@ signal interface_closed
 
 signal username_change(new_name: String)
 signal respawn_player(player: CharacterBody3D)
+signal change_team_good(id: int)
+signal change_team_bad(id: int)
 
 signal spawn_bubble(bubble_information: Dictionary)
 signal burst_bubble(number: int)
 signal clear_bubbles
+
+signal capture_bubble_burst
+signal point_for_team(id: int)
 
 func _test_connectionless(s: Signal) -> void:
 	if s.get_connections().size() == 1: 

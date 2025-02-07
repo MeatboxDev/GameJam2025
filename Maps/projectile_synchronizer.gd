@@ -2,6 +2,7 @@ extends Node
 
 const _bubble_scene: PackedScene = preload("uid://duhicp2kli703")
 
+
 var _bubble_list: Array[Node3D] = []
 
 @rpc("authority", "unreliable", "call_remote")
@@ -52,6 +53,7 @@ func _ready() -> void:
 				info["decceleration"] = i.decceleration
 				info["direction"] = i.direction
 				info["number"] = i.number
+				info["team"] = i.team
 				rpc_id(id, "_net_spawn_bubble", info)
 		)
 	
