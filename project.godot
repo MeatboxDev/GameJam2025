@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Userdata="*res://Globals/Userdata.gd"
 SignalBus="*res://Globals/SignalBus.gd"
 Klog="*res://Globals/KLog.gd"
+Server="*res://Server/server.gd"
 
 [debug]
 

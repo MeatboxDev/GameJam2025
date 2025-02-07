@@ -1,10 +1,9 @@
-[gd_scene load_steps=46 format=3 uid="uid://c0mpvi7fmxm7e"]
+[gd_scene load_steps=47 format=3 uid="uid://c0mpvi7fmxm7e"]
 
 [ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
 [ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_ue8ub"]
 [ext_resource type="Texture2D" uid="uid://bd0hvs57kceft" path="res://Assets/Maps/mall_floor.png" id="2_a2edh"]
 [ext_resource type="Script" path="res://Maps/respawner.gd" id="2_kdg4b"]
-[ext_resource type="Script" path="res://Server/server.gd" id="3_7wemn"]
 [ext_resource type="PackedScene" uid="uid://cnx5lasawgf0e" path="res://Player/gj-player.gltf" id="3_heoob"]
 [ext_resource type="Texture2D" uid="uid://cfke0occfbupa" path="res://Assets/Maps/Ads/Ad_01.svg" id="4_6nvfh"]
 [ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="4_38038"]
@@ -163,12 +162,8 @@ transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -20.9741, 1.28923, 5
 [node name="Respawn4" type="Node3D" parent="Respawner/RespawnPoints"]
 transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -16.7125, 1.28923, 5.32471)
 
-[node name="Server" type="Node" parent="."]
-script = ExtResource("3_7wemn")
-
-[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points", "_interface_manager")]
+[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("spawn_points", "_interface_manager")]
 script = ExtResource("4_38038")
-_bubbly_server = NodePath("../Server")
 spawn_points = [null, null, null, null, null, null]
 _interface_manager = NodePath("../InterfaceManager")
 
@@ -177,8 +172,7 @@ script = ExtResource("5_blbh7")
 
 [node name="UsernameChange" parent="InterfaceManager" instance=ExtResource("6_4gcbf")]
 
-[node name="JoinLobby" parent="InterfaceManager" node_paths=PackedStringArray("_bubbly_server", "_lobby_controller") instance=ExtResource("7_8o4c3")]
-_bubbly_server = NodePath("../../Server")
+[node name="JoinLobby" parent="InterfaceManager" node_paths=PackedStringArray("_lobby_controller") instance=ExtResource("7_8o4c3")]
 _lobby_controller = NodePath("../../LobbyController")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]

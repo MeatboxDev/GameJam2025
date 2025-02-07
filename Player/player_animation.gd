@@ -1,4 +1,4 @@
-extends CharacterBody3D
+class_name Player extends CharacterBody3D
 
 signal username_change(new_username: String)
 
@@ -35,13 +35,34 @@ var username: String = "":
 
 
 var anim_state_machine: AnimationNodeStateMachinePlayback
+var _team_info := {
+	"id": -1,
+	"color": null
+}
 
 @onready var state_machine: StateMachine = $StateMachine
 @onready var _interaction_area: Area3D = $InteractionArea
 @onready var _cam: Camera3D = $CameraStick/Camera
 
+func get_team_id() -> int:
+	return _team_info["id"]
+
+
+func set_team_id(id: int) -> void:
+	_team_info["id"] = id
+
+
+func get_team_color() -> Color:
+	return _team_info["color"]
+
+
+func set_team_color(color: Color) -> void:
+	_team_info["color"] = color
+
+
 func _on_username_change(new_name: String) -> void:
 	username = new_name
+
 
 func _ready() -> void:
 	safe_margin = 0.1
@@ -61,35 +82,40 @@ func _ready() -> void:
 	if DEBUG:
 		_initiate_debug()
 
+func _debug_slider_value(child: Control) -> void:
+	var label: Label = child.get_child(0)
+	var slider: HSlider = child.get_child(1)
+	var v: String = child.name.to_lower()
+	label.text = v + " " + str(self.get(v))
+	slider.value = self.get(v)
+	if self.get(v + "_max") != null:
+		slider.max_value = self.get(v + "_max")
+	if self.get(v + "_min") != null:
+		slider.min_value = self.get(v + "_min")
+	if self.get(v + "_min") != null and self.get(v + "_max") != null:
+		slider.rounded = false
+		slider.step = (self.get(v + "_max") - self.get(v + "_min")) / 1000
+	slider.value_changed.connect(
+		func(value: float) -> void:
+			label.text = v + " " + str(self.get(v))
+			self.set(v, value)
+	)
+
 
 func _initiate_debug() -> void:
 	$Debug.visible = true
 	for child: Control in _debug_characteristics.get_children():
-		if not child is HBoxContainer:
-			continue
-		var label: Label = child.get_child(0)
-		var slider: HSlider = child.get_child(1)
-		var v: String = child.name.to_lower()
-		label.text = v + " " + str(self.get(v))
-		slider.value = self.get(v)
-		if self.get(v + "_max") != null:
-			slider.max_value = self.get(v + "_max")
-		if self.get(v + "_min") != null:
-			slider.min_value = self.get(v + "_min")
-		if self.get(v + "_min") != null and self.get(v + "_max") != null:
-			slider.rounded = false
-			slider.step = (self.get(v + "_max") - self.get(v + "_min")) / 1000
-		slider.value_changed.connect(
-			func(value: float) -> void:
-				label.text = v + " " + str(self.get(v))
-				self.set(v, value)
-		)
+		if child is HBoxContainer:
+			_debug_slider_value(child)
+		if child is PanelContainer:
+			var label: Label = child.get_child(0)
+			label.text = str(self.get(child.name.split(" ")[0]).get(child.name.split(" ")[1]))
 
 
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
-	rpc("_net_update_position", global_position)
+	rpc("net_move", global_position)
 	if position.y < -1:
 		SignalBus.respawn_player.emit(self)
 
@@ -129,9 +155,9 @@ func _handle_bubble_collision(collider: Node3D, normal: Vector3) -> void:
 		collider.rpc("burst")
 
 
-@rpc("any_peer", "unreliable", "call_remote")
-func _net_update_position(real_position: Vector3) -> void:
-	global_position = real_position
+@rpc("any_peer", "reliable", "call_local")
+func net_move(new_position: Vector3) -> void:
+	global_position = new_position
 
 
 @rpc("any_peer", "reliable",  "call_remote")
