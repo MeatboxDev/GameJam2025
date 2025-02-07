@@ -22,11 +22,12 @@ albedo_color = Color(0.79, 0, 0.0131665, 1)
 [node name="CapturePointsTest" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
 
-[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("bubble_spawns", "good_spawns", "bad_spawns")]
+[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("bubble_spawns", "good_spawns", "bad_spawns", "_interface_manager")]
 script = ExtResource("1_bvgce")
 bubble_spawns = [NodePath("../BubbleSpawns")]
 good_spawns = [NodePath("../GoodSide/GoodSpawn"), NodePath("../GoodSide/GoodSpawn2"), NodePath("../GoodSide/GoodSpawn3"), NodePath("../GoodSide/GoodSpawn4")]
 bad_spawns = [NodePath("../BadSide/BadSpawn"), NodePath("../BadSide/BadSpawn2"), NodePath("../BadSide/BadSpawn3"), NodePath("../BadSide/BadSpawn4")]
+_interface_manager = NodePath("../InterfaceManager")
 
 [node name="ProjectileSynchronizer" type="Node" parent="."]
 script = ExtResource("1_ubdan")
