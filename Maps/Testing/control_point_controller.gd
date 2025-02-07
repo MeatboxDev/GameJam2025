@@ -3,6 +3,8 @@ extends Node
 const PLAYER_SCENE := preload("uid://bi0j2wmww54ji")
 const CAPTURE_BUBBLE_SCENE := preload("uid://dx1vrwujsdjan")
 
+const BUBBLE_RESPAWN_TIME := 1.0
+
 @export_category("Game")
 @export var bubble_spawns: Array[Node3D] = []
 
@@ -12,6 +14,7 @@ const CAPTURE_BUBBLE_SCENE := preload("uid://dx1vrwujsdjan")
 @export_category("Bad Guys")
 @export var bad_spawns: Array[Node3D] = []
 
+var _spawn_bubble_timer: SceneTreeTimer = null
 var _player_instance_list: Dictionary = {}
 var _player_instance: Player = null
 var _active_capture_bubble: Node3D
@@ -29,6 +32,15 @@ var _team_information: Dictionary = {
 
 func _team_add_point(team: int) -> void:
 	_team_information[str(team)]["points"] += 1
+	
+	if not is_multiplayer_authority():
+		return
+	
+	if _team_information[str(team)]["points"] == 3:
+		KLog.info("Team: " + str(team) + " wins!")
+		_spawn_bubble_timer.timeout.disconnect(_spawn_bubble_timer_timeout)
+		_spawn_bubble_timer.time_left = 0
+
 
 func _team_append_player_instance(team: int, inst: Player) -> void:
 	_get_team_player_instances(team).append(inst)
@@ -104,12 +116,16 @@ func _request_join_bad(who: int) -> void:
 	# If yes spawn, send this shit to everyone
 	rpc("_spawn_player_bad", who)
 
+func _spawn_bubble_timer_timeout() -> void:
+	rpc("net_spawn_bubble", bubble_spawns.pick_random().global_position)
+
+
 func _on_capture_bubble_burst() -> void:
 	if not is_multiplayer_authority():
 		return
 	
-	await get_tree().create_timer(5.0).timeout
-	rpc("net_spawn_bubble", bubble_spawns.pick_random().global_position)
+	_spawn_bubble_timer = get_tree().create_timer(BUBBLE_RESPAWN_TIME)
+	_spawn_bubble_timer.timeout.connect(_spawn_bubble_timer_timeout)
 
 
 func _ready() -> void:
