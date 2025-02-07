@@ -4,7 +4,9 @@ var _interfaces := {}
 var open_interfaces: Array[Interface]
 
 func _ready() -> void:
-	for interface: Interface in get_children().filter(func(c: Node) -> bool: return c is Interface):
+	for interface: Node in get_children():
+		if not interface is Interface: continue
+		KLog.debug(interface.name)
 		_interfaces[interface.name.to_lower()] = interface
 		interface.transition.connect(_on_interface_transition)
 		interface.kill.connect(_on_interface_close)
@@ -27,9 +29,9 @@ func _on_interface_transition(old: Interface, new_name: String) -> void:
 
 
 func open(interface_name: String) -> void:
-	var new_interface: Interface = _interfaces[interface_name.to_lower()]
+	var new_interface: Interface = _interfaces.get(interface_name.to_lower(), null)
 	if !new_interface:
-		breakpoint
+		KLog.error("Interface not found " + interface_name)
 		return
 	
 	if open_interfaces.size() != 0:

@@ -3,6 +3,7 @@ extends Node
 const PLAYER_SCENE := preload("uid://bi0j2wmww54ji")
 const CAPTURE_BUBBLE_SCENE := preload("uid://dx1vrwujsdjan")
 
+const WIN_THRESHOLD := 1
 const BUBBLE_RESPAWN_TIME := 1.0
 
 @export_category("Game")
@@ -13,6 +14,8 @@ const BUBBLE_RESPAWN_TIME := 1.0
 
 @export_category("Bad Guys")
 @export var bad_spawns: Array[Node3D] = []
+
+@export var _interface_manager: InterfaceManager
 
 var _spawn_bubble_timer: SceneTreeTimer = null
 var _player_instance_list: Dictionary = {}
@@ -30,16 +33,26 @@ var _team_information: Dictionary = {
 	},
 }
 
+func _clear_teams() -> void:
+	for t: String in _team_information:
+		_team_information[t]["points"] = 0
+		for p: Player in _team_information[t]["player_instances"]:
+			p.queue_free()
+		_team_information[t]["player_instances"].clear()
+	_interface_manager.open("PickTeamInterface")
+
+
 func _team_add_point(team: int) -> void:
 	_team_information[str(team)]["points"] += 1
 	
 	if not is_multiplayer_authority():
 		return
 	
-	if _team_information[str(team)]["points"] == 3:
+	if _team_information[str(team)]["points"] == WIN_THRESHOLD:
 		KLog.info("Team: " + str(team) + " wins!")
 		_spawn_bubble_timer.timeout.disconnect(_spawn_bubble_timer_timeout)
 		_spawn_bubble_timer.time_left = 0
+		_clear_teams()
 
 
 func _team_append_player_instance(team: int, inst: Player) -> void:
