@@ -116,6 +116,7 @@ func _request_join_bad(who: int) -> void:
 	# If yes spawn, send this shit to everyone
 	rpc("_spawn_player_bad", who)
 
+
 func _spawn_bubble_timer_timeout() -> void:
 	rpc("net_spawn_bubble", bubble_spawns.pick_random().global_position)
 
