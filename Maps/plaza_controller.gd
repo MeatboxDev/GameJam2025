@@ -2,13 +2,13 @@ class_name LobbyController extends Node
 
 const PLAYER_SCENE := preload("res://Player/PlayerCharacter.tscn")
 
-var _bubbly_server: Bubbly = Server
-@export var spawn_points: Array[Node3D]
 @export var _interface_manager: InterfaceManager
 
-var _player_instance: CharacterBody3D = null
-var _player_instance_list: Dictionary = {}
+var _bubbly_server: Bubbly = Server
 
+var _player_instance: CharacterBody3D = null
+
+var _player_instance_list: Dictionary = {}
 
 func create_server() -> void:
 	_bubbly_server.create_server()
@@ -53,7 +53,6 @@ func remove_player(id: int) -> void:
 
 func _ready() -> void:
 	assert(_interface_manager, "Interface manager not set")
-	assert(spawn_points.size() > 0, "You need to specify at least one spawn point")
 	assert(_bubbly_server, "Server not set!")
 
 	_bubbly_server.multiplayer.peer_connected.connect(
@@ -96,6 +95,7 @@ func _player_spawn(multiplayer_id: int) -> void:
 	add_child(player_instance)
 	if multiplayer_id == multiplayer.get_unique_id():
 		_player_instance = player_instance
+		SignalBus.current_player_change.emit(_player_instance)
 
 
 @rpc("reliable", "any_peer", "call_remote")

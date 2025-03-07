@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dtclk5g26eag5"]
 
-[ext_resource type="Script" path="res://Testing/bubble.gd" id="1_7tr6b"]
+[ext_resource type="Script" uid="uid://d4ht63gbclg3" path="res://Testing/bubble.gd" id="1_7tr6b"]
 [ext_resource type="PackedScene" uid="uid://duhicp2kli703" path="res://Objects/Projectiles/Bubble.tscn" id="2_cdra7"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_xosod"]
@@ -11,8 +11,7 @@ radial_segments = 4
 rings = 1
 
 [sub_resource type="Curve" id="Curve_wt3ai"]
-min_value = -200.0
-max_value = 200.0
+_limits = [-200.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(0.752941, -200), -56.5581, 0.0, 0, 0]
 point_count = 2
 

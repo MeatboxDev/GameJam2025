@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://duhicp2kli703"]
 
-[ext_resource type="Shader" path="res://Objects/Projectiles/bubble_shader.gdshader" id="1_5efrs"]
-[ext_resource type="Script" path="res://Objects/Projectiles/bubble_behaviour.gd" id="1_7rvd2"]
+[ext_resource type="Shader" uid="uid://db7pwkomnwb2t" path="res://Objects/Projectiles/bubble_shader.gdshader" id="1_5efrs"]
+[ext_resource type="Script" uid="uid://bmcy2rekwit2i" path="res://Objects/Projectiles/bubble_behaviour.gd" id="1_7rvd2"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_uwk4r"]
 
@@ -12,11 +12,11 @@ noise = SubResource("FastNoiseLite_uwk4r")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xocbd"]
 render_priority = 0
 shader = ExtResource("1_5efrs")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ca68e")
 shader_parameter/bubble_color = Color(0, 0.866667, 1, 1)
 shader_parameter/height_multiplier = 0.1
 shader_parameter/noise_sample_multiplier = 0.1
 shader_parameter/animation_speed = 0.01
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_ca68e")
 
 [sub_resource type="SphereMesh" id="SphereMesh_l6cno"]
 material = SubResource("ShaderMaterial_xocbd")

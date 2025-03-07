@@ -1,12 +1,14 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpd2o4pcms4nl"]
 
 [ext_resource type="PackedScene" uid="uid://bgm7yu8dotoe7" path="res://Networking/test_character.tscn" id="1_wt0fi"]
-[ext_resource type="PackedScene" uid="uid://crqbqe60pjvvj" path="res://Testing/bubble.tscn" id="2_kcwcx"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_04wgp"]
 size = Vector2(200, 200)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s5lx6"]
+
+[sub_resource type="Resource" id="Resource_aemyx"]
+metadata/__load_path__ = "res://Testing/bubble.tscn"
 
 [node name="TestScene" type="Node3D"]
 
@@ -48,5 +50,5 @@ size = Vector3(4, 5, 13)
 [node name="CharacterBody3D" parent="." instance=ExtResource("1_wt0fi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
-[node name="StaticBody3D" parent="." instance=ExtResource("2_kcwcx")]
+[node name="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12, 2, 0)

@@ -1,17 +1,16 @@
 [gd_scene load_steps=24 format=3 uid="uid://y777m7ml0pha"]
 
-[ext_resource type="Script" path="res://Server/server.gd" id="1_1rcb8"]
-[ext_resource type="Script" path="res://Maps/respawner.gd" id="1_k8tvr"]
-[ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="1_ls6gq"]
-[ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_xxul1"]
-[ext_resource type="Script" path="res://Maps/interactable.gd" id="2_1ricq"]
-[ext_resource type="Script" path="res://Maps/chat_controller.gd" id="3_t1xre"]
+[ext_resource type="Script" uid="uid://givx1uq51cnx" path="res://Server/server.gd" id="1_1rcb8"]
+[ext_resource type="Script" uid="uid://br0mw0jf0f1hs" path="res://Maps/respawner.gd" id="1_k8tvr"]
+[ext_resource type="Script" uid="uid://h3rrdwx07xcx" path="res://Maps/plaza_controller.gd" id="1_ls6gq"]
+[ext_resource type="Script" uid="uid://c1jrrvtkjdt73" path="res://Maps/projectile_synchronizer.gd" id="1_xxul1"]
+[ext_resource type="Script" uid="uid://dws83st1wkh0q" path="res://Maps/interactable.gd" id="2_1ricq"]
+[ext_resource type="Script" uid="uid://cgfblpdfyq78s" path="res://Maps/chat_controller.gd" id="3_t1xre"]
 [ext_resource type="PackedScene" uid="uid://rlrt7sl0d1xr" path="res://Interfaces/Scenes/username_change.tscn" id="5_kc37f"]
 [ext_resource type="PackedScene" uid="uid://djd0d7cywxn8l" path="res://Interfaces/Scenes/join_lobby.tscn" id="6_4fh5i"]
-[ext_resource type="Script" path="res://Interfaces/Base/interface_manager.gd" id="6_vggvg"]
+[ext_resource type="Script" uid="uid://ck02m2k0ws4ic" path="res://Interfaces/Base/interface_manager.gd" id="6_vggvg"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_sgwbx"]
-size = Vector2(200, 200)
+[sub_resource type="BoxMesh" id="BoxMesh_8ujj5"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_dxt8b"]
 
@@ -62,10 +61,8 @@ _spawn_points = [NodePath("../World/RespawnPoint")]
 [node name="Server" type="Node" parent="."]
 script = ExtResource("1_1rcb8")
 
-[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_bubbly_server", "spawn_points", "_interface_manager")]
+[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_interface_manager")]
 script = ExtResource("1_ls6gq")
-_bubbly_server = NodePath("../Server")
-spawn_points = [NodePath("../World/RespawnPoint/Mesh"), NodePath("../World/SpawnPoint2"), NodePath("../World/SpawnPoint3"), NodePath("../World/SpawnPoint4"), NodePath("../World/SpawnPoint5"), NodePath("../World/SpawnPoint6")]
 _interface_manager = NodePath("../InterfaceManager")
 
 [node name="ChatController" type="Node" parent="."]
@@ -96,16 +93,16 @@ script = ExtResource("6_vggvg")
 
 [node name="UsernameChange" parent="InterfaceManager" instance=ExtResource("5_kc37f")]
 
-[node name="JoinLobby" parent="InterfaceManager" node_paths=PackedStringArray("_bubbly_server", "_lobby_controller") instance=ExtResource("6_4fh5i")]
-_bubbly_server = NodePath("../../Server")
+[node name="JoinLobby" parent="InterfaceManager" node_paths=PackedStringArray("_lobby_controller") instance=ExtResource("6_4fh5i")]
 _lobby_controller = NodePath("../../LobbyController")
 
 [node name="World" type="Node3D" parent="."]
 
 [node name="Floor" type="CSGMesh3D" parent="World"]
+transform = Transform3D(153.469, 0, 0, 0, -0.00432536, 0, 0, 0, 109.96, 0, 0, 0)
 use_collision = true
 collision_layer = 3
-mesh = SubResource("PlaneMesh_sgwbx")
+mesh = SubResource("BoxMesh_8ujj5")
 material = SubResource("ORMMaterial3D_eogc5")
 
 [node name="RespawnPoint" type="Node3D" parent="World"]

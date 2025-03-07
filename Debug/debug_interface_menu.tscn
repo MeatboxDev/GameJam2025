@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfei02tvuacrw"]
+
+[ext_resource type="Script" uid="uid://cqvrp3cptvvsy" path="res://Player/debug_window_controller.gd" id="1_7ijao"]
+
+[node name="DebugPanel" type="PanelContainer"]
+offset_right = 58.0
+offset_bottom = 35.0
+size_flags_vertical = 4
+script = ExtResource("1_7ijao")
+window_title = "Player Variables"
+
+[node name="Order" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Controlers" type="HBoxContainer" parent="Order"]
+layout_mode = 2
+
+[node name="WindowTitle" type="Label" parent="Order/Controlers"]
+layout_mode = 2
+text = "DEFAULT TITLE"
+
+[node name="Drag" type="Button" parent="Order/Controlers"]
+layout_mode = 2
+mouse_default_cursor_shape = 6
+text = "==="
+
+[node name="Toggle" type="Button" parent="Order/Controlers"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+text = "+"

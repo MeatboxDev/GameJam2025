@@ -24,6 +24,8 @@ signal clear_bubbles
 signal capture_bubble_burst
 signal point_for_team(id: int)
 
+signal current_player_change(player: Player)
+
 func _test_connectionless(s: Signal) -> void:
 	if s.get_connections().size() == 1: 
 		KLog.warning(s.get_name() + " was emited but has no connections!")

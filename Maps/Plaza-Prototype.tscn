@@ -1,18 +1,23 @@
-[gd_scene load_steps=48 format=3 uid="uid://c0mpvi7fmxm7e"]
+[gd_scene load_steps=50 format=3 uid="uid://c0mpvi7fmxm7e"]
 
 [ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
-[ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_ue8ub"]
+[ext_resource type="Environment" uid="uid://coahrwrwc62o1" path="res://default_env.tres" id="1_ob8t1"]
+[ext_resource type="Script" uid="uid://c1jrrvtkjdt73" path="res://Maps/projectile_synchronizer.gd" id="1_ue8ub"]
 [ext_resource type="Texture2D" uid="uid://bd0hvs57kceft" path="res://Assets/Maps/mall_floor.png" id="2_a2edh"]
-[ext_resource type="Script" path="res://Maps/respawner.gd" id="2_kdg4b"]
+[ext_resource type="Script" uid="uid://br0mw0jf0f1hs" path="res://Maps/respawner.gd" id="2_kdg4b"]
 [ext_resource type="PackedScene" uid="uid://cnx5lasawgf0e" path="res://Player/gj-player.gltf" id="3_heoob"]
 [ext_resource type="Texture2D" uid="uid://cfke0occfbupa" path="res://Assets/Maps/Ads/Ad_01.svg" id="4_6nvfh"]
-[ext_resource type="Script" path="res://Maps/plaza_controller.gd" id="4_38038"]
-[ext_resource type="Script" path="res://Interfaces/Base/interface_manager.gd" id="5_blbh7"]
+[ext_resource type="Script" uid="uid://h3rrdwx07xcx" path="res://Maps/plaza_controller.gd" id="4_38038"]
+[ext_resource type="Script" uid="uid://ck02m2k0ws4ic" path="res://Interfaces/Base/interface_manager.gd" id="5_blbh7"]
 [ext_resource type="Texture2D" uid="uid://b0l51utav1xft" path="res://Assets/Maps/Ads/shrimp ad.svg" id="5_x75m7"]
 [ext_resource type="PackedScene" uid="uid://rlrt7sl0d1xr" path="res://Interfaces/Scenes/username_change.tscn" id="6_4gcbf"]
 [ext_resource type="PackedScene" uid="uid://djd0d7cywxn8l" path="res://Interfaces/Scenes/join_lobby.tscn" id="7_8o4c3"]
 [ext_resource type="Texture2D" uid="uid://c1q8l57la4rla" path="res://Assets/Testing/skybox/skybox_10.png" id="7_ej822"]
-[ext_resource type="Script" path="res://Maps/interactable.gd" id="14_w71ye"]
+[ext_resource type="Script" uid="uid://dws83st1wkh0q" path="res://Maps/interactable.gd" id="14_w71ye"]
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_ob8t1"]
+
+[sub_resource type="Compositor" id="Compositor_wwiia"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_6rdxx"]
 transparency = 2
@@ -138,8 +143,10 @@ radius = 2.97311
 [sub_resource type="ViewportTexture" id="ViewportTexture_xeohu"]
 viewport_path = NodePath("InteractableOpen/InteractableInformation/Viewport")
 
-[node name="Node3D" type="Node3D"]
-transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, 0, 0, 0)
+[node name="Node3D" type="WorldEnvironment"]
+environment = ExtResource("1_ob8t1")
+camera_attributes = SubResource("CameraAttributesPhysical_ob8t1")
+compositor = SubResource("Compositor_wwiia")
 
 [node name="ProjectileSynchronizer" type="Node" parent="."]
 script = ExtResource("1_ue8ub")
@@ -151,20 +158,19 @@ _spawn_points = [NodePath("RespawnPoints/Respawn"), NodePath("RespawnPoints/Resp
 [node name="RespawnPoints" type="Node" parent="Respawner"]
 
 [node name="Respawn" type="Node3D" parent="Respawner/RespawnPoints"]
-transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -30.1465, 2.62959, 5.32471)
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -18.7277, 4.28004, 3.98784)
 
 [node name="Respawn2" type="Node3D" parent="Respawner/RespawnPoints"]
-transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -25.2075, 1.28923, 5.32471)
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -13.7887, 2.93968, 3.98784)
 
 [node name="Respawn3" type="Node3D" parent="Respawner/RespawnPoints"]
-transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -20.9741, 1.28923, 5.32471)
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -9.55532, 2.93968, 3.98784)
 
 [node name="Respawn4" type="Node3D" parent="Respawner/RespawnPoints"]
-transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -16.7125, 1.28923, 5.32471)
+transform = Transform3D(1.42, 0, 0, 0, 1.42, 0, 0, 0, 1.42, -5.29372, 2.93968, 3.98784)
 
-[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("spawn_points", "_interface_manager")]
+[node name="LobbyController" type="Node" parent="." node_paths=PackedStringArray("_interface_manager")]
 script = ExtResource("4_38038")
-spawn_points = [null, null, null, null, null, null]
 _interface_manager = NodePath("../InterfaceManager")
 
 [node name="InterfaceManager" type="Node" parent="."]

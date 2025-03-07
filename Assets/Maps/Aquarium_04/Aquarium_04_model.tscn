@@ -127,7 +127,7 @@ shadow_mesh = SubResource("ArrayMesh_lnkwk")
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sxgy6"]
 _data = {
-"fish swim": ExtResource("4_8iftx")
+&"fish swim": ExtResource("4_8iftx")
 }
 
 [node name="blockbench_export" instance=ExtResource("1_632wd")]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://8j6tos5wm2f3"]
 
-[ext_resource type="Script" path="res://Networking/network.gd" id="1_d0cgp"]
+[ext_resource type="Script" uid="uid://cskhsuk36k55a" path="res://Networking/network.gd" id="1_d0cgp"]
 [ext_resource type="Texture2D" uid="uid://c7c4ntyebp14p" path="res://Assets/Testing/noFilter.webp" id="2_onyyg"]
 [ext_resource type="Texture2D" uid="uid://cq5tp0sl58bjg" path="res://Assets/Maps/Checkpoint/Bubble_stand/Bubble_Stand_0.png" id="3_xysb8"]
 

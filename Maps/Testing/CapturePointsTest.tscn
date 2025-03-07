@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://dyn4fu87v2v8r"]
 
-[ext_resource type="Script" path="res://Maps/respawner.gd" id="1_4tbl2"]
-[ext_resource type="Script" path="res://Maps/Testing/control_point_controller.gd" id="1_bvgce"]
-[ext_resource type="Script" path="res://Maps/projectile_synchronizer.gd" id="1_ubdan"]
-[ext_resource type="Script" path="res://Interfaces/Base/interface_manager.gd" id="3_6h1km"]
-[ext_resource type="Script" path="res://Interfaces/Base/hud_manager.gd" id="4_8cgxw"]
-[ext_resource type="Script" path="res://Interfaces/interface_pick_team.gd" id="4_tuesk"]
+[ext_resource type="Script" uid="uid://br0mw0jf0f1hs" path="res://Maps/respawner.gd" id="1_4tbl2"]
+[ext_resource type="Script" uid="uid://cu6g1bgp08xql" path="res://Maps/Testing/control_point_controller.gd" id="1_bvgce"]
+[ext_resource type="Script" uid="uid://c1jrrvtkjdt73" path="res://Maps/projectile_synchronizer.gd" id="1_ubdan"]
+[ext_resource type="Script" uid="uid://ck02m2k0ws4ic" path="res://Interfaces/Base/interface_manager.gd" id="3_6h1km"]
+[ext_resource type="Script" uid="uid://ggkrbkjhgf6y" path="res://Interfaces/Base/hud_manager.gd" id="4_8cgxw"]
+[ext_resource type="Script" uid="uid://c1u2emw8sqx78" path="res://Interfaces/interface_pick_team.gd" id="4_tuesk"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loa25"]
 albedo_color = Color(0.29, 0.810667, 1, 1)

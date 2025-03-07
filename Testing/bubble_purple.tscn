@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://fyao1cclicva"]
 
-[ext_resource type="Script" path="res://Testing/bubble.gd" id="1_x8xid"]
+[ext_resource type="Script" uid="uid://d4ht63gbclg3" path="res://Testing/bubble.gd" id="1_x8xid"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_rvx5m"]
 lightmap_size_hint = Vector2i(5, 3)
@@ -10,8 +10,7 @@ radial_segments = 4
 rings = 1
 
 [sub_resource type="Curve" id="Curve_qpcbx"]
-min_value = -200.0
-max_value = 200.0
+_limits = [-200.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, 200), 0.0, 0.0, 0, 0, Vector2(0.752941, -200), -56.5581, 0.0, 0, 0]
 point_count = 2
 

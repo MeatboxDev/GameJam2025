@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://biaujmw4riby"]
+
+[ext_resource type="Script" uid="uid://bo0hxairfudgc" path="res://Player/debug_scripts.gd" id="1_nomcc"]
+
+[node name="Content" type="BoxContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_nomcc")
+
+[node name="Variables" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3

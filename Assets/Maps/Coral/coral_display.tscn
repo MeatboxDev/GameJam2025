@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://chdvyhhy1el2e"]
 
-[ext_resource type="Script" path="res://Coral_Randomizer.gd" id="1_dnm1b"]
+[ext_resource type="Script" uid="uid://c6cei5hjl0mh4" path="res://Coral_Randomizer.gd" id="1_dnm1b"]
 [ext_resource type="PackedScene" uid="uid://c65dcgh7alh3h" path="res://Assets/Maps/Coral/coral_pink(1).gltf" id="2_m6b13"]
 [ext_resource type="PackedScene" uid="uid://joxnm80r4tu8" path="res://Assets/Maps/Coral/coral_blue(1).gltf" id="3_0et0y"]
 [ext_resource type="PackedScene" uid="uid://dx0jbvq1ovt07" path="res://Assets/Maps/Coral/coral_yellow.gltf" id="4_uwo7s"]

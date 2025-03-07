@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://bg4e1fd6q8l1f"]
 
-[ext_resource type="Script" path="res://Networking/network.gd" id="1_wc5cs"]
+[ext_resource type="Script" uid="uid://cskhsuk36k55a" path="res://Networking/network.gd" id="1_wc5cs"]
 [ext_resource type="Texture2D" uid="uid://8eyfsxqm4h0x" path="res://Assets/Maps/Mesh_Library/quartercircle_ul.png" id="2_nklqx"]
 [ext_resource type="PackedScene" uid="uid://baoi4sp0b6jag" path="res://Assets/Maps/Checkpoint/Platform_high/Platform_high_collisions.tscn" id="2_pmh7e"]
 [ext_resource type="PackedScene" uid="uid://re3kxtsmtjhx" path="res://Assets/Maps/Aquarium_02/Aquarium_02_collision.tscn" id="5_vhbr6"]

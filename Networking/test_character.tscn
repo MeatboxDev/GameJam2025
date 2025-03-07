@@ -1,6 +1,6 @@
 [gd_scene load_steps=69 format=4 uid="uid://bgm7yu8dotoe7"]
 
-[ext_resource type="Script" path="res://Networking/Movement.gd" id="1_n8brg"]
+[ext_resource type="Script" uid="uid://upwrdkug8hic" path="res://Networking/Movement.gd" id="1_n8brg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oug20"]
 
@@ -4547,13 +4547,13 @@ tracks/77/keys = PackedFloat32Array(0, 1, 0.985983, 1.01249, 1.00265, 0.0333333,
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_48p1r"]
 _data = {
-"attack-animation": SubResource("Animation_0tmt1"),
-"idle-animation": SubResource("Animation_jfv8o"),
-"idle-animation2": SubResource("Animation_y8tvs"),
-"jump-animation": SubResource("Animation_g7uvy"),
-"jump-animation2": SubResource("Animation_kys10"),
-"run-animation": SubResource("Animation_2t4vy"),
-"run-loop-animation": SubResource("Animation_pb5j8")
+&"attack-animation": SubResource("Animation_0tmt1"),
+&"idle-animation": SubResource("Animation_jfv8o"),
+&"idle-animation2": SubResource("Animation_y8tvs"),
+&"jump-animation": SubResource("Animation_g7uvy"),
+&"jump-animation2": SubResource("Animation_kys10"),
+&"run-animation": SubResource("Animation_2t4vy"),
+&"run-loop-animation": SubResource("Animation_pb5j8")
 }
 
 [node name="CharacterBody3D" type="CharacterBody3D" groups=["Player"]]

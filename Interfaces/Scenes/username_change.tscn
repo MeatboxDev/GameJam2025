@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://rlrt7sl0d1xr"]
 
-[ext_resource type="Script" path="res://Interfaces/interface_username_change.gd" id="1_wn5mw"]
+[ext_resource type="Script" uid="uid://deh5q0nh0y65u" path="res://Interfaces/interface_username_change.gd" id="1_wn5mw"]
 
 [node name="UsernameChange" type="Node"]
 script = ExtResource("1_wn5mw")

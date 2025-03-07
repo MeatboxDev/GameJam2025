@@ -1,10 +1,12 @@
 [gd_scene load_steps=9 format=3 uid="uid://bdbgsv8mjtbki"]
 
 [ext_resource type="Texture2D" uid="uid://fy20n800ltg" path="res://Assets/Testing/image.png" id="1_th3gc"]
-[ext_resource type="Script" path="res://character_body_3d.gd" id="2_rsoqe"]
 [ext_resource type="Texture2D" uid="uid://iy85uygqcqsv" path="res://Assets/Testing/mall_floor.png" id="3_56tbu"]
 
 [sub_resource type="ORMMaterial3D" id="ORMMaterial3D_o5lls"]
+
+[sub_resource type="Resource" id="Resource_noarx"]
+metadata/__load_path__ = "res://character_body_3d.gd"
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_amqqv"]
 
@@ -127,7 +129,7 @@ transform = Transform3D(0.0441055, 0.601536, -0.797627, -0.0332117, 0.798845, 0.
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(0.830892, 0, 0, 0, 0.830892, 0, 0, 0, 0.830892, 0.83903, 0.885675, 0.000271475)
-script = ExtResource("2_rsoqe")
+script = SubResource("Resource_noarx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
 transform = Transform3D(0.109468, 0, 0, 0, 0.0839287, 0, 0, 0, 0.106325, 0, 0, 0)

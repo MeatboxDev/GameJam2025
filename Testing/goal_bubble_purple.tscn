@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://7aff7vtjxqmu"]
 
-[ext_resource type="Script" path="res://Testing/goal_bubble_purple.gd" id="1_ijdi2"]
+[ext_resource type="Script" uid="uid://d01u2yetevid0" path="res://Testing/goal_bubble_purple.gd" id="1_ijdi2"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_w6ugc"]
 load_path = "res://.godot/imported/default_bubble_0.png-afc610bdaf1d6b819a5ab4d9747c165b.s3tc.ctex"

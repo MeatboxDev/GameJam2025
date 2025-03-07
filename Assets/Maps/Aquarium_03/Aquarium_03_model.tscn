@@ -168,7 +168,7 @@ shadow_mesh = SubResource("ArrayMesh_hbrs2")
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5mim2"]
 _data = {
-"fish swim": ExtResource("4_b8lqi")
+&"fish swim": ExtResource("4_b8lqi")
 }
 
 [node name="Aquarium_03_model" instance=ExtResource("1_cbjfm")]

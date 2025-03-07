@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dx1vrwujsdjan"]
 
-[ext_resource type="Script" path="res://Objects/Goals/capture_bubble.gd" id="1_a3dp3"]
-[ext_resource type="Shader" path="res://Objects/Projectiles/bubble_shader.gdshader" id="1_dfcdn"]
+[ext_resource type="Script" uid="uid://7o4kjg1le77u" path="res://Objects/Goals/capture_bubble.gd" id="1_a3dp3"]
+[ext_resource type="Shader" uid="uid://db7pwkomnwb2t" path="res://Objects/Projectiles/bubble_shader.gdshader" id="1_dfcdn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_g28bg"]
 render_priority = 0
