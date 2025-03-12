@@ -2,7 +2,6 @@ extends Node
 
 const _bubble_scene: PackedScene = preload("uid://duhicp2kli703")
 
-
 var _bubble_list: Array[Node3D] = []
 
 @rpc("authority", "unreliable", "call_remote")
@@ -42,24 +41,29 @@ func _clear_bubbles() -> void:
 
 
 func _ready() -> void:
-	if is_multiplayer_authority():
-		multiplayer.peer_connected.connect(func(id: int) -> void:
-			for i: Node3D in _bubble_list:
-				var info := {}
-				info["collision_layer"] = 2 | 4
-				info["collision_mask"] = 2 | 4
-				info["position"] = i.global_position
-				info["speed"] = i.speed
-				info["decceleration"] = i.decceleration
-				info["direction"] = i.direction
-				info["number"] = i.number
-				info["team"] = i.team
-				rpc_id(id, "_net_spawn_bubble", info)
-		)
+	Server.server_player_connected.connect(_server_sync_projectiles)
+	
+	Server.client_disconnected_from_server.connect(_clear_bubbles)
 	
 	SignalBus.spawn_bubble.connect(func(info: Dictionary) -> void: rpc("_net_spawn_bubble", info))
+	
 	SignalBus.burst_bubble.connect(_burst_bubble)
+	
 	SignalBus.clear_bubbles.connect(_clear_bubbles)
+
+func _server_sync_projectiles(id: int) -> void:
+	for i: Node3D in _bubble_list:
+		var info := {}
+		# TODO: This is horrible, fix as soon as possible
+		info["collision_layer"] = 2 | 4
+		info["collision_mask"] = 2 | 4
+		info["position"] = i.global_position
+		info["speed"] = i.speed
+		info["decceleration"] = i.decceleration
+		info["direction"] = i.direction
+		info["number"] = i.number
+		info["team"] = i.team
+		rpc_id(id, "_net_spawn_bubble", info)
 
 
 func _physics_process(_delta: float) -> void:

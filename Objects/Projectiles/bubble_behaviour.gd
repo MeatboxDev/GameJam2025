@@ -1,4 +1,4 @@
-extends StaticBody3D
+class_name Bubble extends StaticBody3D
 
 var team: int = -1
 var speed := 0.0
@@ -39,6 +39,7 @@ func _process(_delta: float) -> void:
 				collider.direction = direction
 				direction *= -1
 			elif collider.is_in_group("Player"):
+				print("Suck my cock")
 				pass # I hate this singular line of code, fuck this
 			else:
 				var norm := col.get_normal(i)
@@ -59,5 +60,3 @@ func burst() -> void:
 func _make_solid() -> void:
 	collision_layer = 2 | 4
 	collision_mask = 2 | 4
-	$BubbleMesh.material_override = StandardMaterial3D.new()
-	$BubbleMesh.material_override.albedo_color = Color.RED

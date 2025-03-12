@@ -1,6 +1,6 @@
 extends State
 
-@export var body: CharacterBody3D
+@export var body: Player
 
 var _push_timer: SceneTreeTimer
 

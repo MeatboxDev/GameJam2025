@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dyn4fu87v2v8r"]
+[gd_scene load_steps=16 format=3 uid="uid://dyn4fu87v2v8r"]
 
 [ext_resource type="Script" uid="uid://br0mw0jf0f1hs" path="res://Maps/respawner.gd" id="1_4tbl2"]
 [ext_resource type="Script" uid="uid://cu6g1bgp08xql" path="res://Maps/Testing/control_point_controller.gd" id="1_bvgce"]
@@ -6,6 +6,14 @@
 [ext_resource type="Script" uid="uid://ck02m2k0ws4ic" path="res://Interfaces/Base/interface_manager.gd" id="3_6h1km"]
 [ext_resource type="Script" uid="uid://ggkrbkjhgf6y" path="res://Interfaces/Base/hud_manager.gd" id="4_8cgxw"]
 [ext_resource type="Script" uid="uid://c1u2emw8sqx78" path="res://Interfaces/interface_pick_team.gd" id="4_tuesk"]
+[ext_resource type="PackedScene" uid="uid://bfei02tvuacrw" path="res://Debug/debug_interface_menu.tscn" id="7_5bdoy"]
+[ext_resource type="PackedScene" uid="uid://bop4cw6sh2dn6" path="res://Debug/command_line.tscn" id="8_5t8uy"]
+
+[sub_resource type="Environment" id="Environment_5t8uy"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_ftl0v"]
+
+[sub_resource type="Compositor" id="Compositor_5uy2d"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loa25"]
 albedo_color = Color(0.29, 0.810667, 1, 1)
@@ -19,14 +27,13 @@ albedo_color = Color(1, 0.4, 0.4, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2r3qj"]
 albedo_color = Color(0.79, 0, 0.0131665, 1)
 
-[node name="CapturePointsTest" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+[node name="CapturePointsTest" type="WorldEnvironment"]
+environment = SubResource("Environment_5t8uy")
+camera_attributes = SubResource("CameraAttributesPractical_ftl0v")
+compositor = SubResource("Compositor_5uy2d")
 
-[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("bubble_spawns", "good_spawns", "bad_spawns", "_interface_manager")]
+[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("_interface_manager")]
 script = ExtResource("1_bvgce")
-bubble_spawns = [NodePath("../BubbleSpawns")]
-good_spawns = [NodePath("../GoodSide/GoodSpawn"), NodePath("../GoodSide/GoodSpawn2"), NodePath("../GoodSide/GoodSpawn3"), NodePath("../GoodSide/GoodSpawn4")]
-bad_spawns = [NodePath("../BadSide/BadSpawn"), NodePath("../BadSide/BadSpawn2"), NodePath("../BadSide/BadSpawn3"), NodePath("../BadSide/BadSpawn4")]
 _interface_manager = NodePath("../InterfaceManager")
 
 [node name="ProjectileSynchronizer" type="Node" parent="."]
@@ -179,5 +186,11 @@ material = SubResource("StandardMaterial3D_2r3qj")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.999998, 0.0017773, -1.41522e-06, 0, 0.000796274, 1, 0.0017773, -0.999998, 0.000796273, -0.000145427, 102.76, 0.0818248)
+current = true
 
 [node name="BubbleSpawns" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+
+[node name="DebugPanel" parent="." instance=ExtResource("7_5bdoy")]
+window_title = "Command Line"
+content_scene = ExtResource("8_5t8uy")

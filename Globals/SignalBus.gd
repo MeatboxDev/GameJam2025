@@ -26,6 +26,14 @@ signal point_for_team(id: int)
 
 signal current_player_change(player: Player)
 
+#--- Server Signals ---#
+signal connect_to_server(ip: String, port: String)
+signal disconnect_from_server
+signal create_server(ip: String, port: String)
+
+#--- Printing ---#
+signal print_player_instances
+
 func _test_connectionless(s: Signal) -> void:
 	if s.get_connections().size() == 1: 
 		KLog.warning(s.get_name() + " was emited but has no connections!")

@@ -2,9 +2,19 @@ class_name Bubbly extends Node
 
 signal connection_result(result: bool)
 
+signal server_player_connected(id: int)
+signal client_player_connected(id: int)
+
+signal server_player_disconnected(id: int)
+signal client_player_disconnected(id: int)
+signal client_disconnected_from_server
+
 const IP_ADDRESS := "*"
+
 const PORT := 2100
+
 const MAX_CLIENTS := 8
+
 const TIMEOUT_DURATION := 5.0
 
 var connected_peers: Array[int] = []
@@ -32,6 +42,18 @@ func _ready() -> void:
 	multiplayer.connected_to_server.connect(_c_on_connected_to_server)
 	multiplayer.server_disconnected.connect(_c_on_server_disconnected)
 	multiplayer.connection_failed.connect(_c_connection_failed)
+	
+	SignalBus.connect_to_server.connect(
+		func(ip: String, port: String) -> void:
+			connect_to_server(ip, int(port))
+	)
+	
+	SignalBus.disconnect_from_server.connect(disconnect_from_server)
+	
+	SignalBus.create_server.connect(
+		func(ip: String, port: String) -> void:
+			create_server(ip, int(port))
+	)
 
 
 ## Creates a server for players
@@ -130,10 +152,7 @@ func disconnect_from_server() -> Error:
 		KLog.error("Don't use this if you're host, close instead")
 		return ERR_CANT_CREATE
 
-	_peer = null
-	_clear_players()
-
-	KLog.info("Disconnected from server")
+	_c_on_server_disconnected()
 	return OK
 
 
@@ -153,6 +172,18 @@ func close_server() -> Error:
 	
 	KLog.info("Closed server")
 	return OK
+
+
+## Returns [code]true[/code]
+## if the caller is a server
+func is_server() -> bool:
+	return multiplayer.get_unique_id() == 1
+
+
+## Returns [code]true[/code]
+## if the caller is a client
+func is_client() -> bool:
+	return multiplayer.get_unique_id() != 1
 
 
 func _connection_timeout() -> void:
@@ -181,20 +212,24 @@ func _on_peer_disconnected(id: int) -> void:
 
 
 func _s_on_peer_connected(id: int) -> void:
+	server_player_connected.emit(id)
 	KLog.info("Peer connected " + str(id))
 
 
 func _s_on_peer_disconnected(id: int) -> void:
+	server_player_disconnected.emit(id)
 	KLog.info("Peer disconnected " + str(id))
 
 
 func _c_on_peer_connected(id: int) -> void:
-	if id == 1:
+	if id == 1: # If peer connecting is id 1, connection succesful
 		_join_timeout.timeout.disconnect(_connection_timeout)
+	client_player_connected.emit(id)
 	KLog.info("Peer connected " + str(id))
 
 
 func _c_on_peer_disconnected(id: int) -> void:
+	client_player_disconnected.emit(id)
 	KLog.info("Peer disconnected " + str(id))
 
 
@@ -207,6 +242,7 @@ func _c_on_connected_to_server() -> void:
 func _c_on_server_disconnected() -> void:
 	_peer = null
 	_clear_players()
+	client_disconnected_from_server.emit()
 	KLog.info("Disconnected from server")
 
 

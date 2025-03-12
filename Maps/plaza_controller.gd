@@ -4,18 +4,16 @@ const PLAYER_SCENE := preload("res://Player/PlayerCharacter.tscn")
 
 @export var _interface_manager: InterfaceManager
 
-var _bubbly_server: Bubbly = Server
-
 var _player_instance: CharacterBody3D = null
 
 var _player_instance_list: Dictionary = {}
 
 func create_server() -> void:
-	_bubbly_server.create_server()
+	Server.create_server()
 
 
 func close_server() -> void:
-	var err := _bubbly_server.close_server()
+	var err := Server.close_server()
 	if err == OK:
 		clear_players()
 		_player_spawn(1)
@@ -30,7 +28,7 @@ func change_name() -> void:
 
 
 func leave_server() -> void:
-	var err := _bubbly_server.disconnect_from_server()
+	var err := Server.disconnect_from_server()
 	if err == OK:
 		clear_players()
 		_player_spawn(1)
@@ -51,11 +49,20 @@ func remove_player(id: int) -> void:
 	_player_instance_list.erase(id)
 
 
+func start_game() -> void:
+	rpc("send_players_to_game")
+	
+
+@rpc("any_peer", "call_local", "reliable")
+func send_players_to_game() -> void:
+	get_tree().change_scene_to_file("uid://dyn4fu87v2v8r")
+
+
 func _ready() -> void:
 	assert(_interface_manager, "Interface manager not set")
-	assert(_bubbly_server, "Server not set!")
+	assert(Server, "Server not set!")
 
-	_bubbly_server.multiplayer.peer_connected.connect(
+	Server.multiplayer.peer_connected.connect(
 		func(id: int) -> void:
 			KLog.info("Player Joined: " + str(id))
 			if id != multiplayer.get_unique_id():
@@ -63,15 +70,15 @@ func _ready() -> void:
 				rpc_id(id, "_player_set_name", multiplayer.get_unique_id(), _player_instance.username)
 	)
 
-	_bubbly_server.multiplayer.peer_disconnected.connect(remove_player)
+	Server.multiplayer.peer_disconnected.connect(remove_player)
 	
-	_bubbly_server.multiplayer.connected_to_server.connect(
+	Server.multiplayer.connected_to_server.connect(
 		func() -> void:
 			SignalBus.clear_bubbles.emit()
 			_player_spawn(multiplayer.get_unique_id())
 	)
 	
-	_bubbly_server.multiplayer.server_disconnected.connect(
+	Server.multiplayer.server_disconnected.connect(
 		func() -> void:
 			clear_players()
 			_player_spawn(1)
@@ -105,7 +112,3 @@ func _player_set_name(multiplayer_id: int, username: String) -> void:
 		KLog.error("Could not find player " + username + " with id " + str(multiplayer_id))
 		return
 	player.username = username
-
-func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and event.keycode == KEY_P:
-		get_tree().change_scene_to_file("uid://dyn4fu87v2v8r")

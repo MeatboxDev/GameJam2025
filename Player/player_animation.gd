@@ -2,8 +2,6 @@ class_name Player extends CharacterBody3D
 
 signal username_change(new_username: String)
 
-const DEBUG := true
-
 const CAM_MAX_UP := 1.3
 
 const CAM_MAX_DOWN := -1.3
@@ -53,12 +51,9 @@ var _team_info := {"id": -1, "color": null}
 
 @onready var _state_machine: StateMachine = $StateMachine
 
-@onready var _debug_characteristics: VBoxContainer = $Debug/Characteristics
-
 @onready var _interaction_area: Area3D = $InteractionArea
 
 @onready var _cam: Camera3D = $CameraStick/Camera
-
 
 func _on_username_change(new_name: String) -> void:
 	username = new_name
@@ -83,7 +78,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
-	rpc("net_move", global_position)
+	rpc("net_move", position)
 	if position.y < -1:
 		SignalBus.respawn_player.emit(self)
 
@@ -130,7 +125,7 @@ func _handle_bubble_collision(collider: Node3D, normal: Vector3) -> void:
 
 @rpc("any_peer", "reliable", "call_local")
 func net_move(new_position: Vector3) -> void:
-	global_position = new_position
+	position = new_position
 
 
 @rpc("any_peer", "reliable", "call_remote")

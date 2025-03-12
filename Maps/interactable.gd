@@ -7,6 +7,7 @@ enum INTERACTIONS {
 	JOIN_SERVER = 3,
 	LEAVE_SERVER = 4,
 	CHANGE_NAME = 5,
+	START_GAME = 6,
 }
 
 @export var _interaction: INTERACTIONS
@@ -29,6 +30,7 @@ var is_focused: bool = false:
 	_lobby_controller.join_server,
 	_lobby_controller.leave_server,
 	_lobby_controller.change_name,
+	_lobby_controller.start_game
 ]
 
 @onready var _interaction_info_tween: Tween = null

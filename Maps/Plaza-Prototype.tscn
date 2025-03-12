@@ -1,6 +1,5 @@
-[gd_scene load_steps=50 format=3 uid="uid://c0mpvi7fmxm7e"]
+[gd_scene load_steps=46 format=3 uid="uid://c0mpvi7fmxm7e"]
 
-[ext_resource type="Texture2D" uid="uid://dwnbaia2amroh" path="res://Testing/plaza/plaza-f1.png" id="1_glsal"]
 [ext_resource type="Environment" uid="uid://coahrwrwc62o1" path="res://default_env.tres" id="1_ob8t1"]
 [ext_resource type="Script" uid="uid://c1jrrvtkjdt73" path="res://Maps/projectile_synchronizer.gd" id="1_ue8ub"]
 [ext_resource type="Texture2D" uid="uid://bd0hvs57kceft" path="res://Assets/Maps/mall_floor.png" id="2_a2edh"]
@@ -12,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://b0l51utav1xft" path="res://Assets/Maps/Ads/shrimp ad.svg" id="5_x75m7"]
 [ext_resource type="PackedScene" uid="uid://rlrt7sl0d1xr" path="res://Interfaces/Scenes/username_change.tscn" id="6_4gcbf"]
 [ext_resource type="PackedScene" uid="uid://djd0d7cywxn8l" path="res://Interfaces/Scenes/join_lobby.tscn" id="7_8o4c3"]
-[ext_resource type="Texture2D" uid="uid://c1q8l57la4rla" path="res://Assets/Testing/skybox/skybox_10.png" id="7_ej822"]
 [ext_resource type="Script" uid="uid://dws83st1wkh0q" path="res://Maps/interactable.gd" id="14_w71ye"]
 
 [sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_ob8t1"]
@@ -118,16 +116,6 @@ albedo_color = Color(0.0408, 0.155493, 0.34, 0.803922)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dpv7p"]
 albedo_color = Color(0.56, 0.364, 0.168, 1)
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4tvqr"]
-panorama = ExtResource("7_ej822")
-
-[sub_resource type="Sky" id="Sky_4sh4a"]
-sky_material = SubResource("PanoramaSkyMaterial_4tvqr")
-
-[sub_resource type="Environment" id="Environment_8kgtj"]
-background_mode = 2
-sky = SubResource("Sky_4sh4a")
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_6b382"]
 size = Vector3(8.31042, 5.12683, 4.76476)
 
@@ -143,7 +131,10 @@ radius = 2.97311
 [sub_resource type="ViewportTexture" id="ViewportTexture_xeohu"]
 viewport_path = NodePath("InteractableOpen/InteractableInformation/Viewport")
 
-[node name="Node3D" type="WorldEnvironment"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_k0053"]
+viewport_path = NodePath("InteractableBeginGame/InteractableInformation/Viewport")
+
+[node name="Enviroment" type="WorldEnvironment"]
 environment = ExtResource("1_ob8t1")
 camera_attributes = SubResource("CameraAttributesPhysical_ob8t1")
 compositor = SubResource("Compositor_wwiia")
@@ -182,113 +173,9 @@ script = ExtResource("5_blbh7")
 _lobby_controller = NodePath("../../LobbyController")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.997185, -0.0749786, -3.27742e-09, 0, -4.37114e-08, 1, -0.0749786, 0.997185, 4.35883e-08, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 light_energy = 0.778
 shadow_enabled = true
-
-[node name="lights" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-
-[node name="SpotLight3D" type="SpotLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, -15.5, 16)
-light_energy = 3.444
-light_volumetric_fog_energy = 0.0
-spot_range = 19.5
-spot_attenuation = 0.02
-spot_angle = 40.7812
-
-[node name="SpotLight3D2" type="SpotLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, -1.5, 16)
-light_energy = 3.444
-light_volumetric_fog_energy = 0.0
-spot_range = 19.5
-spot_attenuation = 0.02
-spot_angle = 40.7812
-
-[node name="OmniLight3D" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, 3, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D2" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D3" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D4" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, 3, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D6" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, -20, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D10" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.05, 4, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D11" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.05, 4, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D12" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.05, 4, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D13" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.05, 4, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D14" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.55, -20.9, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D15" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.55, -20.9, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D16" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.55, -20.9, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D17" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.55, -20.9, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D7" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -20, 6.5)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D8" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -20, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D9" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, -20, 2)
-light_energy = 2.111
-omni_range = 6.0
-
-[node name="OmniLight3D5" type="OmniLight3D" parent="lights"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 4)
-light_energy = 3.889
-omni_range = 4.5
 
 [node name="floor1" type="Node3D" parent="."]
 physics_interpolation_mode = 1
@@ -299,6 +186,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 
 [node name="floor" type="CSGBox3D" parent="floor1/actualfloor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.75, -8.5, 0.751)
 use_collision = true
+collision_layer = 3
 size = Vector3(73.5, 26, 0.5)
 material = SubResource("ORMMaterial3D_6rdxx")
 
@@ -1312,12 +1200,108 @@ use_collision = true
 size = Vector3(0.25, 3, 3)
 material = SubResource("StandardMaterial3D_dpv7p")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-texture = ExtResource("1_glsal")
+[node name="lights" type="Node3D" parent="floor1"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_8kgtj")
+[node name="SpotLight3D" type="SpotLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, -15.5, 16)
+light_energy = 3.444
+light_volumetric_fog_energy = 0.0
+spot_range = 19.5
+spot_attenuation = 0.02
+spot_angle = 40.7812
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5, -1.5, 16)
+light_energy = 3.444
+light_volumetric_fog_energy = 0.0
+spot_range = 19.5
+spot_attenuation = 0.02
+spot_angle = 40.7812
+
+[node name="OmniLight3D" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, 3, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 3, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, 3, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D6" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, -20, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D10" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.05, 4, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D11" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.05, 4, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D12" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.05, 4, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D13" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.05, 4, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D14" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.55, -20.9, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D15" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.55, -20.9, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D16" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.55, -20.9, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D17" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.55, -20.9, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D7" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -20, 6.5)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D8" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, -20, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D9" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.5, -20, 2)
+light_energy = 2.111
+omni_range = 6.0
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="floor1/lights"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 4, 4)
+light_energy = 3.889
+omni_range = 4.5
 
 [node name="InteractableLeave" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
 transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 2.13163e-14, 0, -2.13163e-14, 0.995912, -17.2633, 1.43149, 12.8384)
@@ -1421,3 +1405,36 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "Open Server!"
+
+[node name="InteractableBeginGame" type="Node3D" parent="." node_paths=PackedStringArray("_lobby_controller")]
+transform = Transform3D(0.995912, 0, 0, 0, 0.995912, 0, 0, 0, 0.995912, 44.491, 2, 12.7098)
+script = ExtResource("14_w71ye")
+_interaction = 6
+_lobby_controller = NodePath("../LobbyController")
+
+[node name="InteractableArea" type="Area3D" parent="InteractableBeginGame"]
+
+[node name="InteractableShape" type="CollisionShape3D" parent="InteractableBeginGame/InteractableArea"]
+shape = SubResource("SphereShape3D_xr3py")
+
+[node name="InteractableInformation" type="Sprite3D" parent="InteractableBeginGame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24473, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_k0053")
+
+[node name="Viewport" type="SubViewport" parent="InteractableBeginGame/InteractableInformation"]
+size = Vector2i(162, 27)
+
+[node name="Label" type="Label" parent="InteractableBeginGame/InteractableInformation/Viewport"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -71.5
+offset_top = -11.5
+offset_right = 71.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Start Game!"

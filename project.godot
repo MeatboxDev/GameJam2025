@@ -34,12 +34,14 @@ enabled=PackedStringArray("res://addons/ridiculous_coding/plugin.cfg", "res://ad
 [file_customization]
 
 folder_colors={
+"res://Debug/": "green",
 "res://Globals/": "purple",
 "res://Interfaces/": "green",
 "res://Maps/": "orange",
 "res://Objects/": "yellow",
 "res://Player/": "pink",
-"res://Server/": "red"
+"res://Server/": "red",
+"res://bin/": "gray"
 }
 
 [global_group]
