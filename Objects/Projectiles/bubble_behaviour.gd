@@ -39,7 +39,6 @@ func _process(_delta: float) -> void:
 				collider.direction = direction
 				direction *= -1
 			elif collider.is_in_group("Player"):
-				print("Suck my cock")
 				pass # I hate this singular line of code, fuck this
 			else:
 				var norm := col.get_normal(i)
