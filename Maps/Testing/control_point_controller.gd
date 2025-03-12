@@ -68,6 +68,8 @@ func _ready() -> void:
 	
 	Server.client_player_disconnected.connect(_any_eliminate_player)
 	
+	Server.client_connected_to_server.connect(_handle_server_connect)
+	
 	Server.client_disconnected_from_server.connect(_handle_server_disconnect)
 
 
@@ -149,6 +151,10 @@ func _spawn_capture_bubble(position: Vector3) -> void:
 #--- Y88b  d88P 888        888   888        888   Y8888     888     ---#
 #---  "Y8888P"  88888888 8888888 8888888888 888    Y888     888     ---#
 
+## [b][color=lime]Client Function[/color][/b]
+func _handle_server_connect() -> void:
+	_clear_teams()
+
 
 ## [b][color=lime]Client Function[/color][/b]
 ## Removes all players from the teams
@@ -160,7 +166,7 @@ func _clear_teams() -> void:
 		for p: Player in _team_information[t]["player_instances"]:
 			p.queue_free()
 		_team_information[t]["player_instances"].clear()
-	_interface_manager.open("PickTeamInterface")
+	_interface_manager.open("PickTeamInterface") # TODO: This shouldn't happen here
 
 
 ## [b][color=lime]Client Function[/color][/b]

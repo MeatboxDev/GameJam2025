@@ -2,11 +2,11 @@ extends Node
 
 const _bubble_scene: PackedScene = preload("uid://duhicp2kli703")
 
-var _bubble_list: Array[Node3D] = []
+var _bubble_list: Array[Bubble] = []
 
 @rpc("authority", "unreliable", "call_remote")
 func _sync_position(index: int, pos: Vector3) -> void:
-	var instance: Array[Node3D] = _bubble_list.filter(func(i: Node3D) -> bool: return i.number == index)
+	var instance: Array[Bubble] = _bubble_list.filter(func(i: Bubble) -> bool: return i.number == index)
 	if not instance.size():
 		KLog.warning("Bubble with index " + str(index) + " not found over the net")
 		return
@@ -26,13 +26,23 @@ func _net_spawn_bubble(bubble_info: Dictionary) -> void:
 	
 	_bubble_list.append(bubble_instance)
 
+
+## [b][color=red]Server Function[/color][/b]
 func _burst_bubble(num: int) -> void:
-	var instance: Array[Node3D] = _bubble_list.filter(func(i: Node3D) -> bool: return i.number == num)
-	if not instance.size():
+	assert(Server.is_server(), "_burst_bubble running on client not allowed")
+	var index: int = _bubble_list.find_custom(func(i: Bubble) -> bool: return i.number == num)
+	if index == -1:
 		KLog.warning("Instance of bubble number " + str(num) + " not found, ignoring")
 		return
-	instance.front().queue_free()
-	_bubble_list.erase(instance.front())
+	rpc("_burst_bubble_client", index)
+
+
+## [b][color=red]Client Function[/color][/b]
+@rpc("authority", "call_local", "reliable")
+func _burst_bubble_client(index: int) -> void:
+	KLog.debug("I be poppin bubbles")
+	_bubble_list[index].queue_free()
+	_bubble_list.remove_at(index)
 
 
 func _clear_bubbles() -> void:

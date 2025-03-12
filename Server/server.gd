@@ -7,6 +7,7 @@ signal client_player_connected(id: int)
 
 signal server_player_disconnected(id: int)
 signal client_player_disconnected(id: int)
+signal client_connected_to_server
 signal client_disconnected_from_server
 
 const IP_ADDRESS := "*"
@@ -137,6 +138,7 @@ func connect_to_server(ip: String = IP_ADDRESS, port: int = PORT) -> Error:
 
 	multiplayer.multiplayer_peer = _peer
 
+	client_connected_to_server.emit()
 	KLog.info("Joined server " + ip + ":" + str(port))
 	return OK
 

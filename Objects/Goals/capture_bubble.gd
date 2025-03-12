@@ -13,7 +13,7 @@ var _hp := HP
 ## If [member CaptureBubble._hp] below zero burst this bubble and give the Bubble's team a point 
 func _handle_bubble_enter(bubble: Bubble) -> void:
 	assert(Server.is_server(), "_handle_bubble_enter running on client not allowed")
-	bubble.rpc("burst")
+	bubble.burst()
 	rpc("_inflate")
 	if _hp <= 0:
 		SignalBus.point_for_team.emit(bubble.team)

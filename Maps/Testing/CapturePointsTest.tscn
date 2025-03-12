@@ -32,8 +32,11 @@ environment = SubResource("Environment_5t8uy")
 camera_attributes = SubResource("CameraAttributesPractical_ftl0v")
 compositor = SubResource("Compositor_5uy2d")
 
-[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("_interface_manager")]
+[node name="ControlPointController" type="Node" parent="." node_paths=PackedStringArray("_bubble_spawns", "_good_spawns", "_bad_spawns", "_interface_manager")]
 script = ExtResource("1_bvgce")
+_bubble_spawns = [NodePath("../BubbleSpawns")]
+_good_spawns = [NodePath("../GoodSide/GoodSpawn"), NodePath("../GoodSide/GoodSpawn2"), NodePath("../GoodSide/GoodSpawn3"), NodePath("../GoodSide/GoodSpawn4")]
+_bad_spawns = [NodePath("../BadSide/BadSpawn"), NodePath("../BadSide/BadSpawn2"), NodePath("../BadSide/BadSpawn3"), NodePath("../BadSide/BadSpawn4")]
 _interface_manager = NodePath("../InterfaceManager")
 
 [node name="ProjectileSynchronizer" type="Node" parent="."]

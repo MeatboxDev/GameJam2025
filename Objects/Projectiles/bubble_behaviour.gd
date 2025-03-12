@@ -50,8 +50,13 @@ func _process(_delta: float) -> void:
 					direction.z *= -1
 
 
-@rpc("any_peer", "reliable", "call_local")
 func burst() -> void:
+	rpc_id(1, "_notify_burst")
+
+
+@rpc("any_peer", "call_local", "reliable")
+func _notify_burst() -> void:
+	assert(Server.is_server(), "func _notify_burst running on client not allowed")
 	SignalBus.burst_bubble.emit(number)
 
 
