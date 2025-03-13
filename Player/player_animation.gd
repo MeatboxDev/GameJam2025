@@ -75,7 +75,7 @@ func _ready() -> void:
 	SignalBus.respawn_player.emit(self)
 
 
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority(): return
 	
 	rpc("net_move", position)
